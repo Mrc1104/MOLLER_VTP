@@ -8,6 +8,9 @@ moller_hls_tb.cpp -- HLS testing script
 
 # Contact
 Name: Ryan Conaway
+
 Email: mrc@jlab.org
+
 Advisor: Dr. Paul King
+
 University: Ohio University
