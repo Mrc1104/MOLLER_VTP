@@ -14,7 +14,6 @@ typedef struct
   ap_uint<3> t;
 } hit_t;
 
-
 // fadc_hits_t:
 // - contains 256 VXS channels worth + 32 left fiber + 32 right fiber of hit_t reported each 32ns
 // - vxs_ch[  0] to vxs_ch[ 15]: VME slot 3, ch 0 to 15 FADC channels
@@ -30,6 +29,7 @@ typedef struct
 //   fiber_ch_l[0] to fiber_ch_l[31]: these come from adjacent sectors of ecal and needed for current sector to build (6+1) clusters for trigger
 //   fiber_ch_r[0] to fiber_ch_r[31]  channel mapping is arbitrary and needs to be defined
 #define N_CHAN_SEC 147   // number of fadc channels per sector
+// #define N_CHAN_SEC 8 // number of fadc channels per sector // what should this be for MOLLER? 8? 
 typedef struct
 {
   hit_t vxs_ch[N_CHAN_SEC];
@@ -68,13 +68,12 @@ typedef struct
 
 
 void ecal_cluster_hls(
-    ap_uint<3> hit_dt,
-    ap_uint<13> seed_threshold,
-    ap_uint<16> cluster_threshold,
-    hls::stream<fadc_hits_t> &s_fadc_hits,
-    hls::stream<trigger_t> &s_trigger,
-    hls::stream<cluster_all_t> &s_cluster_all
-  );
+  ap_uint<3> hit_dt,
+  ap_uint<13> seed_threshold,
+  ap_uint<16> cluster_threshold,
+  hls::stream<fadc_hits_t> &s_fadc_hits,
+  hls::stream<trigger_t> &s_trigger,
+  hls::stream<cluster_all_t> &s_cluster_all );
 
 ap_uint<5> Find_block(ap_uint<8> ch, ap_uint<2> dim);
 int Find_channel(ap_uint<5> nx, ap_uint<5> ny);
