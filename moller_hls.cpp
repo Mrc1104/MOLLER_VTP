@@ -203,12 +203,16 @@ cluster_t Find_cluster(
     ap_uint<13> e_array[7];
     p_uint<7> hits = 0;
 
-    if(prehits[0].e>=seed_threshold && prehits[0].t>=4){
+    if(prehits[0].e>=seed_threshold && prehits[0].t>=4){ 
+      // if the time is >= 4 (again, in 4ns increments so >= 4 * 4ns)
+      // then it is from a previous run
       t = prehits[0].t;    // map pre time 4 to 7 -> 4 to 7 (unchanged)
       e_array[0] = prehits[0].e;
       hits[0] = 1;
     }
     else if(curhits[0].e>=seed_threshold && curhits[0].t<4){
+      // if the time is < 4 (again, in 4ns increments so < 4 * 4ns)
+      // then it is from current run
       t = curhits[0].t+8;  // map cur time 0 to 3 -> 8 to 11 (move to time after pre hit window)
       e_array[0] = curhits[0].e;
       hits[0] = 1;
@@ -227,7 +231,7 @@ cluster_t Find_cluster(
         e_array[ii] = prehits[ii].e;
         hits[ii] = 1;
       }
-      if(e_array[ii] >= e_array[0])
+      if(e_array[ii] >= e_array[0]) // this is odd to me
         hits[0] = 0;
       }
 

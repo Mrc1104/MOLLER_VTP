@@ -4,7 +4,7 @@
 
 int main(int argc, char *argv[])
 {
-  ap_uint<3> hit_dt = 2;
+  ap_uint<3> hit_dt = 2; // time tolerance for coincidence (presumably in ns)
   ap_uint<13> seed_threshold = 5000;
   ap_uint<16> cluster_threshold = 10000;
 
