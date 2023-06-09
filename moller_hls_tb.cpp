@@ -7,10 +7,13 @@ int main(int argc, char *argv[])
   ap_uint<3> hit_dt = 2;
   ap_uint<13> seed_threshold = 5000;
   ap_uint<16> cluster_threshold = 10000;
+
+  // Note: hls::stream<T> behaves like a fifo array implementation of infinite depth. 
+  // Once the data has been read, it no longer exists (to presever the data, you need to cache it) 
   hls::stream<fadc_hits_t> s_fadc_hits;
   hls::stream<trigger_t> s_trigger, s_trigger_verify;
   hls::stream<cluster_all_t> s_cluster_all;
-
+  
   srand(10);
 
   // generate some random FADC hits
