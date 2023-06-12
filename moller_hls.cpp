@@ -48,13 +48,15 @@ void ecal_cluster_hls(
  	      int nearby_ch = Find_nearby(ch, in);
 
         if(nearby_ch>=0){
-	        if((edge==1) && (in==1 || in==3)){
+	        if((edge==1) && (in==1 || in==3)){ 
+            // if on the end then we are getting our data from a fiber cable
 	          nearby_hit_pre[in].e=fadc_hits_pre.fiber_ch_l[nearby_ch].e;
 	          nearby_hit_pre[in].t=fadc_hits_pre.fiber_ch_l[nearby_ch].t;
             nearby_hit[in].e=fadc_hits.fiber_ch_l[nearby_ch].e;
             nearby_hit[in].t=fadc_hits.fiber_ch_l[nearby_ch].t;
 	        }
 	        else{
+            // Else, getting data from detectors
 	          nearby_hit_pre[in].e=fadc_hits_pre.vxs_ch[nearby_ch].e;
 	          nearby_hit_pre[in].t=fadc_hits_pre.vxs_ch[nearby_ch].t;
             nearby_hit[in].e=fadc_hits.vxs_ch[nearby_ch].e;
@@ -62,6 +64,7 @@ void ecal_cluster_hls(
 	        }
 	      }
 	      else{
+          // If no nearby detectors, then we didn't observe a hit
             nearby_hit_pre[in].e=0;
             nearby_hit_pre[in].t=0;
             nearby_hit[in].e=0;

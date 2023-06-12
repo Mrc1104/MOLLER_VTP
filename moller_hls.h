@@ -29,7 +29,7 @@ typedef struct
 //   fiber_ch_l[0] to fiber_ch_l[31]: these come from adjacent sectors of ecal and needed for current sector to build (6+1) clusters for trigger
 //   fiber_ch_r[0] to fiber_ch_r[31]  channel mapping is arbitrary and needs to be defined
 #define N_CHAN_SEC 147   // number of fadc channels per sector
-// #define N_CHAN_SEC 8 // number of fadc channels per sector // what should this be for MOLLER? 8? 
+// #define N_CHAN_SEC 32 // number of fadc channels per sector // what should this be for MOLLER? (4 segments per sector and 8 rings per segment = 32)? 
 typedef struct
 {
   hit_t vxs_ch[N_CHAN_SEC];
@@ -41,7 +41,8 @@ typedef struct
 // - recommended cluster structure to be reported for each possible cluster position.
 // - idx: cluster index (map based - alternatively a 2d coordinate would be fine is easy to define
 // - e: cluster measured energy (sum of up to 7 fadc_hit_t.e)
-// - t: cluster time, timestamped from cluster central hit time appended to coarse 32ns frame counter: this timestamp spans 0 to 8188ns (0 to 2047 *4ns)
+// - t: cluster time, timestamped from cluster central hit time appended to coarse 32ns frame counter: 
+//      this timestamp spans 0 to 8188ns (0 to 2047 *4ns)
 // - nhits: number of hit channels in cluster. can be useful to reject single channel noise hits
 typedef struct
 {

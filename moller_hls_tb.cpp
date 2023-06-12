@@ -19,7 +19,7 @@ int main(int argc, char *argv[])
   // generate some random FADC hits
   fadc_hits_t fadc_hits;
   trigger_t trigger;
-
+   // Raw data received directly from FADC
   for(int ch=0; ch<N_CHAN_SEC; ch++){
       fadc_hits.vxs_ch[ch].e = 0;
       fadc_hits.vxs_ch[ch].t = 0;
@@ -87,7 +87,9 @@ int main(int argc, char *argv[])
 #ifndef __SYNTHESIS__
     for(int i=0;i<8;i++)
     {
-      if(trigger.trig[i])
+      if(trigger.trig[i]) // cycle through bit by bit : bit = 0 => false;
+                          //                            bit = 1 => true;
+                          // trig: [0]=>0ns, [1]=>4ns, [2]=>8ns, ..., [7]=28ns
         printf("Trigger found at T=%dns\n", t32ns*32+i*4-16);
     }
 #endif
