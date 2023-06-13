@@ -23,8 +23,13 @@ void moller_hls
 	for(int ch = 0; ch < N_CHAN_SEC; ch++){
 
 		// goal: parse which ch corresponds to which ring
-		hit_t pre_hit[7];
-		hit_t curr_hit[7];
+		int channelMapping = ch%8;
+		switch(channelMapping)
+		{
+		case 0:
+
+
+		}
 
 
 
