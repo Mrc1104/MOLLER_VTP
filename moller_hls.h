@@ -26,8 +26,8 @@ typedef struct
 // ...
 // - vxs_ch[ 208 ] to vxs_ch[ 224 ]: VME slot 19, ch 0 to 15 FADC channels
 //
-//#define N_CHAN_SEC 64; // number of FADC channels per sector (16 FADC ch per segment, 4 segment per sector)
-#define N_CHAN_SEC 224; // number of FADC channels per sector (16 FADC ch per segment, 4 segment per sector)
+//#define N_CHAN_SEC 64 // number of FADC channels per sector (16 FADC ch per segment, 4 segment per sector)
+#define N_CHAN_SEC 224 // number of FADC channels per sector (16 FADC ch per segment, 4 segment per sector)
 // Be careful, max array n can make is 4096 bits wide (4096/16 = 256 so we are good)
 typedef struct
 {
@@ -96,7 +96,7 @@ void moller_hls
 	ap_uint<13> seed_threshold, // minimum energy for us to look at an individual hit
 	ap_uint<16> ring_threshold, // minimum summed energy (over one ring) to count a ring as hit
 	hls::stream<fadc_hits_t> &s_fadc_hits, // raw FADC data input stream
-	hls::stream<ring_data_t> rings // output stream for for the ring data
+	hls::stream<ring_data_t> &rings // output stream for for the ring data
 );
 
 // define sub functions here
