@@ -22,12 +22,7 @@ int main(int argc, char *argv[])
 			s_rings );
 	}
 
-	while(!s_rings.empty()){
-		rings_data_t tmp = s_rings.read();
-		for(int i = 0; i < 8; i++){
-			if()
-		}
-	}
+
 
 	return 0;
 }

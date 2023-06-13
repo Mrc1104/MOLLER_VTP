@@ -19,12 +19,12 @@ typedef struct
 // - contains 244 VXS channels of hit_t reported by the FADCs each 32ns pulse
 // - vxs_ch[ 0 ] to vxs_ch[ 15 ]: VME slot 4, ch 0 to 15 FADC channels
 // - vxs_ch[ 16 ] to vxs_ch[ 31 ]: VME slot 5, ch 0 to 15 FADC channels
-// - vxs_ch[ 112 ] to vxs_ch[ 127 ]: VME slot 5, ch 0 to 15 FADC channels
 // ...
+// - vxs_ch[ 112 ] to vxs_ch[ 127 ]: VME slot 10, ch 0 to 15 FADC channels
 // - (VXS switch A and B are at VME slot positions 11,12 so the FADC cannot be installed here
 // - vxs_ch[ 144 ] to vxs_ch[ 159 ]: VME slot 5, ch 0 to 15 FADC channels
 // ...
-// - vxs_ch[ 208 ] to vxs_ch[ 224 ]: VME slot 19, ch 0 to 15 FADC channels
+// - vxs_ch[ 208 ] to vxs_ch[ 223 ]: VME slot 19, ch 0 to 15 FADC channels
 //
 //#define N_CHAN_SEC 64 // number of FADC channels per sector (16 FADC ch per segment, 4 segment per sector)
 #define N_CHAN_SEC 224 // number of FADC channels per sector (16 FADC ch per segment, 4 segment per sector)
