@@ -132,9 +132,12 @@ ap_uint<5> Find_block(ap_uint<8> ch, ap_uint<2> dim){
   ap_uint<5> ny=0;
   ap_uint<3> edge=0;
 
+  int ich = ch%16;  // slot number, start from 0
+  int slot = (ch-ich)/16; // channel number inside a fadc, start from 0
+  /* 
   int slot = ch%16;  // slot number, start from 0
   int ich = ch-slot*16; // channel number inside a fadc, start from 0
-
+*/
   nx=block_map[slot][ich].nx;
   ny=block_map[slot][ich].ny;
   edge=block_map[slot][ich].edge;
