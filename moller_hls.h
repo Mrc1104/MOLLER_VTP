@@ -49,19 +49,22 @@ typedef struct
 	ap_uint<2> bbuff;
 } ring_hit_t;
 
+typedef struct
+{
+	ring_hit_t r[N_CHAN_SEC];
+} ring_hit_all_t;
+
 // ring_loc_t:
 // - This is the general data structure to store the information about hits on a ring;
 //   which segment / sector the hit is in and the timing.
-// - trig: [0]=>0ns, [1]=>4ns, [2]=>8ns, ..., [7]=28ns, when bit=0 no trigger, when bit=1 trigger
-// - segment: bit map for the four segments per sector. bit=0, no hit; bit=1, hit
-// - sector: bit map for the seven sectors. bit=0, no hit; bit = 1 hit
+// - trig: bitmap for time - [0]=>0ns, [1]=>4ns, [2]=>8ns, ..., [7]=28ns, when bit=0 no trigger, when bit=1 trigger
+// - segment: segments run from 0 to 27
 // - bbuf: bit buffer to make structs multiples of 8bits
 typedef struct
 {
 	ap_uint<8> trig;
-	ap_uint<4> segment;
-	ap_uint<7> sector;
-	ap_uint<5> bbuf;
+	ap_uint<5> segment;
+	ap_uint<3> bbuf;
 } ring_loc_t;
 
 typedef struct
@@ -96,7 +99,7 @@ void moller_hls
 	ap_uint<13> seed_threshold, // minimum energy for us to look at an individual hit
 	ap_uint<16> ring_threshold, // minimum summed energy (over one ring) to count a ring as hit
 	hls::stream<fadc_hits_t> &s_fadc_hits, // raw FADC data input stream
-	hls::stream<ring_data_t> &rings // output stream for for the ring data
+	hls::stream<ring_data_t> &s_rings // output stream for for the ring data
 );
 
 // define sub functions here
