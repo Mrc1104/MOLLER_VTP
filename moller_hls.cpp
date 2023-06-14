@@ -71,12 +71,13 @@ void add_ring_data(
 	tmp.segment[hit_segment] = 1;
 
 	// add it to corresponding ring
-	cout << "hit_sector: " << hit_sector << " " << "tmp.sector[0]: " << tmp.sector[0] << endl;
+	cout << "hit_segment: " << hit_segment << " " << "tmp.segment[0]: " << tmp.segment[0] << endl;
 	// cout << "BEFORE:\ttmp.e: " << tmp.e << "\trings["<<ringNum<<"]:"<< rings[ringNum].e << endl;
 	rings[ringNum].e += tmp.e;
 	rings[ringNum].nhits += tmp.nhits;
 	rings[ringNum].sector |= hit_sector;
 	rings[ringNum].segment |= tmp.segment;
+	cout << rings[ringNum].segment << endl;
 	// cout << "AFTER:\ttmp.e: " << tmp.e << "\trings["<<ringNum<<"]:"<< rings[ringNum].e << endl;
 	cout << ringNum << 
 	"\tr[ringNum].e: " <<
