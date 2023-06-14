@@ -81,7 +81,7 @@ typedef struct
 void moller_hls
 (
 	ap_uint<3> hit_dt, // coincidence tolerance
-	ap_uint<13> seed_threshold, // minimum energy for us to look at an individual hit
+	ap_uint<13> energy_threshold, // minimum energy for us to look at an individual hit
 	ap_uint<16> ring_threshold, // minimum summed energy (over one ring) to count a ring as hit
 	hls::stream<fadc_hits_t> &s_fadc_hits, // raw FADC data input stream
 	hls::stream<trigger_t> &s_trigger, // output stream for for the trigger data
@@ -89,7 +89,8 @@ void moller_hls
 	hls::stream<ring_all_t> &s_ring_all_t // output strean for the ring data
 );
 
-// define sub functions here
+/* define sub functions here */
+// parses FADC channel data and sums it to the appropriate ring
 void add_ring_data(
 	int ringNum,
 	int hit_segment, 
@@ -97,5 +98,10 @@ void add_ring_data(
 	hit_t hit_data,
 	ring_hit_t* rings
 );
+
+// takes the summed data from ring_all_t 
+// and compares it to ring_threshold to see 
+// if the ring qualifies as hit
+ring_trigger_t make_ring_bitmap(ring_hit_t* rings, ap_uint<16> ring_threshold);
 
 #endif

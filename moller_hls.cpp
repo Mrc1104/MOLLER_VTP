@@ -4,7 +4,7 @@
 void moller_hls
 (
 	ap_uint<3> hit_dt, // coincidence tolerance
-	ap_uint<13> seed_threshold, // minimum energy for us to look at an individual hit
+	ap_uint<13> energy_threshold, // minimum energy for us to look at an individual hit
 	ap_uint<16> ring_threshold, // minimum summed energy (over one ring) to count a ring as hit
 	hls::stream<fadc_hits_t> &s_fadc_hits, // raw FADC data input stream
 	hls::stream<trigger_t> &s_trigger, // output stream for for the trigger data
@@ -37,12 +37,12 @@ void moller_hls
 		if( (ch%32 == 0) ){
 			sector++;
 		}
-		if(fadc_hits.vxs_chan[ch].e > 0 ) // else, no hit
+		if(fadc_hits.vxs_chan[ch].e >= energy_threshold ) // else, no hit
 			add_ring_data(ch%8, segment%4, sector, fadc_hits.vxs_chan[ch], allr.r);
-
 
 	} // end for loop
 
+	ring_trigger_t ring_bitmap = make_ring_bitmap(allr.r, ring_threshold);
 
 
 
@@ -73,4 +73,20 @@ void add_ring_data(
 	cout << "rings[" << ringNum<<"].segment: " << rings[ringNum].segment << endl;
 	cout << endl;
 
+}
+
+ring_trigger_t make_ring_bitmap(ring_hit_t* rings, ap_uint<16> ring_threshold)
+{
+	ring_trigger_t tmp;
+	for(int ringNum = 0; ringNum < 8; ringNum++){
+		if(rings[ringNum].e >= ring_threshold){
+			tmp.ring[ringNum] = 1;
+		}
+		else{
+			tmp.ring[ringNum] = 0; // just being explicit about it
+		}
+	}
+	// TODO: WE COULD ALSO ADD NHIT FILTERING HERE TOO
+
+	return tmp;
 }
