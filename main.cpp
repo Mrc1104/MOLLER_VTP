@@ -80,6 +80,14 @@ int main(int argc, char *argv[])
 		}
 	}
 
+	while(!s_ring_trigger.empty())
+	{
+		ring_trigger_t ring_trig = s_ring_trigger.read();
+		for(int i = 0; i < 8; i++){
+			/* IMPLEMENT*/
+		}
+	}
+
 
 	return 0;
 }

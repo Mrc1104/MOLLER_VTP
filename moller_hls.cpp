@@ -48,6 +48,7 @@ void moller_hls
 
 
 	s_ring_all_t.write(allr);
+	s_ring_trigger.write(ring_bitmap);
 
 	return;
 } // void moller_hls(...)
