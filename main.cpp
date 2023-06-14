@@ -38,7 +38,7 @@ int main(int argc, char *argv[])
 		std::string comment;
 		std::getline(testData, comment);
 		testData >> index >> en >> ti;
-		std::cout << index << " " << en 
+		std::cout << index << " " << en << " "
 				  << ti << " " << std::endl;
 		
 		fadc_hits.vxs_chan[index].e = en;
