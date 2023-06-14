@@ -85,7 +85,7 @@ void add_ring_data(
 	rings[ringNum].nhits <<
 	"\tr[ringNum].sector  " << 
 	rings[ringNum].sector  <<
-	"\tr[ringNum].segmentt: " <<
+	"\tr[ringNum].segment: " <<
 	rings[ringNum].segment << endl;
 
 }
