@@ -72,21 +72,16 @@ void add_ring_data(
 
 	// add it to corresponding ring
 	cout << "hit_segment: " << hit_segment << " " << "tmp.segment[0]: " << tmp.segment[0] << endl;
-	// cout << "BEFORE:\ttmp.e: " << tmp.e << "\trings["<<ringNum<<"]:"<< rings[ringNum].e << endl;
 	rings[ringNum].e += tmp.e;
 	rings[ringNum].nhits += tmp.nhits;
 	rings[ringNum].sector |= hit_sector;
 	rings[ringNum].segment |= tmp.segment;
 	cout << "rings[ringNum].segment: " << rings[ringNum].segment << endl;
-	// cout << "AFTER:\ttmp.e: " << tmp.e << "\trings["<<ringNum<<"]:"<< rings[ringNum].e << endl;
-	cout << ringNum << 
-	"\tr[ringNum].e: " <<
-	rings[ringNum].e  <<
-	"\tr[ringNum].nhits: " <<
-	rings[ringNum].nhits <<
-	"\tr[ringNum].sector  " << 
-	rings[ringNum].sector  <<
-	"\tr[ringNum].segment: " <<
-	rings[ringNum].segment << endl;
+
+	cout << "ringNum: " << ringNum << endl;
+	cout << "rings[" << ringNum<<"].e: " << rings[ringNum].e << endl;
+	cout << "rings[" << ringNum<<"].nhits: " << rings[ringNum].nhits << endl;
+	cout << "rings[" << ringNum<<"].sector: " << rings[ringNum].sector << endl;
+	cout << "rings[" << ringNum<<"].segment: " << rings[ringNum].segment << endl;
 
 }
