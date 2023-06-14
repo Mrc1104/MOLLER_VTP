@@ -1,4 +1,5 @@
 *.jou
 *.log
 *.exe
+*.out
 *.o
