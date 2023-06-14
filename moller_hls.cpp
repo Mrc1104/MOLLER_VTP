@@ -61,7 +61,7 @@ void add_ring_data(
 	tmp.segment[hit_segment] = 1;
 
 	// add it to corresponding ring
-	rings[ringNum].e += tmp.e;
+	rings[ringNum].e = rings[ringNum].e+tmp.e;
 	rings[ringNum].nhits += tmp.nhits;
 	rings[ringNum].sector |= tmp.sector;
 	rings[ringNum].segment |= tmp.segment;
