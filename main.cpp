@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <fstream>
 #include "moller_hls.h"
 
 int main(int argc, char *argv[])
@@ -14,8 +15,21 @@ int main(int argc, char *argv[])
 	hls::stream<trigger_t> s_trigger; // output stream for for the trigger data
 	hls::stream<ring_trigger_t> s_ring_trigger; // output stream for for the ring trigger data
 	hls::stream<ring_all_t> s_ring_all_t; // output strean for the ring data
+
+
+	// load test data
+	std::ifstream testData;
+	testData.open("test_data/fake_FADC_data.txt");
+	do{
+		#include <iostream>
+		std::cout << testData;
+
+	}while(!testData.eof());
+
+
+
 	while(!s_fadc_hits.empty()){
-		moller_hls( 
+		// moller_hls( 
 			hit_det, 
 			seed_threshold, 
 			cluster_threshold, 
