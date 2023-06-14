@@ -16,7 +16,7 @@ void moller_hls
 
 
 	ap_uint<8> ac_disc[N_CHAN_SEC];
-	trigger_t trigger = {0};
+	trigger_t time_bitmap = {0};
 	ring_all_t allr;
 
 	for(int i = 0; i < 8; i++){
@@ -37,10 +37,10 @@ void moller_hls
 		if( (ch%32 == 0) ){
 			sector++;
 		}
-		if(fadc_hits.vxs_chan[ch].e >= energy_threshold ) // else, no hit
+		if(fadc_hits.vxs_chan[ch].e >= energy_threshold ){ // else, no hit
 			add_ring_data(ch%8, segment%4, sector, fadc_hits.vxs_chan[ch], allr.r);
-		
-
+			time_bitmap = make_timing_bitmap(fadc_hits.vxs_chan[ch]);
+		}
 	} // end for loop
 
 	ring_trigger_t ring_bitmap = make_ring_bitmap(allr.r, ring_threshold);
@@ -92,4 +92,14 @@ ring_trigger_t make_ring_bitmap(ring_hit_t* rings, ap_uint<16> ring_threshold)
 	// TODO: WE COULD ALSO ADD NHIT FILTERING HERE TOO
 
 	return tmp;
+}
+
+trigger_t make_timing_bitmap(hit_t hit_data)
+{
+	ap_uint<4> t=0;
+	if(hit_data.t >=4)
+		t = hit_data.t; // map pre time 4 to 7 -> 4 to 7 (unchanged)
+	else if(hit_data.t < 4)
+		t = hit_data.t + 8; // map cur time 0 to 3 -> 8 to 11 (move to time after pre hit window)
+	
 }
