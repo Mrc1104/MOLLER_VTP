@@ -82,9 +82,9 @@ void add_ring_data(
 	rings[ringNum].e  <<
 	"\tr[ringNum].nhits: " <<
 	rings[ringNum].nhits <<
-	"\tr[ringNum].sector  " << bin
+	"\tr[ringNum].sector  " << bin <<
 	rings[ringNum].sector  <<
-	"\tr[ringNum].segmentt: " << bin
+	"\tr[ringNum].segmentt: " << bin << 
 	rings[ringNum].segment << endl;
 
 }
