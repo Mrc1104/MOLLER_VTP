@@ -61,7 +61,7 @@ void add_ring_data(
 	#include <iostream>
 	using std::cout; using std::endl;
 	
-	rings[ringNum].e = hit_data.e;
+	rings[ringNum].e += hit_data.e;
 	rings[ringNum].nhits += 1;
 	rings[ringNum].sector[hit_sector] = 1;
 	rings[ringNum].segment[hit_segment] = 1;
