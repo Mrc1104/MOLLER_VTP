@@ -26,8 +26,8 @@ int main(int argc, char *argv[])
 
 	fadc_hits_t fadc_hits;
 	for(int ch = 0; ch < N_CHAN_SEC; ch++){
-		fadc_hits.vxs_chan[ch].e;
-		fadc_hits.vxs_chan[ch].t;
+		fadc_hits.vxs_chan[ch].e = 0;
+		fadc_hits.vxs_chan[ch].t = 0;
 	}
 	do{
 		int index;
