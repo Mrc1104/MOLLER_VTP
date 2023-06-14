@@ -46,17 +46,17 @@ int main(int argc, char *argv[])
 
 	}while(!testData.eof());
 
-
+	s_fadc_hits.write(fadc_hits);
 
 	while(!s_fadc_hits.empty()){
-		/* moller_hls( 
+		moller_hls( 
 			hit_det, 
 			seed_threshold, 
 			cluster_threshold, 
 			s_fadc_hits, 
 			s_trigger,
 			s_ring_trigger,
-			s_ring_all_t ); */
+			s_ring_all_t ); 
 	}
 
 
