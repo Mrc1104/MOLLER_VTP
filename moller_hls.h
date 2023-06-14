@@ -40,49 +40,36 @@ typedef struct
 // - e: sum of the energy of all the hits on a ind. ring
 // - t: ring time measured at the central hit time
 // - nhits: number of hits on an ind. ring
-// - bbuff: nit buffer to make struct multiple of 8bits
+// - segment: bit map for the 4 segments in a sector
+// - sector: bit map for the 7 sectors in our detector
 typedef struct
 {
 	ap_uint<16> e;
 	ap_uint<3> t;
 	ap_uint<3> nhits;
-	ap_uint<2> bbuff;
+	ap_uint<7> sector;
+	ap_uint<4> segment;
+
 } ring_hit_t;
 
 typedef struct
 {
-	ring_hit_t r[N_CHAN_SEC];
-} ring_hit_all_t;
+	ring_hit_t r[8];
+} ring_all_t;
 
-// ring_loc_t:
-// - This is the general data structure to store the information about hits on a ring;
-//   which segment / sector the hit is in and the timing.
+// trigger_t:
 // - trig: bitmap for time - [0]=>0ns, [1]=>4ns, [2]=>8ns, ..., [7]=28ns, when bit=0 no trigger, when bit=1 trigger
-// - segment: segments run from 0 to 27
-// - bbuf: bit buffer to make structs multiples of 8bits
 typedef struct
 {
 	ap_uint<8> trig;
-	ap_uint<5> segment;
-	ap_uint<3> bbuf;
-} ring_loc_t;
+} trigger_t;
 
-typedef struct
+// ring_trigger_t:
+// - ring trig: bitmap for ring hit - [0]=r0, [1]=r1, [2]=r2, ..., [7]=r6, when bit=0 no ring_trigger, when bit=1 ring_trigger
+typedef struct 
 {
-	ring_loc_t loc;
-	ring_hit_t hits;
-} ring_data_t;
-
-// rings_all_t:
-// - An array to store the all the information for all 8 rings
-// - [0] = r1, [1] = r2, [2] = r3, [3] = r4
-//   [4] = r5a, [5] = r5b, [6] = r5c, [7] = r6
-//   bit = 0, no hit; bit = 1, hit
-typedef struct
-{
-	ring_data_t rings[8];
-} rings_all_t ;
-
+	ap_uint<8> ring;
+} ring_trigger_t;
 
 // moller_hls:
 // - main workhorse of the code where most of the logic is performed
@@ -99,7 +86,9 @@ void moller_hls
 	ap_uint<13> seed_threshold, // minimum energy for us to look at an individual hit
 	ap_uint<16> ring_threshold, // minimum summed energy (over one ring) to count a ring as hit
 	hls::stream<fadc_hits_t> &s_fadc_hits, // raw FADC data input stream
-	hls::stream<ring_data_t> &s_rings // output stream for for the ring data
+	hls::stream<trigger_t> &s_trigger, // output stream for for the trigger data
+	hls::stream<ring_trigger_t> &s_ring_trigger, // output stream for for the ring trigger data
+	hls::stream<ring_all_t> &s_ring_all_t // output strean for the ring data
 );
 
 // define sub functions here

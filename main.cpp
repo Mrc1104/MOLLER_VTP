@@ -11,15 +11,18 @@ int main(int argc, char *argv[])
 	// hls::stream<T> behaves like a fifo array with infinite depth
 	// Once data has been read, it no longer is stored in any buffer
 	hls::stream<fadc_hits_t> s_fadc_hits; // raw data stream from the 
-	hls::stream<ring_data_t> s_rings; // output stream for the complete ring data
-
+	hls::stream<trigger_t> s_trigger; // output stream for for the trigger data
+	hls::stream<ring_trigger_t> s_ring_trigger; // output stream for for the ring trigger data
+	hls::stream<ring_all_t> s_ring_all_t; // output strean for the ring data
 	while(!s_fadc_hits.empty()){
 		moller_hls( 
 			hit_det, 
 			seed_threshold, 
 			cluster_threshold, 
 			s_fadc_hits, 
-			s_rings );
+			s_trigger,
+			s_ring_trigger,
+			s_ring_all_t );
 	}
 
 
