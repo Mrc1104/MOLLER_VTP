@@ -64,19 +64,10 @@ void add_ring_data(
 	#include <iostream>
 	using std::cout; using std::endl;
 	
-	ring_hit_t tmp; 
-	tmp.e = hit_data.e;
-	tmp.nhits = 1;
-	tmp.sector[hit_sector] = 1;
-	tmp.segment[hit_segment] = 1;
-
-	// add it to corresponding ring
-	cout << "hit_sector: " << hit_sector << " " << "tmp.sector[0]: " << tmp.sector[0] << endl;
-	rings[ringNum].e += tmp.e;
-	rings[ringNum].nhits += tmp.nhits;
-	rings[ringNum].sector |= hit_sector;
-	rings[ringNum].segment |= tmp.segment;
-	cout << "rings[ringNum].sector: " << rings[ringNum].sector << endl;
+	rings[ringNum].e = hit_data.e;
+	rings[ringNum].nhits = 1;
+	rings[ringNum].sector[hit_sector] = 1;
+	rings[ringNum].segment[hit_segment] = 1;
 
 	cout << "ringNum: " << ringNum << endl;
 	cout << "rings[" << ringNum<<"].e: " << rings[ringNum].e << endl;
