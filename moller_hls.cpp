@@ -83,5 +83,6 @@ void add_ring_data(
 	cout << "rings[" << ringNum<<"].nhits: " << rings[ringNum].nhits << endl;
 	cout << "rings[" << ringNum<<"].sector: " << rings[ringNum].sector << endl;
 	cout << "rings[" << ringNum<<"].segment: " << rings[ringNum].segment << endl;
+	cout << endl;
 
 }
