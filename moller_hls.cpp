@@ -67,14 +67,15 @@ void add_ring_data(
 	rings[ringNum].segment |= tmp.segment;
 	#include <iostream>
 	using std::cout; using std::endl;
-	cout << ringNum << 
-	"\tr[ringNum].e: " <<
-	rings[ringNum].e  <<
-	"\tr[ringNum].nhits: " <<
-	rings[ringNum].nhits <<
-	"\tr[ringNum].sector  " <<
-	rings[ringNum].sector  <<
-	"\tr[ringNum].segmentt: " <<
-	rings[ringNum].segment << endl;
+	cout << "tmp.e: " << tmp.e << "\trings["<<ringNum<<"]:"<< rings[ringNum].e << endl;
+	// cout << ringNum << 
+	// "\tr[ringNum].e: " <<
+	// rings[ringNum].e  <<
+	// "\tr[ringNum].nhits: " <<
+	// rings[ringNum].nhits <<
+	// "\tr[ringNum].sector  " <<
+	// rings[ringNum].sector  <<
+	// "\tr[ringNum].segmentt: " <<
+	// rings[ringNum].segment << endl;
 
 }
