@@ -92,5 +92,12 @@ void moller_hls
 );
 
 // define sub functions here
+void add_ring_data(
+	int ch,
+	int hit_segment, 
+	int hit_sector, 
+	hit_t hit_data,
+	ring_all_t ring_all
+);
 
 #endif

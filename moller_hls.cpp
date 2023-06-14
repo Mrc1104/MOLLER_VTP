@@ -16,13 +16,22 @@ void moller_hls
 
 
 	ap_uint<8> ac_disc[N_CHAN_SEC];
-	ap_uint<8> trigger = {0};
+	trigger_t trigger = {0};
 	ring_all_t allr;
+
+	int segment = -1; // segments run from 0 to 4
+	int sector = -1; // sectors run from 0 to 6
 	for(int ch = 0; ch < N_CHAN_SEC; ch++){
-
-		// goal: parse fadc raw data and divy it up to the proper ring
-		if()
-
+		// every time ch%8 == 0, we are in a new segment
+		if( (ch%8 == 0) ){
+			segment++;
+		}
+		// every time ch%32 ==0, we are in a new sector
+		if( (ch%32 == 0) ){
+			sector++;
+		}
+		if(fadc_hits.vxs_chan[ch].e > 0 ) // else, no hit
+			add_ring_data(ch, segment%4, sector, fadc_hits.vxs_chan[ch], allr);
 
 
 
@@ -37,4 +46,19 @@ void moller_hls
 	return;
 } // void moller_hls(...)
 
-void find_ring();
+void add_ring_data(
+	int ch,
+	int hit_segment, 
+	int hit_sector, 
+	hit_t hit_data,
+	ring_all_t* ring_all
+)
+{
+	ring_hit_t tmp; 
+	tmp.e += hit_data.e;
+	tmp.nhits = 1;
+	tmp.sector[hit_sector] = 1;
+	tmp.segment[hit_segment] = 1;
+
+
+}
