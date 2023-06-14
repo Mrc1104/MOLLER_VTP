@@ -1,6 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
+
+// for testing
 #include <fstream>
+#include <string>
 #include "moller_hls.h"
 
 int main(int argc, char *argv[])
@@ -22,21 +25,21 @@ int main(int argc, char *argv[])
 	testData.open("test_data/fake_FADC_data.txt");
 	do{
 		#include <iostream>
-		std::cout << testData;
+		std::getline(testData, std::cout);
 
 	}while(!testData.eof());
 
 
 
 	while(!s_fadc_hits.empty()){
-		// moller_hls( 
+		/* moller_hls( 
 			hit_det, 
 			seed_threshold, 
 			cluster_threshold, 
 			s_fadc_hits, 
 			s_trigger,
 			s_ring_trigger,
-			s_ring_all_t );
+			s_ring_all_t ); */
 	}
 
 
