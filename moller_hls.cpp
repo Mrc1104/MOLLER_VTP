@@ -17,7 +17,14 @@ void moller_hls
 
 	ap_uint<8> ac_disc[N_CHAN_SEC];
 	trigger_t trigger = {0};
-	ring_all_t allr = {0};
+	ring_all_t allr;
+
+	for(int i = 0l i < 9; i++){
+		allr.r[i].e = 0;
+		allr.r[i].nhits = 0;
+		allr.r[i].sector = {0};
+		allr.r[i].segment = {0};
+	}
 
 	int segment = -1; // segments run from 0 to 4
 	int sector = -1; // sectors run from 0 to 6
