@@ -17,7 +17,7 @@ int main(int argc, char *argv[])
 	hls::stream<fadc_hits_t> s_fadc_hits; // raw data stream from the 
 	hls::stream<trigger_t> s_trigger; // output stream for for the trigger data
 	hls::stream<ring_trigger_t> s_ring_trigger; // output stream for for the ring trigger data
-	hls::stream<ring_all_t> s_ring_all_t; // output strean for the ring data
+	hls::stream<ring_all_t> s_ring_all_t; // output stream for the ring data
 
 
 	// load test data
@@ -25,10 +25,10 @@ int main(int argc, char *argv[])
 	testData.open("test_data/fake_FADC_data.txt");
 
 	fadc_hits_t fadc_hits;
-	for(int ch = 0; ch < N_CHAN_SEC; ch++){
-		fadc_hits.vxs_chan[ch].e = 0;
-		fadc_hits.vxs_chan[ch].t = 0;
-	}
+//	for(int ch = 0; ch < N_CHAN_SEC; ch++){
+//		fadc_hits.vxs_chan[ch].e;
+//		fadc_hits.vxs_chan[ch].t;
+//	}
 	do{
 		int index;
 		ap_uint<13> en;

@@ -9,7 +9,7 @@ void moller_hls
 	hls::stream<fadc_hits_t> &s_fadc_hits, // raw FADC data input stream
 	hls::stream<trigger_t> &s_trigger, // output stream for for the trigger data
 	hls::stream<ring_trigger_t> &s_ring_trigger, // output stream for for the ring trigger data
-	hls::stream<ring_all_t> &s_ring_all_t // output strean for the ring data
+	hls::stream<ring_all_t> &s_ring_all_t // output stream for the ring data
 )
 {
 	fadc_hits_t fadc_hits = s_fadc_hits.read();
@@ -17,7 +17,7 @@ void moller_hls
 
 	ap_uint<8> ac_disc[N_CHAN_SEC];
 	trigger_t trigger = {0};
-	ring_all_t allr;
+	ring_all_t allr = {0};
 
 	int segment = -1; // segments run from 0 to 4
 	int sector = -1; // sectors run from 0 to 6
@@ -51,7 +51,7 @@ void add_ring_data(
 	int hit_segment, 
 	int hit_sector, 
 	hit_t hit_data,
-	ring_all_t* ring_all
+	ring_all_t ring_all
 )
 {
 	ring_hit_t tmp; 
@@ -61,20 +61,20 @@ void add_ring_data(
 	tmp.segment[hit_segment] = 1;
 
 	// add it to corresponding ring
-	ring_all->r[ringNum].e += tmp.e;
-	ring_all->r[ringNum].nhits += tmp.nhits;
-	ring_all->r[ringNum].sector |= tmp.sector;
-	ring_all->r[ringNum].segment |= tmp.segment;
+	ring_all.r[ringNum].e += tmp.e;
+	ring_all.r[ringNum].nhits += tmp.nhits;
+	ring_all.r[ringNum].sector |= tmp.sector;
+	ring_all.r[ringNum].segment |= tmp.segment;
 	#include <iostream>
 	using std::cout; using std::endl;
 	cout << 
 	"ring_all->r[ringNum].e: " <<
-	ring_all->r[ringNum].e  <<
+	ring_all.r[ringNum].e  <<
 	"ring_all->r[ringNum].nhits: " <<
-	ring_all->r[ringNum].nhits <<
+	ring_all.r[ringNum].nhits <<
 	"ring_all->r[ringNum].sector  " <<
-	ring_all->r[ringNum].sector  <<
+	ring_all.r[ringNum].sector  <<
 	"ring_all->r[ringNum].segmentt: " <<
-	ring_all->r[ringNum].segment << endl;
+	ring_all.r[ringNum].segment << endl;
 
 }
