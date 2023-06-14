@@ -95,7 +95,7 @@ void add_ring_data(
 	int hit_segment, 
 	int hit_sector, 
 	hit_t hit_data,
-	ring_all_t ring_all
+	ring_hit_t* rings
 );
 
 #endif

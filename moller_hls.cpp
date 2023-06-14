@@ -31,7 +31,7 @@ void moller_hls
 			sector++;
 		}
 		if(fadc_hits.vxs_chan[ch].e > 0 ) // else, no hit
-			add_ring_data(ch%8, segment%4, sector, fadc_hits.vxs_chan[ch], allr);
+			add_ring_data(ch%8, segment%4, sector, fadc_hits.vxs_chan[ch], allr.r);
 
 
 
@@ -51,7 +51,7 @@ void add_ring_data(
 	int hit_segment, 
 	int hit_sector, 
 	hit_t hit_data,
-	ring_all_t ring_all
+	ring_hit_t* rings
 )
 {
 	ring_hit_t tmp; 
@@ -61,20 +61,20 @@ void add_ring_data(
 	tmp.segment[hit_segment] = 1;
 
 	// add it to corresponding ring
-	ring_all.r[ringNum].e += tmp.e;
-	ring_all.r[ringNum].nhits += tmp.nhits;
-	ring_all.r[ringNum].sector |= tmp.sector;
-	ring_all.r[ringNum].segment |= tmp.segment;
+	rings[ringNum].e += tmp.e;
+	rings[ringNum].nhits += tmp.nhits;
+	rings[ringNum].sector |= tmp.sector;
+	rings[ringNum].segment |= tmp.segment;
 	#include <iostream>
 	using std::cout; using std::endl;
 	cout << 
 	"ring_all->r[ringNum].e: " <<
-	ring_all.r[ringNum].e  <<
+	rings[ringNum].e  <<
 	"ring_all->r[ringNum].nhits: " <<
-	ring_all.r[ringNum].nhits <<
+	rings[ringNum].nhits <<
 	"ring_all->r[ringNum].sector  " <<
-	ring_all.r[ringNum].sector  <<
+	rings[ringNum].sector  <<
 	"ring_all->r[ringNum].segmentt: " <<
-	ring_all.r[ringNum].segment << endl;
+	rings[ringNum].segment << endl;
 
 }
