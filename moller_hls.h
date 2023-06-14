@@ -41,11 +41,9 @@ typedef struct
 // - t: ring time measured at the central hit time
 // - nhits: number of hits on an ind. ring
 // - segment: bit map for the 4 segments in a sector
-// - sector: bit map for the 7 sectors in our detector
 typedef struct
 {
 	ap_uint<16> e;
-	ap_uint<3> t;
 	ap_uint<3> nhits;
 	ap_uint<7> sector;
 	ap_uint<4> segment;
