@@ -38,7 +38,8 @@ int main(int argc, char *argv[])
 		std::string comment;
 		std::getline(testData, comment);
 		testData >> index >> en >> ti;
-		std::cout << index << en << ti << std::endl;
+		std::cout << index << " " << en 
+				  << ti << " " << std::endl;
 		
 		fadc_hits.vxs_chan[index].e = en;
 		fadc_hits.vxs_chan[index].t = ti;
@@ -49,16 +50,18 @@ int main(int argc, char *argv[])
 	s_fadc_hits.write(fadc_hits);
 
 	while(!s_fadc_hits.empty()){
-	moller_hls
-	(
-		hit_dt,
-		seed_threshold, 
-		ring_threshold, 
-		s_fadc_hits, 
-		s_trigger, 
-		s_ring_trigger, 
-	 	s_ring_all_t 
-	);
+
+		moller_hls
+		(
+			hit_dt,
+			seed_threshold, 
+			ring_threshold, 
+			s_fadc_hits, 
+			s_trigger, 
+			s_ring_trigger, 
+	 		s_ring_all_t 
+		);
+
 	}
 
 
