@@ -70,13 +70,11 @@ void add_ring_data(
 	// add it to corresponding ring
 	#include <iostream>
 	using std::cout; using std::endl;
-	std::cout << "hitsector:" <<  hit_sector << endl;
 	// cout << "BEFORE:\ttmp.e: " << tmp.e << "\trings["<<ringNum<<"]:"<< rings[ringNum].e << endl;
 	rings[ringNum].e += tmp.e;
 	rings[ringNum].nhits += tmp.nhits;
 	rings[ringNum].sector |= hit_sector;
 	rings[ringNum].segment |= tmp.segment;
-	cout << "rings[ringNum].sector: " << rings[ringNum].sector << endl;
 	// cout << "AFTER:\ttmp.e: " << tmp.e << "\trings["<<ringNum<<"]:"<< rings[ringNum].e << endl;
 	cout << ringNum << 
 	"\tr[ringNum].e: " <<
