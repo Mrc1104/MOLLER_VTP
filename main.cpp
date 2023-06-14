@@ -25,7 +25,9 @@ int main(int argc, char *argv[])
 	testData.open("test_data/fake_FADC_data.txt");
 	do{
 		#include <iostream>
-		std::getline(testData, std::cout);
+		std::string str;
+		std::getline(testData, str);
+		std::cout << str << std::endl;
 
 	}while(!testData.eof());
 
