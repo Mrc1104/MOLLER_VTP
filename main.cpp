@@ -39,6 +39,10 @@ int main(int argc, char *argv[])
 		std::getline(testData, comment);
 		testData >> index >> en >> ti;
 		std::cout << index << en << ti << std::endl;
+		
+		fadc_hits.vxs_chan[index].e = en;
+		fadc_hits.vxs_chan[index].t = ti;
+
 
 	}while(!testData.eof());
 
