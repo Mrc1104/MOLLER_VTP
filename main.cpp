@@ -23,11 +23,22 @@ int main(int argc, char *argv[])
 	// load test data
 	std::ifstream testData;
 	testData.open("test_data/fake_FADC_data.txt");
+
+	fadc_hits_t fadc_hits;
+	for(int ch = 0; ch < N_CHAN_SEC; ch++){
+		fadc_hits.vxs_chan[ch].e = 0;
+		fadc_hits.vxs_chan[ch].t = 0;
+	}
 	do{
+		int index;
+		ap_uint<13> en;
+		ap_uint<3> ti;
+
 		#include <iostream>
-		std::string str;
-		std::getline(testData, str);
-		std::cout << str << std::endl;
+		std::string comment;
+		std::getline(testData, comment);
+		testData >> index >> en >> ti;
+		std::cout << index << en << ti << endl;
 
 	}while(!testData.eof());
 
