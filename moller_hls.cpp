@@ -19,7 +19,7 @@ void moller_hls
 	trigger_t trigger = {0};
 	ring_all_t allr;
 
-	for(int i = 0l i < 9; i++){
+	for(int i = 0; i < 8; i++){
 		allr.r[i].e = 0;
 		allr.r[i].nhits = 0;
 		allr.r[i].sector = {0};
@@ -68,7 +68,7 @@ void add_ring_data(
 	tmp.segment[hit_segment] = 1;
 
 	// add it to corresponding ring
-	rings[ringNum].e = rings[ringNum].e+tmp.e;
+	rings[ringNum].e += tmp.e;
 	rings[ringNum].nhits += tmp.nhits;
 	rings[ringNum].sector |= tmp.sector;
 	rings[ringNum].segment |= tmp.segment;
@@ -80,9 +80,9 @@ void add_ring_data(
 	// rings[ringNum].e  <<
 	// "\tr[ringNum].nhits: " <<
 	// rings[ringNum].nhits <<
-	// "\tr[ringNum].sector  " <<
+	// "\tr[ringNum].sector  " << bin
 	// rings[ringNum].sector  <<
-	// "\tr[ringNum].segmentt: " <<
+	// "\tr[ringNum].segmentt: " << bin
 	// rings[ringNum].segment << endl;
 
 }
