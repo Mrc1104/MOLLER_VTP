@@ -41,9 +41,6 @@ void moller_hls
 			add_ring_data(ch%8, segment%4, sector, fadc_hits.vxs_chan[ch], allr.r);
 
 
-
-
-
 	} // end for loop
 
 
@@ -65,7 +62,7 @@ void add_ring_data(
 	using std::cout; using std::endl;
 	
 	rings[ringNum].e = hit_data.e;
-	rings[ringNum].nhits = 1;
+	rings[ringNum].nhits += 1;
 	rings[ringNum].sector[hit_sector] = 1;
 	rings[ringNum].segment[hit_segment] = 1;
 
