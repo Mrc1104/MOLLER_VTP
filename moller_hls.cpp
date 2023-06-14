@@ -39,6 +39,7 @@ void moller_hls
 		}
 		if(fadc_hits.vxs_chan[ch].e >= energy_threshold ) // else, no hit
 			add_ring_data(ch%8, segment%4, sector, fadc_hits.vxs_chan[ch], allr.r);
+		
 
 	} // end for loop
 
@@ -46,6 +47,7 @@ void moller_hls
 
 
 
+	s_ring_all_t.write(allr);
 
 	return;
 } // void moller_hls(...)
@@ -66,12 +68,12 @@ void add_ring_data(
 	rings[ringNum].sector[hit_sector] = 1;
 	rings[ringNum].segment[hit_segment] = 1;
 
-	cout << "ringNum: " << ringNum << endl;
-	cout << "rings[" << ringNum<<"].e: " << rings[ringNum].e << endl;
-	cout << "rings[" << ringNum<<"].nhits: " << rings[ringNum].nhits << endl;
-	cout << "rings[" << ringNum<<"].sector: " << rings[ringNum].sector << endl;
-	cout << "rings[" << ringNum<<"].segment: " << rings[ringNum].segment << endl;
-	cout << endl;
+	// cout << "ringNum: " << ringNum << endl;
+	// cout << "rings[" << ringNum<<"].e: " << rings[ringNum].e << endl;
+	// cout << "rings[" << ringNum<<"].nhits: " << rings[ringNum].nhits << endl;
+	// cout << "rings[" << ringNum<<"].sector: " << rings[ringNum].sector << endl;
+	// cout << "rings[" << ringNum<<"].segment: " << rings[ringNum].segment << endl;
+	// cout << endl;
 
 }
 
