@@ -100,7 +100,7 @@ int main(int argc, char *argv[])
 		for(int ring_index = 0; ring_index < 8; ring_index ++){
 			cout << "Ring: " << ring_index << "\t";
 			for(int time_tick = 7; time_tick > -1; time_tick--){
-				cout << "[" << time_tick << "]";
+				cout << "[" << time_trig.trig[ring_index][time_tick] << "]";
 			}
 			cout << endl;
 		}
