@@ -109,6 +109,7 @@ void make_timing_bitmap(int ring_num, hit_t hit_data, trigger_t *ptrigger)
   ptrigger->trig[ring_num][t_actual] = 1;
 
   cout << endl;
+  cout << "ring_num: " << ring_num << endl;
   cout << "hit_data: " << hit_data.t << "\tt_buff: " << t_buff << "\tt_actual: " << t_actual << endl;
   cout << "ptrigger->trig[" << ring_num << "][" << t_actual 
        << "] = 1: " << ptrigger->trig[ring_num][t_actual] << endl;
