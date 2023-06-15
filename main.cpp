@@ -47,6 +47,10 @@ int main(int argc, char *argv[])
 			fadc_hits.vxs_chan[index].t = ti;
 		}
 	}
+	else{
+		#include<iostream>
+		std::cout << "Cannot load test data file" << std::endl;
+	}
 	s_fadc_hits.write(fadc_hits);
 
 	while(!s_fadc_hits.empty()){
