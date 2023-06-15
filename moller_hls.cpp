@@ -38,13 +38,10 @@ void moller_hls
 			sector++;
 		}
 		if(fadc_hits.vxs_chan[ch].e >= energy_threshold ){ // else, no hit
-  //   	int ringNum,
-	// int hit_segment, 
-	// int hit_sector, 
-	// hit_t hit_data,
-	// ring_hit_t* rings
-			add_ring_data(ch%8, segment%4, sector, fadc_hits.vxs_chan[ch], allr.r);
-			time_bitmap = make_timing_bitmap(fadc_hits.vxs_chan[ch]);
+      int ring_num = ch%8;
+      int segment_num = segment%4; 
+			add_ring_data(ring_num, segment_num, sector, fadc_hits.vxs_chan[ch], allr.r);
+			make_timing_bitmap(ring_num, fadc_hits.vxs_chan[ch], &time_bitmap);
 		}
 	} // end for loop
 
@@ -99,12 +96,17 @@ ring_trigger_t make_ring_bitmap(ring_hit_t* rings, ap_uint<16> ring_threshold)
 	return tmp;
 }
 
-trigger_t make_timing_bitmap(hit_t hit_data)
+void make_timing_bitmap(int ring_num, hit_t hit_data, trigger_t *ptrigger)
 {
-	ap_uint<4> t=0;
+  #include <iostream>
+  using std::cout; using std::endl;
+	ap_uint<4> t_buff=0;
 	if(hit_data.t >=4)
-		t = hit_data.t; // map pre time 4 to 7 -> 4 to 7 (unchanged)
+		t_buff = hit_data.t; // map pre time 4 to 7 -> 4 to 7 (unchanged)
 	else if(hit_data.t < 4)
-		t = hit_data.t + 8; // map cur time 0 to 3 -> 8 to 11 (move to time after pre hit window)
-	
+		t_buff = hit_data.t + 8; // map cur time 0 to 3 -> 8 to 11 (move to time after pre hit window)
+	ap_uint<3> t_actual = t_buff - 4;
+  ptrigger->trig[ring_num][t_actual] = 1;
+  cout << "ptrigger->trig[ring_num][t_actual] = 1: " << ptrigger->trig[ring_num][t_actual] << endl;
+
 }

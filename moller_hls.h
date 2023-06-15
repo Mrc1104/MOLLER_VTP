@@ -105,6 +105,10 @@ void add_ring_data(
 // if the ring qualifies as hit
 ring_trigger_t make_ring_bitmap(ring_hit_t* rings, ap_uint<16> ring_threshold);
 
-trigger_t make_timing_bitmap(hit_t hit_data);
+void make_timing_bitmap(
+	int ringNum,
+	hit_t hit_data,
+	trigger_t *ptrigger
+);
 
 #endif
