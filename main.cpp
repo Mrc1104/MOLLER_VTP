@@ -84,6 +84,7 @@ int main(int argc, char *argv[])
 	}
 
 	printf("\nRing Trig Data:__________________\n");
+	cout << "Format:\t 7 ------------------ 0\t 4ns ticks" << endl;
 	while(!s_ring_trigger.empty())
 	{
 		ring_trigger_t ring_trig = s_ring_trigger.read();
