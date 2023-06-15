@@ -41,7 +41,7 @@ int main()
             t = 0;
         }
     
-        out << e << t;
+        out << e << t << endl;
     }
 
 
