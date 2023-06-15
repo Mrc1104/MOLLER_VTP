@@ -107,8 +107,8 @@ int main(int argc, char *argv[])
 				cout << "[" << time_trig.trig[ring_index][time_tick] << "]";
 			}
 			cout << endl;
-			t32ns++;
 		}
+		t32ns++;
 	}
 
 
