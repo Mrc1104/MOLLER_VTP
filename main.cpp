@@ -68,28 +68,31 @@ int main(int argc, char *argv[])
 		);
 
 	}
-
+	
+	printf("Ring Data:__________________");
 	while(!s_ring_all_t.empty())
 	{
 		ring_all_t ring_data = s_ring_all_t.read();
 		for(int i = 0; i < 8; i++){
-			// cout << "ringNum: " << i << endl;
-			// cout << "ring_data.r[" << i<<"].e: " << ring_data.r[i].e << endl;
-			// cout << "ring_data.r[" << i<<"].nhits: " << ring_data.r[i].nhits << endl;
-			// cout << "ring_data.r[" << i<<"].sector: " << ring_data.r[i].sector << endl;
-			// cout << "ring_data.r[" << i<<"].segment: " << ring_data.r[i].segment << endl;
-			// cout << endl;
+			cout << "ringNum: " << i << endl;
+			cout << "ring_data.r[" << i<<"].e: " << ring_data.r[i].e << endl;
+			cout << "ring_data.r[" << i<<"].nhits: " << ring_data.r[i].nhits << endl;
+			cout << "ring_data.r[" << i<<"].sector: " << ring_data.r[i].sector << endl;
+			cout << "ring_data.r[" << i<<"].segment: " << ring_data.r[i].segment << endl;
+			cout << endl;
 		}
 	}
 
+	printf("Ring Trig Data:__________________");
 	while(!s_ring_trigger.empty())
 	{
 		ring_trigger_t ring_trig = s_ring_trigger.read();
-		for(int i = 0; i < 8; i++){
-			/* IMPLEMENT */
+		for(int ring_index = 7; ring_index > -1; ring_index--){
+			cout << "[" << ring_trig.ring[ring_index] << "]";
 		}
 	}
-
+	
+	printf("Time Trig Data:__________________");
 	while(!s_time_trigger.empty())
 	{
 		int t32ns = 0;
