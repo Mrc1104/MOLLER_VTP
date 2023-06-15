@@ -1,85 +1,114 @@
-#ifndef ecal_cluster_h
-#define ecal_cluster_h
+#ifndef MOLLER_HLS_H
+#define MOLLER_HLS_H
 
 #include <ap_int.h>
 #include <hls_stream.h>
 
+
 // hit_t:
-// - every 32ns each fadc channel reports 13 bit energy, and 3 bit hit time (time offset in current 32ns clock: 0=0ns, 1=4ns, 2=8ns, ..., 7=28ns)
+// - every 32ns each fadc reports 13 bit energy, and 3 bit hit time (time offset in current 32ns clock: 0=0ns, 1=4ns, 2=8ns, ..., 7=28ns)
 // - if the channel has no hit, then the energy, e, will be reported as 0
-// - energy, e, will saturate at 8191 (e.g. if the FADC integral (after pedestal subtraction and gain) is greater than 8191, the FADC report 8191
-typedef struct
+// - energy, e, will saturate at 8191 (e.g. if the FADC intergal [after pedastal subtr. and gian] is greater than 8191, the FADC reports 8191)
+typedef struct 
 {
-  ap_uint<13> e;
-  ap_uint<3> t;
+	ap_uint<13> e;
+	ap_uint<3> t;
 } hit_t;
 
 // fadc_hits_t:
-// - contains 256 VXS channels worth + 32 left fiber + 32 right fiber of hit_t reported each 32ns
-// - vxs_ch[  0] to vxs_ch[ 15]: VME slot 3, ch 0 to 15 FADC channels
-//   vxs_ch[ 16] to vxs_ch[ 31]: VME slot 4, ch 0 to 15 FADC channels
-//   ...
-//   vxs_ch[112] to vxs_ch[127]: VME slot 10, ch 0 to 15 FADC channels
-//   (VXS switch A & B are at VME slot positions 11,12, so the FADC never can be installed here)
-//   vxs_ch[128] to vxs_ch[143]: VME slot 13, ch 0 to 15 FADC channels
-//   vxs_ch[144] to vxs_ch[159]: VME slot 14, ch 0 to 15 FADC channels
-//   ...
-//   vxs_ch[240] to vxs_ch[255]: VME slot 20, ch 0 to 15 FADC channels
+// - contains 244 VXS channels of hit_t reported by the FADCs each 32ns pulse
+// - vxs_ch[ 0 ] to vxs_ch[ 15 ]: VME slot 4, ch 0 to 15 FADC channels
+// - vxs_ch[ 16 ] to vxs_ch[ 31 ]: VME slot 5, ch 0 to 15 FADC channels
+// ...
+// - vxs_ch[ 112 ] to vxs_ch[ 127 ]: VME slot 10, ch 0 to 15 FADC channels
+// - (VXS switch A and B are at VME slot positions 11,12 so the FADC cannot be installed here
+// - vxs_ch[ 144 ] to vxs_ch[ 159 ]: VME slot 5, ch 0 to 15 FADC channels
+// ...
+// - vxs_ch[ 208 ] to vxs_ch[ 223 ]: VME slot 19, ch 0 to 15 FADC channels
 //
-//   fiber_ch_l[0] to fiber_ch_l[31]: these come from adjacent sectors of ecal and needed for current sector to build (6+1) clusters for trigger
-//   fiber_ch_r[0] to fiber_ch_r[31]  channel mapping is arbitrary and needs to be defined
-#define N_CHAN_SEC 147   // number of fadc channels per sector
-// #define N_CHAN_SEC 32 // number of fadc channels per sector // what should this be for MOLLER? (4 segments per sector and 8 rings per segment = 32)? 
+//#define N_CHAN_SEC 64 // number of FADC channels per sector (16 FADC ch per segment, 4 segment per sector)
+#define N_CHAN_SEC 224 // number of FADC channels per sector (16 FADC ch per segment, 4 segment per sector)
+// Be careful, max array n can make is 4096 bits wide (4096/16 = 256 so we are good)
 typedef struct
 {
-  hit_t vxs_ch[N_CHAN_SEC];
-  hit_t fiber_ch_l[32];
-  hit_t fiber_ch_r[32];
+	hit_t vxs_chan[N_CHAN_SEC];
 } fadc_hits_t;
 
-// cluster_t:
-// - recommended cluster structure to be reported for each possible cluster position.
-// - idx: cluster index (map based - alternatively a 2d coordinate would be fine is easy to define
-// - e: cluster measured energy (sum of up to 7 fadc_hit_t.e)
-// - t: cluster time, timestamped from cluster central hit time appended to coarse 32ns frame counter: 
-//      this timestamp spans 0 to 8188ns (0 to 2047 *4ns)
-// - nhits: number of hit channels in cluster. can be useful to reject single channel noise hits
+
+// ring_hit_t:
+// - Hit data for a single ring
+// - e: sum of the energy of all the hits on a ind. ring
+// - t: ring time measured at the central hit time
+// - nhits: number of hits on an ind. ring
+// - segment: bit map for the 4 segments in a sector
 typedef struct
 {
-  ap_uint<5> x;
-  ap_uint<4> y;
-  ap_uint<16> e;
-  ap_uint<3> t;
-  ap_uint<3>  nhits;
-} cluster_t;
+	ap_uint<16> e;
+	ap_uint<3> nhits;
+	ap_uint<7> sector;
+	ap_uint<4> segment;
 
+} ring_hit_t;
 
 typedef struct
 {
-  cluster_t c[N_CHAN_SEC];
-} cluster_all_t;
+	ring_hit_t r[8];
+} ring_all_t;
 
 // trigger_t:
-// - code works with 32ns of data at a time. hits & trigger have 4ns resolution, so 8 trigger decisions per iteration are computed.
-// - trig: [0]=>0ns, [1]=>4ns, [2]=>8ns, ..., [7]=28ns, when bit=0 no trigger, when bit=1 trigger
+// - trig: bitmap for time - [0]=>0ns, [1]=>4ns, [2]=>8ns, ..., [7]=28ns, when bit=0 no trigger, when bit=1 trigger
+// - 8-element array, one for each ring: [0] = r1, [1] = r2, ..., [7] = r7; when bit=0 no time_trigger, when bit=1 time_trigger
 typedef struct
 {
-  ap_uint<8> trig;
+	ap_uint<8> trig[8];
 } trigger_t;
 
+// ring_trigger_t:
+// - ring trig: bitmap for ring hit - [0]=r0, [1]=r1, [2]=r2, ..., [7]=r6; when bit=0 no ring_trigger, when bit=1 ring_trigger
+typedef struct 
+{
+	ap_uint<8> ring;
+} ring_trigger_t;
 
-void ecal_cluster_hls(
-  ap_uint<3> hit_dt,
-  ap_uint<13> seed_threshold,
-  ap_uint<16> cluster_threshold,
-  hls::stream<fadc_hits_t> &s_fadc_hits,
-  hls::stream<trigger_t> &s_trigger,
-  hls::stream<cluster_all_t> &s_cluster_all );
+// moller_hls:
+// - main workhorse of the code where most of the logic is performed
+// - Inputs:
+// 		hit_dt - coincidence tolerance
+// 		seed_threshold - min energy for a hit to count
+// 		ring_threshold - min summed energy for a ring to be counted as hit
+// 		s_fadc_hits - input stream buffer for raw FADC data
+// 		rings - output stream of hit rings bitmap | [0]=1 => ring1 hit;[0]=0 => ring1 not hit 
+// 		trigger - output stream of rings timing trigger bitmap
+void moller_hls
+(
+	ap_uint<3> hit_dt, // coincidence tolerance
+	ap_uint<13> energy_threshold, // minimum energy for us to look at an individual hit
+	ap_uint<16> ring_threshold, // minimum summed energy (over one ring) to count a ring as hit
+	hls::stream<fadc_hits_t> &s_fadc_hits, // raw FADC data input stream
+	hls::stream<trigger_t> &s_trigger, // output stream for for the trigger data
+	hls::stream<ring_trigger_t> &s_ring_trigger, // output stream for for the ring trigger data
+	hls::stream<ring_all_t> &s_ring_all_t // output strean for the ring data
+);
 
-ap_uint<5> Find_block(ap_uint<8> ch, ap_uint<2> dim);
-int Find_channel(ap_uint<5> nx, ap_uint<5> ny);
-int Find_nearby(ap_uint<8> ch, ap_uint<3> ii);
-cluster_t Find_cluster(hit_t prehits[7], hit_t curhits[7], ap_uint<3> hit_dt, ap_uint<13> seed_threshold, ap_uint<5> x, ap_uint<4> y);
+/* define sub functions here */
+// parses FADC channel data and sums it to the appropriate ring
+void add_ring_data(
+	int ringNum,
+	int hit_segment, 
+	int hit_sector, 
+	hit_t hit_data,
+	ring_hit_t* rings
+);
 
+// takes the summed data from ring_all_t 
+// and compares it to ring_threshold to see 
+// if the ring qualifies as hit
+ring_trigger_t make_ring_bitmap(ring_hit_t* rings, ap_uint<16> ring_threshold);
+
+void make_timing_bitmap(
+	int ringNum,
+	hit_t hit_data,
+	trigger_t *ptrigger
+);
 
 #endif
