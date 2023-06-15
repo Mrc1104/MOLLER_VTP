@@ -51,7 +51,6 @@ int main(int argc, char *argv[])
 	else{
 		std::cout << "Cannot load test data file" << std::endl;
 	}
-	cout << "here1" << endl;
 	s_fadc_hits.write(fadc_hits);
 	while(!s_fadc_hits.empty()){
 
@@ -83,7 +82,7 @@ int main(int argc, char *argv[])
 	}
 
 	printf("\nRing Trig Data:__________________\n");
-	cout << "Format:\t 7 ------------------ 0\t 4ns ticks" << endl;
+	cout << "Format:\t 7 ------------------ 0\t ring #" << endl;
 	while(!s_ring_trigger.empty())
 	{
 		ring_trigger_t ring_trig = s_ring_trigger.read();
