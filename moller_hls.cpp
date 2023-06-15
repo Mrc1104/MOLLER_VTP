@@ -114,7 +114,7 @@ void make_timing_bitmap(int ring_num, hit_t hit_data, trigger_t *ptrigger)
        << "] = 1: " << ptrigger->trig[ring_num][t_actual] << endl;
 
   for(int i = 0; i < 8; i++){
-    cout << "[" << ptrigger->trig[ring_num] << "]";
+    cout << "[" << ptrigger->trig[ring_num][0] << "]";
   }
   cout << "\n" <<  endl;
 }
