@@ -38,12 +38,10 @@ int main(int argc, char *argv[])
 	std::string comment;
 	if(testData){
 		std::getline(testData, comment);
-		while(!testData.eof()){
-			int index;
-			ap_uint<13> en = 0;
-			ap_uint<3> ti = 0;
-
-			testData >> index >> en >> ti;
+		int index;
+		ap_uint<13> en = 0;
+		ap_uint<3> ti = 0;
+		while( testData >> index >> en >> ti ){
 			std::cout << index << " " << en << " "
 				 	  << ti << " " << std::endl;
 			fadc_hits.vxs_chan[index].e = en;
