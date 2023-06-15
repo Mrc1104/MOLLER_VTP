@@ -4,6 +4,8 @@
 // for testing
 #include <fstream>
 #include <string>
+		#include <iostream>
+
 #include "moller_hls.h"
 
 int main(int argc, char *argv[])
@@ -35,7 +37,6 @@ int main(int argc, char *argv[])
 		ap_uint<13> en;
 		ap_uint<3> ti;
 
-		#include <iostream>
 		std::string comment;
 		std::getline(testData, comment);
 		testData >> index >> en >> ti;
