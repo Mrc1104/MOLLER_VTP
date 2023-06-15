@@ -36,8 +36,8 @@ int main(int argc, char *argv[])
 		ap_uint<3> ti;
 
 		#include <iostream>
-		// std::string comment;
-		// std::getline(testData, comment);
+		std::string comment;
+		std::getline(testData, comment);
 		testData >> index >> en >> ti;
 		std::cout << index << " " << en << " "
 				  << ti << " " << std::endl;
