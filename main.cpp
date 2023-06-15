@@ -40,10 +40,10 @@ int main(int argc, char *argv[])
 			ap_uint<13> en;
 			ap_uint<3> ti;
 
-			#include <iostream>
-			testData >> index >> en >> ti;
-			std::cout << index << " " << en << " "
-				 	  << ti << " " << std::endl;
+			// #include <iostream>
+			// testData >> index >> en >> ti;
+			// std::cout << index << " " << en << " "
+			// 	 	  << ti << " " << std::endl;
 			fadc_hits.vxs_chan[index].e = en;
 			fadc_hits.vxs_chan[index].t = ti;
 		}
@@ -88,12 +88,13 @@ int main(int argc, char *argv[])
 	{
 		ring_trigger_t ring_trig = s_ring_trigger.read();
 		for(int i = 0; i < 8; i++){
-			/* IMPLEMENT*/
+			/* IMPLEMENT */
 		}
 	}
 
 	while(!s_time_trigger.empty())
 	{
+		int t32ns = 0;
 		trigger_t time_trig = s_time_trigger.read();
 		#include <iostream>
 		using std::cout; using std::endl;
@@ -104,6 +105,12 @@ int main(int argc, char *argv[])
 				cout << "[" << time_trig.trig[ring_index][time_tick] << "]";
 			}
 			cout << endl;
+			for(int time_tick = 7; time_tick > -1; time_tick--){
+				if(time_trig.trig[ring_index][time_tick]){
+					printf("Trigger found at T=%dns\n", t32ns*32+time_tick*4-16);
+				}
+			}
+			t32ns++;
 		}
 	}
 
