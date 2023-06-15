@@ -30,8 +30,8 @@ void moller_hls
 	for(int i = 0; i < 8; i++){
 		allr.r[i].e = 0;
 		allr.r[i].nhits = 0;
-		allr.r[i].sector = {0};
-		allr.r[i].segment = {0};
+		allr.r[i].sector = 0;
+		allr.r[i].segment = 0;
 	}
 
 	int segment = -1; // segments run from 0 to 4
