@@ -32,21 +32,21 @@ int main(int argc, char *argv[])
 		fadc_hits.vxs_chan[ch].t = 0;
 	}
 	std::string comment;
-	std::getline(testData, comment);
-	while(!testData.eof()){
-		int index;
-		ap_uint<13> en;
-		ap_uint<3> ti;
+	if(testData){
+		std::getline(testData, comment);
+		while(!testData.eof()){
+			int index;
+			ap_uint<13> en;
+			ap_uint<3> ti;
 
-		#include <iostream>
-		testData >> index >> en >> ti;
-		std::cout << index << " " << en << " "
-				  << ti << " " << std::endl;
-		
-		fadc_hits.vxs_chan[index].e = en;
-		fadc_hits.vxs_chan[index].t = ti;
+			#include <iostream>
+			testData >> index >> en >> ti;
+			std::cout << index << " " << en << " "
+				 	  << ti << " " << std::endl;
+			fadc_hits.vxs_chan[index].e = en;
+			fadc_hits.vxs_chan[index].t = ti;
+		}
 	}
-
 	s_fadc_hits.write(fadc_hits);
 
 	while(!s_fadc_hits.empty()){
