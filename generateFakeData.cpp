@@ -18,6 +18,8 @@ int main()
     ap_uint<13> e;
     ap_uint<3> t;
     for(int ch; ch < N_CHAN_SEC; ch++){
+        e = 0;
+        t = 0;
         if(ch%8 < 4){ // rings 1 - 4
             if( (rand()%100) < 10 ){
                 e = rand() % 8192;
