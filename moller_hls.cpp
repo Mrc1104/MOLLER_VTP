@@ -114,7 +114,19 @@ void make_timing_bitmap(int ring_num, hit_t hit_data, trigger_t *ptrigger)
 	else if(hit_data.t < 4)
 		t_buff = hit_data.t + 8; // map cur time 0 to 3 -> 8 to 11 (move to time after pre hit window)
 	ap_uint<3> t_actual = t_buff - 4;
-  ptrigger->trig[ring_num][t_actual] = 1;
+
+	// ptrigger is a pointer to trigger_t trig[8], which is an array 
+	// itself of 8-bit integers (which you can think of as an array of bits).
+	// With the form [ring][time]
+	/* [r0]|[r1]|[r2]|[r3]|[r4]|[r5]|[r6]|[r7]
+	   [t0]|[t0]|[t0]|[t0]|[t0]|[t0]|[t0]|[t0]
+	   [t1]|[t1]|[t1]|[t1]|[t1]|[t1]|[t1]|[t1]
+	   [t2]|[t2]|[t2]|[t2]|[t2]|[t2]|[t2]|[t2]
+		...  ...  ...  ...  ...  ...  ...  ... 
+	   [t6]|[t6]|[t6]|[t6]|[t6]|[t6]|[t6]|[t6]
+	   [t7]|[t7]|[t7]|[t7]|[t7]|[t7]|[t7]|[t7]
+	*/
+	ptrigger->trig[ring_num][t_actual] = 1;
 
 
   #include <iostream>
@@ -129,4 +141,5 @@ void make_timing_bitmap(int ring_num, hit_t hit_data, trigger_t *ptrigger)
     cout << "[" << ptrigger->trig[ring_num][i] << "]";
   }
   cout << "\n" <<  endl;
+  cout << "ring_num: " << ring_num << "t_actual: " << t_actual << ptrigger->trig[ring_num][t_actual] << endl;
 }
