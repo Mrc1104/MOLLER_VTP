@@ -25,7 +25,7 @@ int main(int argc, char *argv[])
 	// load test data
 	std::ifstream testData;
 	// testData.open("test_data/fake_FADC_data.txt");
-	testData.open("test_data/fake_timing_data.txt");
+	testData.open("test_data/fake_timing_data2.txt");
 
 	fadc_hits_t fadc_hits;
 	for(int ch = 0; ch < N_CHAN_SEC; ch++){
@@ -97,7 +97,7 @@ int main(int argc, char *argv[])
 		trigger_t time_trig = s_time_trigger.read();
 		#include <iostream>
 		using std::cout; using std::endl;
-		cout << "Format:\t 7 ------------------ 0\t4ns ticks" << endl;
+		cout << "Format:\t 7 ------------------ 0\t 4ns ticks" << endl;
 		for(int ring_index = 0; ring_index < 8; ring_index ++){
 			cout << "Ring: " << ring_index << "\t";
 			for(int time_tick = 7; time_tick > -1; time_tick--){
