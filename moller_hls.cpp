@@ -15,7 +15,6 @@ void moller_hls
 	fadc_hits_t fadc_hits = s_fadc_hits.read();
 
 
-	ap_uint<8> ac_disc[N_CHAN_SEC];
 	trigger_t time_bitmap;
 	for(int i = 0; i < 8; i++){
 		for(int j = 0; j < 8; j++){
