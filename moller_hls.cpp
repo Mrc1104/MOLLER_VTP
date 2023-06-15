@@ -107,6 +107,9 @@ void make_timing_bitmap(int ring_num, hit_t hit_data, trigger_t *ptrigger)
 		t_buff = hit_data.t + 8; // map cur time 0 to 3 -> 8 to 11 (move to time after pre hit window)
 	ap_uint<3> t_actual = t_buff - 4;
   ptrigger->trig[ring_num][t_actual] = 1;
+
+  cout << endl;
+  cout << "hit_data: " << hit_data.t << "\tt_buff: " << t_buff << "\tt_actual: " << t_actual << endl;
   cout << "ptrigger->trig[" << ring_num << "][" << t_actual 
        << "] = 1: " << ptrigger->trig[ring_num][t_actual] << endl;
 
