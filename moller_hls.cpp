@@ -4,7 +4,7 @@
 void moller_hls
 (
 	ap_uint<3> hit_dt, // coincidence tolerance
-	ap_uint<13> seed_threshold, // minimum energy for us to look at an individual hit
+	ap_uint<13> energy_threshold, // minimum energy for us to look at an individual hit
 	ap_uint<16> ring_threshold, // minimum summed energy (over one ring) to count a ring as hit
 	hls::stream<fadc_hits_t> &s_fadc_hits, // raw FADC data input stream
 	hls::stream<trigger_t> &s_trigger, // output stream for for the trigger data
@@ -25,14 +25,13 @@ void moller_hls
 			time_bitmap.trig[i] = 0;
 		}
 	}
-
+	
 	ring_all_t allr;
-
 	for(int i = 0; i < 8; i++){
 		allr.r[i].e = 0;
 		allr.r[i].nhits = 0;
-		allr.r[i].sector = {0};
-		allr.r[i].segment = {0};
+		allr.r[i].sector = 0;
+		allr.r[i].segment = 0;
 	}
 
 	int segment = -1; // segments run from 0 to 4
@@ -46,17 +45,21 @@ void moller_hls
 		if( (ch%32 == 0) ){
 			sector++;
 		}
-		if(fadc_hits.vxs_chan[ch].e > 0 ) // else, no hit
-			add_ring_data(ch%8, segment%4, sector, fadc_hits.vxs_chan[ch], allr.r);
-		
-
-
+		if(fadc_hits.vxs_chan[ch].e >= energy_threshold ){ // else, no hit
+      int ring_num = ch%8;
+      int segment_num = segment%4; 
+			add_ring_data(ring_num, segment_num, sector, fadc_hits.vxs_chan[ch], allr.r);
+			make_timing_bitmap(ring_num, fadc_hits.vxs_chan[ch], &time_bitmap);
+		}
 	} // end for loop
 
+	ring_trigger_t ring_bitmap = make_ring_bitmap(allr.r, ring_threshold);
 
 
 
 	s_ring_all_t.write(allr);
+	s_ring_trigger.write(ring_bitmap);
+	s_trigger.write(time_bitmap);
 
 	return;
 } // void moller_hls(...)
@@ -69,8 +72,7 @@ void add_ring_data(
 	ring_hit_t* rings
 )
 {
-	#include <iostream>
-	using std::cout; using std::endl;
+
 	
 	rings[ringNum].e += hit_data.e;
 	rings[ringNum].nhits += 1;
@@ -86,4 +88,60 @@ void add_ring_data(
 	cout << "rings[" << ringNum<<"].segment: " << rings[ringNum].segment << endl;
 	cout << endl;
 
+}
+
+ring_trigger_t make_ring_bitmap(ring_hit_t* rings, ap_uint<16> ring_threshold)
+{
+	ring_trigger_t tmp;
+	for(int ringNum = 0; ringNum < 8; ringNum++){
+		if(rings[ringNum].e >= ring_threshold){
+			tmp.ring[ringNum] = 1;
+		}
+		else{
+			tmp.ring[ringNum] = 0; // just being explicit about it
+		}
+	}
+	// TODO: WE COULD ALSO ADD NHIT FILTERING HERE TOO
+
+	return tmp;
+}
+
+void make_timing_bitmap(int ring_num, hit_t hit_data, trigger_t *ptrigger)
+{
+
+	ap_uint<4> t_buff=0;
+	if(hit_data.t >=4)
+		t_buff = hit_data.t; // map pre time 4 to 7 -> 4 to 7 (unchanged)
+	else if(hit_data.t < 4)
+		t_buff = hit_data.t + 8; // map cur time 0 to 3 -> 8 to 11 (move to time after pre hit window)
+	ap_uint<3> t_actual = t_buff - 4;
+
+	// ptrigger is a pointer to trigger_t trig[8], which is an array 
+	// itself of 8-bit integers (which you can think of as an array of bits).
+	// With the form [ring][time]
+	/* [r0]|[r1]|[r2]|[r3]|[r4]|[r5]|[r6]|[r7]
+	   [t0]|[t0]|[t0]|[t0]|[t0]|[t0]|[t0]|[t0]
+	   [t1]|[t1]|[t1]|[t1]|[t1]|[t1]|[t1]|[t1]
+	   [t2]|[t2]|[t2]|[t2]|[t2]|[t2]|[t2]|[t2]
+		...  ...  ...  ...  ...  ...  ...  ... 
+	   [t6]|[t6]|[t6]|[t6]|[t6]|[t6]|[t6]|[t6]
+	   [t7]|[t7]|[t7]|[t7]|[t7]|[t7]|[t7]|[t7]
+	*/
+	ptrigger->trig[ring_num][t_actual] = 1;
+
+
+//   #include <iostream>
+//   using std::cout; using std::endl;
+//   cout << endl;
+//   cout << "ring_num: " << ring_num << endl;
+//   cout << "hit_data: " << hit_data.t << "\tt_buff: " << t_buff << "\tt_actual: " << t_actual << endl;
+//   cout << "ptrigger->trig[" << ring_num << "][" << t_actual 
+//        << "] = 1: " << ptrigger->trig[ring_num][t_actual] << endl;
+
+//   for(int i = 7; i > -1; i--){ // the ap_uint<N> has big endiannes
+//     cout << "[" << ptrigger->trig[ring_num][i] << "]";
+//   }
+//   cout << "\n" <<  endl;
+  // simple cout statement to check endiannes
+//   cout << "ring_num: " << ring_num << "\tt_actual: " << t_actual  << "\t" << ptrigger->trig[ring_num] << endl;
 }
