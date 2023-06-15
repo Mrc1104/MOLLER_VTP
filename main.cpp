@@ -97,7 +97,7 @@ int main(int argc, char *argv[])
 		trigger_t time_trig = s_time_trigger.read();
 		#include <iostream>
 		using std::cout; using std::endl;
-		cout << "Format:\t7 ------------------0\t4ns ticks" << endl;
+		cout << "Format:\t 7 -------------------- 0\t4ns ticks" << endl;
 		for(int ring_index = 0; ring_index < 8; ring_index ++){
 			cout << "Ring: " << ring_index << "\t";
 			for(int time_tick = 7; time_tick > -1; time_tick--){
