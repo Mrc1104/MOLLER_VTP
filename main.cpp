@@ -107,8 +107,8 @@ int main(int argc, char *argv[])
 					printf("Trigger found at T=%dns\n", t32ns*32+time_tick*4-16);
 				}
 			}
-			t32ns++;
 		}
+		t32ns++;
 	}
 
 
