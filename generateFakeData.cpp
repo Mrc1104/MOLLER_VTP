@@ -5,7 +5,6 @@
 #include <hls_stream.h>
 
 #include "moller_hls.h"
-#include "moller_hls.cpp"
 
 using namespace std;
 
