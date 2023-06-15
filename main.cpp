@@ -27,7 +27,7 @@ int main(int argc, char *argv[])
 	// load test data
 	std::ifstream testData;
 	// testData.open("test_data/fake_FADC_data.txt");
-	testData.open("test_data/fake_timing_data2.txt");
+	testData.open("test_data/fake_timing_data3.txt");
 	// testData.open("test_data/random_fake_data.txt");
 
 	fadc_hits_t fadc_hits;
