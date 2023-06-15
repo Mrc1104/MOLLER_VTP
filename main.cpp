@@ -51,8 +51,9 @@ int main(int argc, char *argv[])
 	else{
 		std::cout << "Cannot load test data file" << std::endl;
 	}
+	cout << "here1" << endl;
 	s_fadc_hits.write(fadc_hits);
-
+	cout << "here2" << endl;
 	while(!s_fadc_hits.empty()){
 
 		moller_hls
