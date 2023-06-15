@@ -60,6 +60,7 @@ void moller_hls
 
 	s_ring_all_t.write(allr);
 	s_ring_trigger.write(ring_bitmap);
+	s_trigger.write(time_bitmap);
 
 	return;
 } // void moller_hls(...)
@@ -72,14 +73,15 @@ void add_ring_data(
 	ring_hit_t* rings
 )
 {
-	#include <iostream>
-	using std::cout; using std::endl;
+
 	
 	rings[ringNum].e += hit_data.e;
 	rings[ringNum].nhits += 1;
 	rings[ringNum].sector[hit_sector] = 1;
 	rings[ringNum].segment[hit_segment] = 1;
 
+	// #include <iostream>
+	// using std::cout; using std::endl;
 	// cout << "ringNum: " << ringNum << endl;
 	// cout << "rings[" << ringNum<<"].e: " << rings[ringNum].e << endl;
 	// cout << "rings[" << ringNum<<"].nhits: " << rings[ringNum].nhits << endl;
@@ -129,17 +131,18 @@ void make_timing_bitmap(int ring_num, hit_t hit_data, trigger_t *ptrigger)
 	ptrigger->trig[ring_num][t_actual] = 1;
 
 
-  #include <iostream>
-  using std::cout; using std::endl;
-  cout << endl;
-  cout << "ring_num: " << ring_num << endl;
-  cout << "hit_data: " << hit_data.t << "\tt_buff: " << t_buff << "\tt_actual: " << t_actual << endl;
-  cout << "ptrigger->trig[" << ring_num << "][" << t_actual 
-       << "] = 1: " << ptrigger->trig[ring_num][t_actual] << endl;
+//   #include <iostream>
+//   using std::cout; using std::endl;
+//   cout << endl;
+//   cout << "ring_num: " << ring_num << endl;
+//   cout << "hit_data: " << hit_data.t << "\tt_buff: " << t_buff << "\tt_actual: " << t_actual << endl;
+//   cout << "ptrigger->trig[" << ring_num << "][" << t_actual 
+//        << "] = 1: " << ptrigger->trig[ring_num][t_actual] << endl;
 
-  for(int i = 7; i > -1; i--){
-    cout << "[" << ptrigger->trig[ring_num][i] << "]";
-  }
-  cout << "\n" <<  endl;
-  cout << "ring_num: " << ring_num << "\tt_actual: " << t_actual  << "\t" << ptrigger->trig[ring_num] << endl;
+//   for(int i = 7; i > -1; i--){ // the ap_uint<N> has big endiannes
+//     cout << "[" << ptrigger->trig[ring_num][i] << "]";
+//   }
+//   cout << "\n" <<  endl;
+  // simple cout statement to check endiannes
+//   cout << "ring_num: " << ring_num << "\tt_actual: " << t_actual  << "\t" << ptrigger->trig[ring_num] << endl;
 }

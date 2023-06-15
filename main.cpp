@@ -17,7 +17,7 @@ int main(int argc, char *argv[])
 	// hls::stream<T> behaves like a fifo array with infinite depth
 	// Once data has been read, it no longer is stored in any buffer
 	hls::stream<fadc_hits_t> s_fadc_hits; // raw data stream from the 
-	hls::stream<trigger_t> s_trigger; // output stream for for the trigger data
+	hls::stream<trigger_t> s_time_trigger; // output stream for for the trigger data
 	hls::stream<ring_trigger_t> s_ring_trigger; // output stream for for the ring trigger data
 	hls::stream<ring_all_t> s_ring_all_t; // output stream for the ring data
 
@@ -62,7 +62,7 @@ int main(int argc, char *argv[])
 			energy_threshold, 
 			ring_threshold, 
 			s_fadc_hits, 
-			s_trigger, 
+			s_time_trigger, 
 			s_ring_trigger, 
 	 		s_ring_all_t 
 		);
@@ -89,6 +89,20 @@ int main(int argc, char *argv[])
 		ring_trigger_t ring_trig = s_ring_trigger.read();
 		for(int i = 0; i < 8; i++){
 			/* IMPLEMENT*/
+		}
+	}
+
+	while(!s_time_trigger.empty())
+	{
+		trigger_t time_trig = s_time_trigger.read();
+		#include <iostream>
+		using std::cout; using std::endl;
+		for(int ring_index = 0; ring_index < 8; ring_index ++){
+			cout << "Ring: " << ring_index << "\t";
+			for(int time_tick = 7; time_tick > -1; time_tick--){
+				cout << "[" << time_tick << "]";
+			}
+			cout << endl;
 		}
 	}
 
