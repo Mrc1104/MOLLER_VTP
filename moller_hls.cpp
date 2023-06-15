@@ -15,8 +15,17 @@ void moller_hls
 	fadc_hits_t fadc_hits = s_fadc_hits.read();
 
 
-	ap_uint<8> ac_disc[N_CHAN_SEC];
-	trigger_t trigger = {0};
+	trigger_t time_bitmap;
+	for(int i = 0; i < 8; i++){
+		for(int j = 0; j < 8; j++){
+			// trigger_t time_bitmap = {0}; 
+			/* The XILINX documentation says not to initilize ap_uint<N> like above */
+			/* and that if used in an array, they might not initilize to zero       */
+			/* So I am initilizing the array if ap_uint<N> explicitly               */
+			time_bitmap.trig[i] = 0;
+		}
+	}
+
 	ring_all_t allr;
 
 	for(int i = 0; i < 8; i++){
@@ -68,11 +77,13 @@ void add_ring_data(
 	rings[ringNum].sector[hit_sector] = 1;
 	rings[ringNum].segment[hit_segment] = 1;
 
-	// cout << "ringNum: " << ringNum << endl;
-	// cout << "rings[" << ringNum<<"].e: " << rings[ringNum].e << endl;
-	// cout << "rings[" << ringNum<<"].nhits: " << rings[ringNum].nhits << endl;
-	// cout << "rings[" << ringNum<<"].sector: " << rings[ringNum].sector << endl;
-	// cout << "rings[" << ringNum<<"].segment: " << rings[ringNum].segment << endl;
-	// cout << endl;
+	#include <iostream>
+	using std::cout; using std::endl;
+	cout << "ringNum: " << ringNum << endl;
+	cout << "rings[" << ringNum<<"].e: " << rings[ringNum].e << endl;
+	cout << "rings[" << ringNum<<"].nhits: " << rings[ringNum].nhits << endl;
+	cout << "rings[" << ringNum<<"].sector: " << rings[ringNum].sector << endl;
+	cout << "rings[" << ringNum<<"].segment: " << rings[ringNum].segment << endl;
+	cout << endl;
 
 }
