@@ -10,7 +10,7 @@ using namespace std;
 
 int main()
 {
-    ofstream out("test_data/random_fake_data");
+    ofstream out("test_data/random_fake_data.txt");
     out << "# chan energy time" << endl;
 
 
