@@ -44,8 +44,8 @@ int main(int argc, char *argv[])
 			ap_uint<3> ti = 0;
 
 			testData >> index >> en >> ti;
-			// std::cout << index << " " << en << " "
-			// 	 	  << ti << " " << std::endl;
+			std::cout << index << " " << en << " "
+				 	  << ti << " " << std::endl;
 			fadc_hits.vxs_chan[index].e = en;
 			fadc_hits.vxs_chan[index].t = ti;
 		}
