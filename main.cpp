@@ -41,12 +41,12 @@ int main(int argc, char *argv[])
 		int index;
 		ap_uint<13> en = 0;
 		ap_uint<3> ti = 0;
-		// while( testData >> index >> en >> ti ){
-		// 	std::cout << index << " " << en << " "
-		// 		 	  << ti << " " << std::endl;
-		// 	fadc_hits.vxs_chan[index].e = en;
-		// 	fadc_hits.vxs_chan[index].t = ti;
-		// }
+		while( testData >> index >> en >> ti ){
+			std::cout << index << " " << en << " "
+				 	  << ti << " " << std::endl;
+			fadc_hits.vxs_chan[index].e = en;
+			fadc_hits.vxs_chan[index].t = ti;
+		}
 	}
 	else{
 		std::cout << "Cannot load test data file" << std::endl;
