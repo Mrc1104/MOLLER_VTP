@@ -69,7 +69,7 @@ int main(int argc, char *argv[])
 
 	}
 	
-	printf("Ring Data:__________________");
+	printf("\nRing Data:__________________\n");
 	while(!s_ring_all_t.empty())
 	{
 		ring_all_t ring_data = s_ring_all_t.read();
@@ -83,7 +83,7 @@ int main(int argc, char *argv[])
 		}
 	}
 
-	printf("Ring Trig Data:__________________");
+	printf("\nRing Trig Data:__________________\n");
 	while(!s_ring_trigger.empty())
 	{
 		ring_trigger_t ring_trig = s_ring_trigger.read();
@@ -92,7 +92,7 @@ int main(int argc, char *argv[])
 		}
 	}
 	
-	printf("Time Trig Data:__________________");
+	printf("\nTime Trig Data:__________________\n");
 	while(!s_time_trigger.empty())
 	{
 		int t32ns = 0;
