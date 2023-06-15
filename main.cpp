@@ -42,6 +42,10 @@ int main(int argc, char *argv[])
 		ap_uint<13> en = 0;
 		ap_uint<3> ti = 0;
 		while( testData >> index >> en >> ti ){
+			if(index < 0 || index > 223){
+				cout << "Trying to read into a nonexistant fadc channel" << endl;
+				break; // ran out of fadc channels
+			}
 			std::cout << index << " " << en << " "
 				 	  << ti << " " << std::endl;
 			fadc_hits.vxs_chan[index].e = en;
