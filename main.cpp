@@ -73,9 +73,10 @@ int main(int argc, char *argv[])
 		ring_all_t ring_data = s_ring_all_t.read();
 		for(int ring_index = 0; ring_index < 8; ring_index++){
 			cout << "ringNum: " << ring_index << endl;
-			cout << "ring_data.r[" << ring_index<< "].e: " << ring_data.r[ring_index].e << endl;
-			cout << "ring_data.r[" << ring_index<< "].nhits: " << ring_data.r[ring_index].nhits << endl;
-			// cout << "ring_data.r[" << i<<"].segment: " << ring_data.r[i].segment << endl;
+			cout << "ring_data.r[" << ring_index << "].e: " << ring_data.r[ring_index].e << endl;
+			cout << "ring_data.r[" << ring_index << "].nhits: " << ring_data.r[ring_index].nhits << endl;
+			// cout << "ring_data.r[" << i << "].segment: " << ring_data.r[i].segment << endl;
+			cout << "ring_data.r[" << ring_index <<"].segment: ";
 			for(int seg_index = 7; seg_index > -1; seg_index--){
 				cout << "[" << ring_data.r[ring_index].segment[seg_index] << "]";
 			}
