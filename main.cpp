@@ -4,7 +4,6 @@
 // for testing
 #include <fstream>
 #include <string>
-		#include <iostream>
 
 #include "moller_hls.h"
 
@@ -32,13 +31,14 @@ int main(int argc, char *argv[])
 		fadc_hits.vxs_chan[ch].e = 0;
 		fadc_hits.vxs_chan[ch].t = 0;
 	}
-	do{
+	std::string comment;
+	std::getline(testData, comment);
+	while(!testData.eof()){
 		int index;
 		ap_uint<13> en;
 		ap_uint<3> ti;
 
-		std::string comment;
-		std::getline(testData, comment);
+		#include <iostream>
 		testData >> index >> en >> ti;
 		std::cout << index << " " << en << " "
 				  << ti << " " << std::endl;
@@ -47,7 +47,7 @@ int main(int argc, char *argv[])
 		fadc_hits.vxs_chan[index].t = ti;
 
 
-	}while(!testData.eof());
+	}
 
 	s_fadc_hits.write(fadc_hits);
 
