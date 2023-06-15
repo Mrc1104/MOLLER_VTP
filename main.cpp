@@ -105,11 +105,11 @@ int main(int argc, char *argv[])
 				cout << "[" << time_trig.trig[ring_index][time_tick] << "]";
 			}
 			cout << endl;
-			for(int time_tick = 7; time_tick > -1; time_tick--){
-				if(time_trig.trig[ring_index][time_tick]){
-					printf("Trigger found at T=%dns\n", t32ns*32+time_tick*4-16);
-				}
-			}
+			// for(int time_tick = 7; time_tick > -1; time_tick--){
+			// 	if(time_trig.trig[ring_index][time_tick]){
+			// 		printf("Trigger found at T=%dns\n", t32ns*32+time_tick*4-16);
+			// 	}
+			// }
 			t32ns++;
 		}
 	}
