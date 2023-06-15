@@ -45,8 +45,6 @@ int main(int argc, char *argv[])
 		
 		fadc_hits.vxs_chan[index].e = en;
 		fadc_hits.vxs_chan[index].t = ti;
-
-
 	}
 
 	s_fadc_hits.write(fadc_hits);
