@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <iostream>
+using std::cout; using std::endl;
 
 // for testing
 #include <fstream>
@@ -40,8 +42,7 @@ int main(int argc, char *argv[])
 			ap_uint<13> en;
 			ap_uint<3> ti;
 
-			// #include <iostream>
-			// testData >> index >> en >> ti;
+			testData >> index >> en >> ti;
 			// std::cout << index << " " << en << " "
 			// 	 	  << ti << " " << std::endl;
 			fadc_hits.vxs_chan[index].e = en;
@@ -49,7 +50,6 @@ int main(int argc, char *argv[])
 		}
 	}
 	else{
-		#include<iostream>
 		std::cout << "Cannot load test data file" << std::endl;
 	}
 	s_fadc_hits.write(fadc_hits);
@@ -73,8 +73,6 @@ int main(int argc, char *argv[])
 	{
 		ring_all_t ring_data = s_ring_all_t.read();
 		for(int i = 0; i < 8; i++){
-			// #include <iostream>
-			// using std::cout; using std::endl;
 			// cout << "ringNum: " << i << endl;
 			// cout << "ring_data.r[" << i<<"].e: " << ring_data.r[i].e << endl;
 			// cout << "ring_data.r[" << i<<"].nhits: " << ring_data.r[i].nhits << endl;
@@ -96,8 +94,7 @@ int main(int argc, char *argv[])
 	{
 		int t32ns = 0;
 		trigger_t time_trig = s_time_trigger.read();
-		#include <iostream>
-		using std::cout; using std::endl;
+
 		cout << "Format:\t 7 ------------------ 0\t 4ns ticks" << endl;
 		for(int ring_index = 0; ring_index < 8; ring_index ++){
 			cout << "Ring: " << ring_index << "\t";
@@ -105,11 +102,11 @@ int main(int argc, char *argv[])
 				cout << "[" << time_trig.trig[ring_index][time_tick] << "]";
 			}
 			cout << endl;
-			// for(int time_tick = 7; time_tick > -1; time_tick--){
-			// 	if(time_trig.trig[ring_index][time_tick]){
-			// 		printf("Trigger found at T=%dns\n", t32ns*32+time_tick*4-16);
-			// 	}
-			// }
+			for(int time_tick = 7; time_tick > -1; time_tick--){
+				if(time_trig.trig[ring_index][time_tick]){
+					printf("Trigger found at T=%dns\n", t32ns*32+time_tick*4-16);
+				}
+			}
 			t32ns++;
 		}
 	}
