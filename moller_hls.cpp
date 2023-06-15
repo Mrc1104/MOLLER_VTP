@@ -25,8 +25,8 @@ void moller_hls
 			time_bitmap.trig[i] = 0;
 		}
 	}
+	
 	ring_all_t allr;
-
 	for(int i = 0; i < 8; i++){
 		allr.r[i].e = 0;
 		allr.r[i].nhits = 0;
