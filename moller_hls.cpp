@@ -79,14 +79,14 @@ void add_ring_data(
 	rings[ringNum].sector[hit_sector] = 1;
 	rings[ringNum].segment[hit_segment] = 1;
 
-	#include <iostream>
-	using std::cout; using std::endl;
-	cout << "ringNum: " << ringNum << endl;
-	cout << "rings[" << ringNum<<"].e: " << rings[ringNum].e << endl;
-	cout << "rings[" << ringNum<<"].nhits: " << rings[ringNum].nhits << endl;
-	cout << "rings[" << ringNum<<"].sector: " << rings[ringNum].sector << endl;
-	cout << "rings[" << ringNum<<"].segment: " << rings[ringNum].segment << endl;
-	cout << endl;
+	// #include <iostream>
+	// using std::cout; using std::endl;
+	// cout << "ringNum: " << ringNum << endl;
+	// cout << "rings[" << ringNum<<"].e: " << rings[ringNum].e << endl;
+	// cout << "rings[" << ringNum<<"].nhits: " << rings[ringNum].nhits << endl;
+	// cout << "rings[" << ringNum<<"].sector: " << rings[ringNum].sector << endl;
+	// cout << "rings[" << ringNum<<"].segment: " << rings[ringNum].segment << endl;
+	// cout << endl;
 
 }
 
