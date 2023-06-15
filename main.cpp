@@ -77,7 +77,7 @@ int main(int argc, char *argv[])
 			cout << "ring_data.r[" << ring_index << "].nhits: " << ring_data.r[ring_index].nhits << endl;
 			// cout << "ring_data.r[" << i << "].segment: " << ring_data.r[i].segment << endl;
 			cout << "ring_data.r[" << ring_index <<"].segment: ";
-			for(int seg_index = 7; seg_index > -1; seg_index--){
+			for(int seg_index = 27; seg_index > -1; seg_index--){
 				cout << "[" << ring_data.r[ring_index].segment[seg_index] << "]";
 			}
 			cout << endl;
