@@ -34,7 +34,6 @@ void moller_hls
 	}
 
 	int segment = -1; // segments run from 0 to 4
-	int sector = -1; // sectors run from 0 to 6
 	for(int ch = 0; ch < N_CHAN_SEC; ch++){
 		// every time ch%8 == 0, we are in a new segment
 		if( (ch%8 == 0) ){
@@ -43,7 +42,7 @@ void moller_hls
 		if(fadc_hits.vxs_chan[ch].e >= energy_threshold ){ // else, no hit
       		int ring_num = ch%8;
       		int segment_num = segment; 
-			add_ring_data(ring_num, segment_num, sector, fadc_hits.vxs_chan[ch], allr.r);
+			add_ring_data(ring_num, segment_num, fadc_hits.vxs_chan[ch], allr.r);
 			make_timing_bitmap(ring_num, fadc_hits.vxs_chan[ch], &time_bitmap);
 		}
 	} // end for loop
@@ -77,7 +76,6 @@ void add_ring_data(
 	// cout << "ringNum: " << ringNum << endl;
 	// cout << "rings[" << ringNum<<"].e: " << rings[ringNum].e << endl;
 	// cout << "rings[" << ringNum<<"].nhits: " << rings[ringNum].nhits << endl;
-	// cout << "rings[" << ringNum<<"].sector: " << rings[ringNum].sector << endl;
 	// cout << "rings[" << ringNum<<"].segment: " << rings[ringNum].segment << endl;
 	// cout << endl;
 

@@ -40,7 +40,7 @@ typedef struct
 // - e: sum of the energy of all the hits on a ind. ring
 // - t: ring time measured at the central hit time
 // - nhits: number of hits on an ind. ring
-// - segment: bit map for the 28 segments in a sector
+// - segment: bit map for the 28 segments in our detector
 // - bitbuffer: bit buffer to make the struct multiple of 8
 typedef struct
 {
@@ -96,7 +96,6 @@ void moller_hls
 void add_ring_data(
 	int ringNum,
 	int hit_segment, 
-	int hit_sector, 
 	hit_t hit_data,
 	ring_hit_t* rings
 );
