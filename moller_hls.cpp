@@ -38,6 +38,11 @@ void moller_hls
 			sector++;
 		}
 		if(fadc_hits.vxs_chan[ch].e >= energy_threshold ){ // else, no hit
+  //   	int ringNum,
+	// int hit_segment, 
+	// int hit_sector, 
+	// hit_t hit_data,
+	// ring_hit_t* rings
 			add_ring_data(ch%8, segment%4, sector, fadc_hits.vxs_chan[ch], allr.r);
 			time_bitmap = make_timing_bitmap(fadc_hits.vxs_chan[ch]);
 		}
