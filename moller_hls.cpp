@@ -17,6 +17,11 @@ void moller_hls
 
 	ap_uint<8> ac_disc[N_CHAN_SEC];
 	trigger_t time_bitmap = {0};
+	for(int i = 0; i < 8; i++){
+		for(int j = 0; j < 8; j++){
+			time_bitmap.trig[i] = 0;
+		}
+	}
 	ring_all_t allr;
 
 	for(int i = 0; i < 8; i++){
