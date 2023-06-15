@@ -92,7 +92,7 @@ int main(int argc, char *argv[])
 		}
 	}
 	
-	printf("\nTime Trig Data:__________________\n");
+	printf("\n\nTime Trig Data:__________________\n");
 	while(!s_time_trigger.empty())
 	{
 		int t32ns = 0;
