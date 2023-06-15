@@ -57,13 +57,14 @@ typedef struct
 
 // trigger_t:
 // - trig: bitmap for time - [0]=>0ns, [1]=>4ns, [2]=>8ns, ..., [7]=28ns, when bit=0 no trigger, when bit=1 trigger
+// - 8-element array, one for each ring: [0] = r1, [1] = r2, ..., [7] = r7; when bit=0 no time_trigger, when bit=1 time_trigger
 typedef struct
 {
-	ap_uint<8> trig;
+	ap_uint<8> trig[8];
 } trigger_t;
 
 // ring_trigger_t:
-// - ring trig: bitmap for ring hit - [0]=r0, [1]=r1, [2]=r2, ..., [7]=r6, when bit=0 no ring_trigger, when bit=1 ring_trigger
+// - ring trig: bitmap for ring hit - [0]=r0, [1]=r1, [2]=r2, ..., [7]=r6; when bit=0 no ring_trigger, when bit=1 ring_trigger
 typedef struct 
 {
 	ap_uint<8> ring;
@@ -103,5 +104,11 @@ void add_ring_data(
 // and compares it to ring_threshold to see 
 // if the ring qualifies as hit
 ring_trigger_t make_ring_bitmap(ring_hit_t* rings, ap_uint<16> ring_threshold);
+
+void make_timing_bitmap(
+	int ringNum,
+	hit_t hit_data,
+	trigger_t *ptrigger
+);
 
 #endif
