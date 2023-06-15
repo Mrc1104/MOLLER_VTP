@@ -30,7 +30,6 @@ void moller_hls
 	for(int i = 0; i < 8; i++){
 		allr.r[i].e = 0;
 		allr.r[i].nhits = 0;
-		allr.r[i].sector = 0;
 		allr.r[i].segment = 0;
 	}
 
@@ -41,13 +40,9 @@ void moller_hls
 		if( (ch%8 == 0) ){
 			segment++;
 		}
-		// every time ch%32 ==0, we are in a new sector
-		if( (ch%32 == 0) ){
-			sector++;
-		}
 		if(fadc_hits.vxs_chan[ch].e >= energy_threshold ){ // else, no hit
-      int ring_num = ch%8;
-      int segment_num = segment%4; 
+      		int ring_num = ch%8;
+      		int segment_num = segment; 
 			add_ring_data(ring_num, segment_num, sector, fadc_hits.vxs_chan[ch], allr.r);
 			make_timing_bitmap(ring_num, fadc_hits.vxs_chan[ch], &time_bitmap);
 		}
@@ -67,7 +62,6 @@ void moller_hls
 void add_ring_data(
 	int ringNum,
 	int hit_segment, 
-	int hit_sector, 
 	hit_t hit_data,
 	ring_hit_t* rings
 )
@@ -76,7 +70,6 @@ void add_ring_data(
 	
 	rings[ringNum].e += hit_data.e;
 	rings[ringNum].nhits += 1;
-	rings[ringNum].sector[hit_sector] = 1;
 	rings[ringNum].segment[hit_segment] = 1;
 
 	// #include <iostream>

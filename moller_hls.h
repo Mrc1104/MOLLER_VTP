@@ -40,13 +40,14 @@ typedef struct
 // - e: sum of the energy of all the hits on a ind. ring
 // - t: ring time measured at the central hit time
 // - nhits: number of hits on an ind. ring
-// - segment: bit map for the 4 segments in a sector
+// - segment: bit map for the 28 segments in a sector
+// - bitbuffer: bit buffer to make the struct multiple of 8
 typedef struct
 {
 	ap_uint<16> e;
 	ap_uint<3> nhits;
-	ap_uint<7> sector;
-	ap_uint<4> segment;
+	ap_uint<28> segment;
+	ap_uint<1> bitbuffer;
 
 } ring_hit_t;
 
