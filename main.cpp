@@ -6,7 +6,7 @@ using std::cout; using std::endl;
 // for testing
 #include <fstream>
 #include <string>
-#include <random>
+
 #include "moller_hls.h"
 
 void generateRndData(hit_t* vxs_chan){
