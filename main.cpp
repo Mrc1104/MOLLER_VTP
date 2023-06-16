@@ -67,7 +67,7 @@ int main(int argc, char *argv[])
 		fadc_hits.vxs_chan[ch].e = 0;
 		fadc_hits.vxs_chan[ch].t = 0;
 	}
-	generateRndData(fadc_hits.vxs_chan)
+	generateRndData(fadc_hits.vxs_chan);
 	// std::string comment;
 	// if(testData){
 	// 	std::getline(testData, comment);
