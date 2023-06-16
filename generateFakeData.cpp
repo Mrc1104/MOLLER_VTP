@@ -17,7 +17,7 @@ int main()
     srand(time(0));
     ap_uint<13> e;
     ap_uint<3> t;
-    for(int ch; ch < N_CHAN_SEC; ch++){
+    for(int ch = 0; ch < N_CHAN_SEC; ch++){
         e = 0;
         t = 0;
         if(ch%8 < 4){ // rings 1 - 4
