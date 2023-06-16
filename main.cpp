@@ -9,6 +9,38 @@ using std::cout; using std::endl;
 
 #include "moller_hls.h"
 
+void generateRndData(hit_t* vxs_chan){
+
+	std::srand(std::time(0)); // set random seed
+	ap_uint<13> energy;
+	ap_uint<3> time;
+	for(int ch = 0; ch < N_CHAN_SEC; ch++){
+		energy = 0;
+		time = 0;
+		if(ch%8 < 4){ // rings 1 - 4
+           	if( (rand()%100) < 10 ){
+               	energy = rand() % 8192;
+               	time = rand() % 8;
+           	}
+        }
+        else if( (ch%8 < 7) && (ch%8 > 3) ){ // rings 5a, 5b, 5c
+           	if( (rand()%100) < 40 ){
+               	energy = rand() % 8192;
+               	time = rand() % 8;
+           	}
+        }
+        else if( ch%8 > 6){ // ring 6
+           	if( (rand()%100) < 10 ){
+               	energy = rand() % 8192;
+               	time = rand() % 8;
+           	}
+        }
+		vxs_chan[ch].e = energy;
+		vxs_chan[ch].t = energy;
+	}
+}
+
+
 int main(int argc, char *argv[])
 {
 	ap_uint<3> hit_dt = 2; // time tolerance for coincidence (in 4ns ticks)
@@ -25,9 +57,9 @@ int main(int argc, char *argv[])
 
 
 	// load test data
-	std::ifstream testData;
+	// std::ifstream testData;
 	// testData.open("test_data/fake_FADC_data.txt");
-	testData.open("test_data/fake_timing_data3.txt");
+	// testData.open("test_data/fake_timing_data3.txt");
 	// testData.open("test_data/random_fake_data.txt");
 
 	fadc_hits_t fadc_hits;
@@ -35,27 +67,28 @@ int main(int argc, char *argv[])
 		fadc_hits.vxs_chan[ch].e = 0;
 		fadc_hits.vxs_chan[ch].t = 0;
 	}
-	std::string comment;
-	if(testData){
-		std::getline(testData, comment);
-		int index;
-		ap_uint<13> en = 0;
-		ap_uint<3> ti = 0;
-		while( testData >> index  ){
-			if(index < 0 || index > 223){
-				cout << "Trying to read into a nonexistant fadc channel" << endl;
-				break; // ran out of fadc channels
-			}
-			testData >> en >> ti;
-			std::cout << index << " " << en << " "
-				 	  << ti << " " << std::endl;
-			fadc_hits.vxs_chan[index].e = en;
-			fadc_hits.vxs_chan[index].t = ti;
-		}
-	}
-	else{
-		std::cout << "Cannot load test data file" << std::endl;
-	}
+	generateRndData(fadc_hits.vxs_chan)
+	// std::string comment;
+	// if(testData){
+	// 	std::getline(testData, comment);
+	// 	int index;
+	// 	ap_uint<13> en = 0;
+	// 	ap_uint<3> ti = 0;
+	// 	while( testData >> index  ){
+	// 		if(index < 0 || index > 223){
+	// 			cout << "Trying to read into a nonexistant fadc channel" << endl;
+	// 			break; // ran out of fadc channels
+	// 		}
+	// 		testData >> en >> ti;
+	// 		std::cout << index << " " << en << " "
+	// 			 	  << ti << " " << std::endl;
+	// 		fadc_hits.vxs_chan[index].e = en;
+	// 		fadc_hits.vxs_chan[index].t = ti;
+	// 	}
+	// }
+	// else{
+	// 	std::cout << "Cannot load test data file" << std::endl;
+	// }
 	s_fadc_hits.write(fadc_hits);
 	while(!s_fadc_hits.empty()){
 
