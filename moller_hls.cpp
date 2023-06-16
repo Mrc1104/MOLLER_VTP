@@ -19,9 +19,9 @@ void moller_hls
 	for(int i = 0; i < 8; i++){
 		for(int j = 0; j < 8; j++){
 			// trigger_t time_bitmap = {0}; 
-			/* The XILINX documentation says not to initilize ap_uint<N> like above */
-			/* and that if used in an array, they might not initilize to zero       */
-			/* So I am initilizing the array if ap_uint<N> explicitly               */
+			/* The XILINX documentation says not to initialize ap_uint<N> like above */
+			/* and that if used in an array, they might not initialize to zero       */
+			/* So I am initializing the array if ap_uint<N> explicitly               */
 			time_bitmap.trig[i] = 0;
 		}
 	}
