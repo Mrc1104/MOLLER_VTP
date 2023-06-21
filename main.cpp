@@ -84,7 +84,7 @@ int main(int argc, char *argv[])
 			}
 			else{
 				fchan_map >> detector_id >> seg_num >> sub_elem;
-				cout << "string; " << detector_id << " map: " << m[detector_id] << endl;
+				cout << "ch: " << ch << " string; " << detector_id << " map: " << m[detector_id] << endl;
 			}
 			if(ch == 15) slot++;
 
