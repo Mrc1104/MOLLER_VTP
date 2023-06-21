@@ -68,6 +68,7 @@ int main(int argc, char *argv[])
 	fchan_map.open("chan_map/det_map_naive.dat");
 	chan_map chmap[N_SLOT][16]; // N_SLOT is defined in moller_hls.h
 								// Each FADC has 16 chans (one FADC per slot)
+								cout << "sizeof: " << sizeof(chan_map[0][0]) << endl;
 	char tmp;
 	int ch;
 	std::string detector_id;
@@ -86,8 +87,8 @@ int main(int argc, char *argv[])
 				fchan_map.putback(tmp); // char has issues reading multi-digit #s 
 				fchan_map >> ch >> detector_id >> seg_num >> sub_elem;
 				chmap[slot][ch] = {m[detector_id], seg_num, sub_elem};
-				cout << channelCount << " chmap[" << slot <<"]["<<ch<<"] = " << m[detector_id] << " " << seg_num << " " << sub_elem << endl;
-				channelCount++;
+				// cout << channelCount << " chmap[" << slot <<"]["<<ch<<"] = " << m[detector_id] << " " << seg_num << " " << sub_elem << endl;
+				// channelCount++;
 				if(ch == 15) slot++;
 			}
 		}
