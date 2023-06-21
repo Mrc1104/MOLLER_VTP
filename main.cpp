@@ -75,9 +75,7 @@ int main(int argc, char *argv[])
 
 	int slot = 0;
 	if(fchan_map){
-		cout << "HERE" << endl;
 		std::getline(fchan_map, comment);
-		cout << comment << endl;
 		while( fchan_map >> ch){
 			if(ch == '#'){
 				cout << "HERE1" << endl;
@@ -85,12 +83,8 @@ int main(int argc, char *argv[])
 				cout << comment << endl;
 			}
 			else{
-				cout << "HERE1" << endl;
 				fchan_map >> detector_id >> seg_num >> sub_elem;
-				cout << detector_id << " " <<  m[detector_id] << endl;
-				chmap[slot][ch] = {m[detector_id], seg_num, sub_elem};
-				cout << "chmap[" << slot << "][" << ch << "] = " << chmap[slot][ch].DET_ID 
-					 << " " <<  chmap[slot][ch].SEG_NUM << " " << chmap[slot][ch].SUB_ELEMENT << endl;
+				cout << "string; " << detector_id << " map: " << m[detector_id] << endl;
 			}
 			if(ch == 15) slot++;
 
