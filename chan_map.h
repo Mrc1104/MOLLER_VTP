@@ -8,7 +8,7 @@ typedef struct
 {
     det_type DET_ID;
     ap_uint<5> SEG_NUM;
-    ap_uint<8> SUB_ELEMENT;
+    ap_int<8> SUB_ELEMENT;
 } chan_map;
 
 std::map<std::string, det_type> m = 
