@@ -105,7 +105,7 @@ int main(int argc, char *argv[])
 		if(i < N_SLOT-1)
 			fout_array << " },";
 		else
-			fout_array << "}\n";
+			fout_array << " }\n";
 	}
 	fout_array << "};";
 
