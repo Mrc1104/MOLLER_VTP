@@ -1,3 +1,6 @@
+#ifndef DETECTOR_TYPE_H
+#define DETECTOR_TYPE_H
+
 enum det_type
 {
     NONE = 0,
@@ -12,3 +15,4 @@ enum det_type
     PION_DET = 9,
     SHOWER_MAX = 10
 };
+#endif

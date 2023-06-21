@@ -1,6 +1,9 @@
 #include <ap_int.h>
 #include <map>
 #include "detector_type.h"
+
+#ifndef CHAN_MAP_H
+#define CHAN_MAP_H
 typedef struct 
 {
     det_type DET_ID;
@@ -21,3 +24,4 @@ std::map<std::string, det_type> m =
     {"PION_DET", PION_DET},
     {"SHOWER_MAX", SHOWER_MAX}
 };
+#endif
