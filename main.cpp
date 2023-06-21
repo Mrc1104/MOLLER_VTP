@@ -86,28 +86,28 @@ int main(int argc, char *argv[])
 				fchan_map.putback(tmp); // char has issues reading multi-digit #s 
 				fchan_map >> ch >> detector_id >> seg_num >> sub_elem;
 				chmap[slot][ch] = {m[detector_id], seg_num, sub_elem};
-				// cout << channelCount << " chmap[" << slot <<"]["<<ch<<"] = " << m[detector_id] << " " << seg_num << " " << sub_elem << endl;
+				cout << channelCount << " chmap[" << slot <<"]["<<ch<<"] = " << m[detector_id] << " " << seg_num << " " << sub_elem << endl;
 				// channelCount++;
 				if(ch == 15) slot++;
 			}
 		}
 	}
 	std::ofstream fout_array("chan_map/array1.h");
-	fout_array << "chan_map chmap[N_SLOT][16] = {\n";
+	fout_array << "chan_map chmap[N_SLOT][16] = {";
 	for(int i = 0 ; i < N_SLOT; i++){
-		fout_array << "{ ";
+		fout_array << "\n{ ";
 		for(int j = 0; j < 16; j++){
 			if(j < 15)
 				fout_array << "{" << chmap[i][j].DET_ID << ", " << chmap[i][j].SEG_NUM << ", " << chmap[i][j].SUB_ELEMENT << "},";
 			else
-				fout_array << "{" << chmap[i][j].DET_ID << ", " << chmap[i][j].SEG_NUM << ", " << chmap[i][j].SUB_ELEMENT << "},\n";
+				fout_array << "{" << chmap[i][j].DET_ID << ", " << chmap[i][j].SEG_NUM << ", " << chmap[i][j].SUB_ELEMENT << "}";
 		}
 		if(i < N_SLOT-1)
-			fout_array << "},\n";
+			fout_array << "},";
 		else
 			fout_array << "}\n";
 	}
-	fout_array << "chan_map chmap[N_SLOT][16] = };";
+	fout_array << "};";
 
 
 	/*
