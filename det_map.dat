@@ -1,0 +1,36 @@
+#####################################################################################
+# det_map.dat
+# Description: Channel to detector mapping. Subdivided by the slot number of the 
+#              VXS crate, each slot holds 16 (0 - 15) FADC channels that corresponds
+#              to a particular detector. Main.cpp will parse the information inserted
+#              below and create an array that will be used in the FPGA for arbritrary
+#              detector to channel mapping.
+# 
+# Note:        Any lines starting with '#' will be ignored. Delineate by spaces
+#              FADC_CHAN_NUMBER - integer [0-15]
+#              DETECTOR_TYPE - enum (see detector_type.h for scheme)
+#              SEGMENT_NUMBER - integer [0-27]
+#              SUB_ELEMENT - no sub-element => -1
+#                            for TRIG_SCINT, => chan # if TRIG_SCINT pair
+#                            for RING_5, => 65 (5a), 66 (5b), 67 (5c)
+#
+# FADC_CHAN_NUMBER,    DETECTOR_TYPE,  SEGMENT_NUMBER, SUB_ELEMENT  
+#####################################################################################
+
+# SLOT 4
+0   RING_ONE    0   -1
+1   RING_TWO    0   -1
+2   RING_THREE  0   -1
+3   RING_FOUR   0   -1
+4   RING_5      0   65
+5   RING_5      0   66
+6   RING_5      0   67
+7   RING_6      0   -1
+8   RING_ONE    0   -1
+9   RING_TWO    0   -1
+10  RING_THREE  0   -1
+11  RING_FOUR   0   -1
+12  RING_5      0   65
+13  RING_5      0   66
+14  RING_5      0   67
+15  RING_6      0   -1
