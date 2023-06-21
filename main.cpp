@@ -64,14 +64,31 @@ int main(int argc, char *argv[])
 	std::string comment;
 
 	// load channel to det mapping
-	std::ifstream chanMap;
-	chanMap.open("chan_map/det_map_naive.dat");
+	std::ifstream fchan_map;
+	fchan_map.open("chan_map/det_map_naive.dat");
 	chan_map chmap[N_SLOT][16]; // N_SLOT is defined in moller_hls.h
 								// Each FADC has 16 chans (one FADC per slot)
-	if(chanMap){
-		
+	int ch;
+	std::string detector_id;
+	int seg_num;
+	int sub_elem;
+
+	int slot = 0;
+	if(fchan_map){
+		while( fchan_map >> ch){
+			if(ch == '#'){
+				std::getline(fchan_map, comment);
+			}
+			else{
+				fchan_map >> detector_id >> seg_num >> sub_elem;
+				chmap[slot][ch] = {m[detector_id], seg_num, sub_elem};
+			}
+			if(ch == 15) slot++;
+
+		}
 	}
 
+	/*
 	// load test data
 	std::ifstream testData;
 	testData.open("test_data/fake_timing_data.txt");
@@ -167,6 +184,6 @@ int main(int argc, char *argv[])
 		t32ns++;
 	}
 
-
+*/
 	return 0;
 }
