@@ -87,7 +87,7 @@ int main(int argc, char *argv[])
 			else{
 				cout << "HERE1" << endl;
 				fchan_map >> detector_id >> seg_num >> sub_elem;
-				cout << m[detector_id] << endl;
+				cout << detector_id << " " <<  m[detector_id] << endl;
 				chmap[slot][ch] = {m[detector_id], seg_num, sub_elem};
 				cout << "chmap[" << slot << "][" << ch << "] = " << chmap[slot][ch].DET_ID 
 					 << " " <<  chmap[slot][ch].SEG_NUM << " " << chmap[slot][ch].SUB_ELEMENT << endl;
