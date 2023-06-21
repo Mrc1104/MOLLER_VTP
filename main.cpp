@@ -76,6 +76,7 @@ int main(int argc, char *argv[])
 	int slot = 0;
 	if(fchan_map){
 		cout << "HERE" << endl;
+		std::getline(fchan_map, comment);
 		while( fchan_map >> ch){
 			if(ch == '#'){
 				cout << "HERE1" << endl;
