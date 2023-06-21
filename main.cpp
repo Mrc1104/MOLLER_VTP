@@ -60,7 +60,7 @@ int main(int argc, char *argv[])
 	hls::stream<ring_trigger_t> s_ring_trigger; // output stream for for the ring trigger data
 	hls::stream<ring_all_t> s_ring_all_t; // output stream for the ring data
 
-	// I/O
+	// I/O BLOCk
 	std::string comment;
 
 	// load channel to det mapping
@@ -79,14 +79,12 @@ int main(int argc, char *argv[])
 		while( fchan_map >> tmp){
 			if(tmp == '#'){ // ignore # lines
 				std::getline(fchan_map, comment);
-				cout << comment << endl;
 			}
 			else{
-				fchan_map.putback(tmp);
+				fchan_map.putback(tmp); // char has issues reading multi-digit #s 
 				fchan_map >> ch >> detector_id >> seg_num >> sub_elem;
-				cout << "ch:" << ch << " detector_id: " << detector_id << " seg_num: " << seg_num << " sub_elem: " << sub_elem << endl;
 				chmap[0][ch] = {m[detector_id], seg_num, sub_elem};
-				cout << "chmap[" << slot <<"]["<<ch<<"] = " << m[detector_id] << " " << seg_num << " " << sub_elem << endl;
+				// cout << "chmap[" << slot <<"]["<<ch<<"] = " << m[detector_id] << " " << seg_num << " " << sub_elem << endl;
 			}
 			if(ch == 15) slot++;
 		}
@@ -139,6 +137,7 @@ int main(int argc, char *argv[])
 
 	}
 	
+	// TRIGGER INFO BLOCK
 	printf("\nRing Data:__________________\n");
 	while(!s_ring_all_t.empty())
 	{
