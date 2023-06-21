@@ -75,6 +75,8 @@ int main(int argc, char *argv[])
 	int sub_elem;
 
 	int slot = 0;
+
+	int channelCount = 0;
 	if(fchan_map){
 		while( fchan_map >> tmp){
 			if(tmp == '#'){ // ignore # lines
@@ -85,10 +87,12 @@ int main(int argc, char *argv[])
 				fchan_map >> ch >> detector_id >> seg_num >> sub_elem;
 				chmap[0][ch] = {m[detector_id], seg_num, sub_elem};
 				// cout << "chmap[" << slot <<"]["<<ch<<"] = " << m[detector_id] << " " << seg_num << " " << sub_elem << endl;
+				channelCount++;
 			}
 			if(ch == 15) slot++;
 		}
 	}
+	cout << "Channel Count: " << channelCount << endl;
 
 	/*
 	// load test data
