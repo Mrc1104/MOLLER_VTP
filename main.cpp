@@ -56,6 +56,10 @@ int main(int argc, char *argv[])
 	hls::stream<ring_trigger_t> s_ring_trigger; // output stream for for the ring trigger data
 	hls::stream<ring_all_t> s_ring_all_t; // output stream for the ring data
 
+	// load channel to det mapping
+	std::ifstream chanMap;
+	chanMap.open("chan_map/det_map_naive.dat");
+
 
 	// load test data
 	std::ifstream testData;
