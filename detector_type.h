@@ -1,5 +1,6 @@
 enum det_type
 {
+    NONE = 0,
     RING_ONE = 1,
     RING_TWO = 2,
     RING_THREE = 3,

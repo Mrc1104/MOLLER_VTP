@@ -26,8 +26,8 @@ typedef struct
 // ...
 // - vxs_ch[ 208 ] to vxs_ch[ 223 ]: VME slot 19, ch 0 to 15 FADC channels
 //
-//#define N_CHAN_SEC 64 // number of FADC channels per sector (16 FADC ch per segment, 4 segment per sector)
 #define N_CHAN_SEC 224 // number of FADC channels per sector (16 FADC ch per segment, 4 segment per sector)
+#define N_SLOT 14 // number of FADC slots in the VXS Crate
 // Be careful, max array n can make is 4096 bits wide (4096/16 = 256 so we are good)
 typedef struct
 {

@@ -8,7 +8,10 @@ using std::cout; using std::endl;
 #include <string>
 
 #include "moller_hls.h"
+
+// channel mapping
 #include "detector_type.h"
+#include "chan_map.h"
 
 void generateRndData(hit_t* vxs_chan){
 
@@ -56,10 +59,17 @@ int main(int argc, char *argv[])
 	hls::stream<ring_trigger_t> s_ring_trigger; // output stream for for the ring trigger data
 	hls::stream<ring_all_t> s_ring_all_t; // output stream for the ring data
 
+	// I/O
+	std::string comment;
+
 	// load channel to det mapping
 	std::ifstream chanMap;
 	chanMap.open("chan_map/det_map_naive.dat");
+	chan_map chmap[N_SLOT][16]; // N_SLOT is defined in moller_hls.h
+								// Each FADC has 16 chans (one FADC per slot)
+	if(chanMap){
 
+	}
 
 	// load test data
 	std::ifstream testData;
@@ -71,7 +81,6 @@ int main(int argc, char *argv[])
 		fadc_hits.vxs_chan[ch].t = 0;
 	}
 	// generateRndData(fadc_hits.vxs_chan);
-	std::string comment;
 	if(testData){
 		std::getline(testData, comment);
 		int index;
