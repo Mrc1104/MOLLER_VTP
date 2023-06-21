@@ -85,6 +85,8 @@ int main(int argc, char *argv[])
 				fchan_map.putback(tmp);
 				fchan_map >> ch >> detector_id >> seg_num >> sub_elem;
 				cout << "ch:" << ch << " detector_id: " << detector_id << " seg_num: " << seg_num << " sub_elem: " << sub_elem << endl;
+				chmap[0][ch] = {m[detector_id], seg_num, sub_elem};
+				cout << "chmap[0]["<<ch<<"] = " << m[detector_id] << " " << seg_num << " " << sub_elem << endl;
 			}
 		}
 	}
