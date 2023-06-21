@@ -1,4 +1,5 @@
 #include "moller_hls.h"
+#include "detector_type.h"
 
 
 void moller_hls

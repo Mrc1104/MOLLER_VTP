@@ -8,6 +8,7 @@ using std::cout; using std::endl;
 #include <string>
 
 #include "moller_hls.h"
+#include "detector_type.h"
 
 void generateRndData(hit_t* vxs_chan){
 
