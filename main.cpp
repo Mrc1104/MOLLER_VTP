@@ -103,7 +103,7 @@ int main(int argc, char *argv[])
 				fout_array << "{" << chmap[i][j].DET_ID << ", " << chmap[i][j].SEG_NUM << ", " << chmap[i][j].SUB_ELEMENT << "}";
 		}
 		if(i < N_SLOT-1)
-			fout_array << "},";
+			fout_array << " },";
 		else
 			fout_array << "}\n";
 	}
