@@ -78,10 +78,12 @@ int main(int argc, char *argv[])
 		cout << "HERE" << endl;
 		while( fchan_map >> ch){
 			if(ch == '#'){
+				cout << "HERE1" << endl;
 				std::getline(fchan_map, comment);
 				cout << comment << endl;
 			}
 			else{
+				cout << "HERE1" << endl;
 				fchan_map >> detector_id >> seg_num >> sub_elem;
 				chmap[slot][ch] = {m[detector_id], seg_num, sub_elem};
 				cout << "chmap[" << slot << "][" << ch << "] = " << chmap[slot][ch].DET_ID 
