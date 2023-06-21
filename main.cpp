@@ -88,8 +88,8 @@ int main(int argc, char *argv[])
 				chmap[slot][ch] = {m[detector_id], seg_num, sub_elem};
 				cout << channelCount << " chmap[" << slot <<"]["<<ch<<"] = " << m[detector_id] << " " << seg_num << " " << sub_elem << endl;
 				channelCount++;
+				if(ch == 15) slot++;
 			}
-			if(ch == 15) slot++;
 		}
 	}
 	cout << "Channel Count: " << channelCount << endl;
