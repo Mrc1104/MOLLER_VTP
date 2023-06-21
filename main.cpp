@@ -98,10 +98,9 @@ int main(int argc, char *argv[])
 		fout_array << "{ ";
 		for(int j = 0; j < 16; j++){
 			if(j < 15)
-				fout_array << "{" << chmap[i][j].DET_ID << ", " << chmap[i][j].SEG_NUM << ", " << chmap[i][j].SUB_ELEMENT << "},"
+				fout_array << "{" << chmap[i][j].DET_ID << ", " << chmap[i][j].SEG_NUM << ", " << chmap[i][j].SUB_ELEMENT << "},";
 			else
-				fout_array << "{" << chmap[i][j].DET_ID << ", " << chmap[i][j].SEG_NUM << ", " << chmap[i][j].SUB_ELEMENT << "},\n"
-
+				fout_array << "{" << chmap[i][j].DET_ID << ", " << chmap[i][j].SEG_NUM << ", " << chmap[i][j].SUB_ELEMENT << "},\n";
 		}
 		if(i < N_SLOT-1)
 			fout_array << "},\n";
