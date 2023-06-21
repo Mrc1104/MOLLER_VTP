@@ -68,7 +68,7 @@ int main(int argc, char *argv[])
 	fchan_map.open("chan_map/det_map_naive.dat");
 	chan_map chmap[N_SLOT][16]; // N_SLOT is defined in moller_hls.h
 								// Each FADC has 16 chans (one FADC per slot)
-	char ch;
+	int ch;
 	std::string detector_id;
 	int seg_num;
 	int sub_elem;
@@ -76,9 +76,9 @@ int main(int argc, char *argv[])
 	int slot = 0;
 	if(fchan_map){
 		std::getline(fchan_map, comment);
-		while( fchan_map >> ch){
-			if(ch == '#'){
-				cout << "HERE1" << endl;
+		while( fchan_map.peek() != EOF){
+			if(fchan_map.peek() == '#'){
+				cout << "ignore Line" << endl;
 				std::getline(fchan_map, comment);
 				cout << comment << endl;
 			}
