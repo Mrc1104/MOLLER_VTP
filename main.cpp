@@ -82,6 +82,8 @@ int main(int argc, char *argv[])
 			else{
 				fchan_map >> detector_id >> seg_num >> sub_elem;
 				chmap[slot][ch] = {m[detector_id], seg_num, sub_elem};
+				cout << "chmap[" << slot << "][" << ch << "] = " << chmap[slot][ch].DET_ID 
+					 << " " <<  chmap[slot][ch].SEG_NUM << " " << chmap[slot][ch].SUB_ELEMENT << endl;
 			}
 			if(ch == 15) slot++;
 
