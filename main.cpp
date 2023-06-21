@@ -75,8 +75,8 @@ int main(int argc, char *argv[])
 
 	int slot = 0;
 	if(fchan_map){
-		while( fchan_map.peek() != EOF){
-			if(fchan_map.peek() == '#'){ // ignore # lines
+		while( fchan_map >> ch){
+			if(ch == '#'){ // ignore # lines
 				std::getline(fchan_map, comment);
 				cout << comment << endl;
 			}
