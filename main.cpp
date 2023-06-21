@@ -78,6 +78,7 @@ int main(int argc, char *argv[])
 		while( fchan_map >> ch){
 			if(ch == '#'){
 				std::getline(fchan_map, comment);
+				cout << comment << endl;
 			}
 			else{
 				fchan_map >> detector_id >> seg_num >> sub_elem;
