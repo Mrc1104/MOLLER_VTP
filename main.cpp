@@ -12,6 +12,7 @@ using std::cout; using std::endl;
 // channel mapping
 #include "detector_type.h"
 #include "chan_map.h"
+#include <map>
 
 void generateRndData(hit_t* vxs_chan){
 
@@ -68,7 +69,7 @@ int main(int argc, char *argv[])
 	chan_map chmap[N_SLOT][16]; // N_SLOT is defined in moller_hls.h
 								// Each FADC has 16 chans (one FADC per slot)
 	if(chanMap){
-
+		
 	}
 
 	// load test data

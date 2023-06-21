@@ -1,4 +1,5 @@
 #include <ap_int.h>
+#include <map>
 #include "detector_type.h"
 typedef struct 
 {
@@ -6,3 +7,17 @@ typedef struct
     ap_uint<5> SEG_NUM;
     ap_uint<8> SUB_ELEMENT;
 } chan_map;
+
+std::map<std::string, det_type> m = 
+{
+    {"RING_ONE", RING_ONE},
+    {"RING_TWO", RING_TWO},
+    {"RING_THREE", RING_THREE},
+    {"RING_FOUR", RING_FOUR},
+    {"RING_FIVE", RING_FIVE},
+    {"RING_SIX", RING_SIX},
+    {"RING_SEVEN", RING_SEVEN},
+    {"TRIG_SCINT", TRIG_SCINT},
+    {"PION_DET", PION_DET},
+    {"SHOWER_MAX", SHOWER_MAX}
+};
