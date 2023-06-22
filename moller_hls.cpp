@@ -50,6 +50,8 @@ void moller_hls
       		int segment_num = arr_chan_map[slot][ich].SEG_NUM; 
 			int sub_element = arr_chan_map[slot][ich].SUB_ELEMENT; 
 			int ringNum = -1;
+			std::cout << ch << " chmap[" << slot <<"]["<<ich<<"] = " << det << " " << segment_num << " " << sub_element << std::endl;
+
 			switch(det)
 			{
 			case RING_ONE:
