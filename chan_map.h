@@ -13,7 +13,7 @@ typedef struct
     ap_int<9> SUB_ELEMENT;
 } chan_map;
 
-std::map<std::string, det_type> m = 
+const std::map<std::string, det_type> m = 
 {
     {"RING_ONE", RING_ONE},
     {"RING_TWO", RING_TWO},
