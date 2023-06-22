@@ -112,8 +112,8 @@ int main(int argc, char *argv[])
 				fchan_map.putback(tmp); // char has issues reading multi-digit #s 
 				fchan_map >> ch >> detector_id >> seg_num >> sub_elem;
 				chmap[slot][ch] = {m.at(detector_id), seg_num, sub_elem};
-				// cout << channelCount << " chmap[" << slot <<"]["<<ch<<"] = " << m[detector_id] << " " << seg_num << " " << sub_elem << endl;
-				// channelCount++;
+				cout << channelCount << " chmap[" << slot <<"]["<<ch<<"] = " << m.at(detector_id) << " " << seg_num << " " << sub_elem << endl;
+				channelCount++;
 				if(ch == 15) slot++;
 			}
 		}
