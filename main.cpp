@@ -88,7 +88,7 @@ int main(int argc, char *argv[])
 
 	// load channel to det mapping
 	std::ifstream fchan_map;
-	fchan_map.open("chan_map/det_map_naive.conf");
+	fchan_map.open("chan_map/det_map_naive2.conf");
 	/* If the chmap[][] is already created and stored in a header file, include it and comment out the I/O section*/
 	// #include "chan_map/array#.h"
 	
