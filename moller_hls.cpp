@@ -67,7 +67,7 @@ void moller_hls
 				ringNum = 3; 
 				break;
 			case RING_FIVE: // ring 5 has 3 subrings
-				if(sub_element = 'A') ringNum = 4;
+				if(sub_element = 65) ringNum = 4;
 				if(sub_element = 'B') ringNum = 5;
 				if(sub_element = 'C') ringNum = 6;
 				break;	
