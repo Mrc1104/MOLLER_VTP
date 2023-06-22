@@ -136,7 +136,7 @@ int main(int argc, char *argv[])
 
 	// generateRndData(fadc_hits.vxs_chan);
 
-	
+	/*
 	if(testData){
 		std::getline(testData, comment);
 		int index;
@@ -176,7 +176,7 @@ int main(int argc, char *argv[])
 
 	}
 	
-	/*
+	
 	// TRIGGER INFO BLOCK
 	printf("\nRing Data:__________________\n");
 	while(!s_ring_all_t.empty())
