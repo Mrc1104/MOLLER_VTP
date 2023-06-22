@@ -41,10 +41,45 @@ void moller_hls
 			segment++;
 		}
 		if(fadc_hits.vxs_chan[ch].e >= energy_threshold ){ // else, no hit
-      		int ring_num = ch%8;
-      		int segment_num = segment; 
-			add_ring_data(ring_num, segment_num, fadc_hits.vxs_chan[ch], allr.r);
-			make_timing_bitmap(ring_num, fadc_hits.vxs_chan[ch], &time_bitmap);
+			/* Need to determine which channel corresponds to which slot / fadc channel */
+			int ich = ch%16; // channel # inside the fadc (starts at 0)
+			int slot = (ch-ich)/16; // slot # (starts at 0)
+
+			/* Get Channel to Detector Mappig Information */
+      		det_type det = arr_chan_map[slot][ich].DET_ID; 
+      		int segment_num = arr_chan_map[slot][ich].SEG_NUM; 
+			int sub_element = arr_chan_map[slot][ich].SUB_ELEMENT; 
+			int ringNum = -1;
+			switch(det)
+			{
+			case RING_ONE:
+				ringNum = 0; // we start counting rings at 0
+				break;
+			case RING_TWO:
+				ringNum = 1; 
+				break;
+			case RING_THREE:
+				ringNum = 2; 
+				break;
+			case RING_FOUR:
+				ringNum = 3; 
+				break;
+			case RING_FIVE: // ring 5 has 3 subrings
+				if(sub_element = 'A') ringNum = 4;
+				if(sub_element = 'B') ringNum = 5;
+				if(sub_element = 'C') ringNum = 6;
+				break;	
+			case RING_SIX: 
+				ringNum = 7;
+			case NONE:
+				break;
+			default:
+				break;
+			}
+			if(ringNum != -1){
+				add_ring_data(ringNum, segment_num, fadc_hits.vxs_chan[ch], allr.r);
+				make_timing_bitmap(ringNum, fadc_hits.vxs_chan[ch], &time_bitmap);
+			}
 		}
 	} // end for loop
 
@@ -67,11 +102,9 @@ void add_ring_data(
 )
 {
 
-	
 	rings[ringNum].e += hit_data.e;
 	rings[ringNum].nhits += 1;
 	rings[ringNum].segment[hit_segment] = 1;
-
 	// #include <iostream>
 	// using std::cout; using std::endl;
 	// cout << "ringNum: " << ringNum << endl;

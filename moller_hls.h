@@ -101,7 +101,7 @@ void moller_hls
 // parses FADC channel data and sums it to the appropriate ring
 void add_ring_data(
 	int ringNum,
-	int hit_segment, 
+	int hit_segment,
 	hit_t hit_data,
 	ring_hit_t* rings
 );
