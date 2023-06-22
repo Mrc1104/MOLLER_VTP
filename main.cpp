@@ -88,7 +88,7 @@ int main(int argc, char *argv[])
 
 	// load channel to det mapping
 	std::ifstream fchan_map;
-	fchan_map.open("chan_map/det_map_naive.conf");
+	fchan_map.open("chan_map/det_map_naive2.conf");
 	/* If the chmap[][] is already created and stored in a header file, include it and comment out the I/O section*/
 	// #include "chan_map/array#.h"
 	
@@ -114,7 +114,7 @@ int main(int argc, char *argv[])
 				chmap[slot][ch] = {m.at(detector_id), seg_num, sub_elem};
 				cout << channelCount << " chmap[" << slot <<"]["<<ch<<"] = " << m.at(detector_id) << " " << seg_num << " " << sub_elem << endl;
 				channelCount++;
-				if(ch == 15) slot++;
+				if( channelCount%16 == 0) slot++;
 			}
 		}
 	}
