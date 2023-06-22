@@ -1,9 +1,11 @@
+#ifndef CHAN_MAP_H
+#define CHAN_MAP_H
+
 #include <ap_int.h>
 #include <map>
 #include "detector_type.h"
 
-#ifndef CHAN_MAP_H
-#define CHAN_MAP_H
+
 typedef struct 
 {
     det_type DET_ID;
