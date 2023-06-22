@@ -45,9 +45,9 @@ void generateRndData(hit_t* vxs_chan){
 	}
 }
 
-void save_chan_map_array(chan_map arr[][16], std::string name, std::string path)
+void save_chan_map_array(chan_map arr[][16], std::string path)
 {
-	std::ofstream fout_array((path+name).c_str());
+	std::ofstream fout_array(path.c_str());
 	fout_array << "#include \"chan_map.h\"\n\n";
 	fout_array << "const chan_map chmap[N_SLOT][16] = {";
 	for(int i = 0 ; i < N_SLOT; i++){
@@ -117,7 +117,7 @@ int main(int argc, char *argv[])
 	
 	// Uncomment if you want to save the chan_map array to a file       //
 	// Remember to specify which name and path you want to save it in   //
-	save_chan_map_array(chmap,"array1.h","chan_map/" );
+	save_chan_map_array(chmap,"chan_map/array1.h" );
 	
 
 	
