@@ -112,7 +112,7 @@ int main(int argc, char *argv[])
 				fchan_map.putback(tmp); // char has issues reading multi-digit #s 
 				fchan_map >> ch >> detector_id >> seg_num >> sub_elem;
 				chmap[slot][ch] = {m.at(detector_id), seg_num, sub_elem};
-				cout << channelCount << " chmap[" << slot <<"]["<<ch<<"] = " << m.at(detector_id) << " " << seg_num << " " << sub_elem << endl;
+				// cout << channelCount << " chmap[" << slot <<"]["<<ch<<"] = " << m.at(detector_id) << " " << seg_num << " " << sub_elem << endl;
 				channelCount++;
 				if( channelCount%16 == 0) slot++;
 			}
@@ -120,7 +120,7 @@ int main(int argc, char *argv[])
 	}
 	// Uncomment if you want to save the chan_map array to a file       //
 	// Remember to specify which name and path you want to save it in   //
-	// save_chan_map_array(chmap,"chan_map/array2.h" );
+	save_chan_map_array(chmap,"chan_map/array2.h" );
 	
 
 	
@@ -136,7 +136,7 @@ int main(int argc, char *argv[])
 
 	// generateRndData(fadc_hits.vxs_chan);
 
-	/*
+	
 	if(testData){
 		std::getline(testData, comment);
 		int index;
@@ -227,6 +227,6 @@ int main(int argc, char *argv[])
 		t32ns++;
 	}
 
-	*/
+	
 	return 0;
 }
