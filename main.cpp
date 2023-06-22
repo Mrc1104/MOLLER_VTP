@@ -85,7 +85,7 @@ int main(int argc, char *argv[])
 
 	// load channel to det mapping
 	std::ifstream fchan_map;
-	fchan_map.open("chan_map/det_map_naive.dat");
+	fchan_map.open("chan_map/det_map_naive.conf");
 	chan_map chmap[N_SLOT][16]; // N_SLOT is defined in moller_hls.h
 								// Each FADC has 16 chans (one FADC per slot)
 	char tmp;
