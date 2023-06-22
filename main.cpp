@@ -120,7 +120,7 @@ int main(int argc, char *argv[])
 	}
 	// Uncomment if you want to save the chan_map array to a file       //
 	// Remember to specify which name and path you want to save it in   //
-	save_chan_map_array(chmap,"chan_map/array1.h" );
+	// save_chan_map_array(chmap,"chan_map/array1.h" );
 	
 
 	
@@ -135,7 +135,7 @@ int main(int argc, char *argv[])
 	}
 
 	generateRndData(fadc_hits.vxs_chan);
-	
+
 	/*
 	if(testData){
 		std::getline(testData, comment);
