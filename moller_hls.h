@@ -4,6 +4,10 @@
 #include <ap_int.h>
 #include <hls_stream.h>
 
+#include "chan_map.h"
+#include "detector_type.h"
+
+
 
 // hit_t:
 // - every 32ns each fadc reports 13 bit energy, and 3 bit hit time (time offset in current 32ns clock: 0=0ns, 1=4ns, 2=8ns, ..., 7=28ns)

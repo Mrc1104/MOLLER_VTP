@@ -1,6 +1,4 @@
 #include "moller_hls.h"
-#include "detector_type.h"
-#include "chan_map.h"
 
 
 void moller_hls
