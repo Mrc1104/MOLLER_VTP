@@ -166,7 +166,7 @@ int main(int argc, char *argv[])
 		);
 
 	}
-	/*
+	
 	// TRIGGER INFO BLOCK
 	printf("\nRing Data:__________________\n");
 	while(!s_ring_all_t.empty())
@@ -217,6 +217,6 @@ int main(int argc, char *argv[])
 		t32ns++;
 	}
 
-	*/
+	
 	return 0;
 }
