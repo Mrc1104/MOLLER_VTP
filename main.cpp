@@ -48,7 +48,8 @@ void generateRndData(hit_t* vxs_chan){
 void save_chan_map_array(chan_map arr[][16], std::string path)
 {
 	std::ofstream fout_array(path.c_str());
-	fout_array << "chan_map chmap[N_SLOT][16] = {";
+	fout_array << "#include \"chan_map.h\"\n";
+	fout_array << "const chan_map chmap[N_SLOT][16] = {";
 	for(int i = 0 ; i < N_SLOT; i++){
 		fout_array << "\n{ ";
 		for(int j = 0; j < 16; j++){
