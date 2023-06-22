@@ -55,9 +55,9 @@ void save_chan_map_array(chan_map arr[][16], std::string path)
 		fout_array << "\n{ ";
 		for(int j = 0; j < 16; j++){
 			if(j < 15)
-				fout_array << "{" << arr[i][j].DET_ID << ", " << arr[i][j].SEG_NUM << ", " << arr[i][j].SUB_ELEMENT << "},";
+				fout_array << "{" << m2.at(arr[i][j].DET_ID) << ", " << arr[i][j].SEG_NUM << ", " << arr[i][j].SUB_ELEMENT << "},";
 			else
-				fout_array << "{" << arr[i][j].DET_ID << ", " << arr[i][j].SEG_NUM << ", " << arr[i][j].SUB_ELEMENT << "}";
+				fout_array << "{" << m2.at(arr[i][j].DET_ID) << ", " << arr[i][j].SEG_NUM << ", " << arr[i][j].SUB_ELEMENT << "}";
 		}
 		if(i < N_SLOT-1)
 			fout_array << " },";
