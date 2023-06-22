@@ -118,8 +118,6 @@ int main(int argc, char *argv[])
 			}
 		}
 	}
-
-	
 	// Uncomment if you want to save the chan_map array to a file       //
 	// Remember to specify which name and path you want to save it in   //
 	save_chan_map_array(chmap,"chan_map/array1.h" );
@@ -135,7 +133,10 @@ int main(int argc, char *argv[])
 		fadc_hits.vxs_chan[ch].e = 0;
 		fadc_hits.vxs_chan[ch].t = 0;
 	}
-	// generateRndData(fadc_hits.vxs_chan);
+
+	generateRndData(fadc_hits.vxs_chan);
+	
+	/*
 	if(testData){
 		std::getline(testData, comment);
 		int index;
@@ -156,6 +157,8 @@ int main(int argc, char *argv[])
 	else{
 		std::cout << "Cannot load test data file" << std::endl;
 	}
+	*/
+
 	s_fadc_hits.write(fadc_hits);
 	while(!s_fadc_hits.empty()){
 
