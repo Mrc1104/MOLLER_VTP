@@ -1,3 +1,4 @@
+#pragma once
 #include "../moller_hls.h"
 #include "../chan_map.h"
 
