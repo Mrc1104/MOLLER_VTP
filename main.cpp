@@ -88,7 +88,7 @@ int main(int argc, char *argv[])
 
 	// load channel to det mapping
 	std::ifstream fchan_map;
-	fchan_map.open("chan_map/det_map_naive2.conf");
+	fchan_map.open("chan_map/det_map_naive1.conf");
 	/* If the chmap[][] is already created and stored in a header file, include it and comment out the I/O section*/
 	// #include "chan_map/array#.h"
 	
@@ -101,7 +101,6 @@ int main(int argc, char *argv[])
 	int sub_elem;
 
 	int slot = 0;
-
 	int channelCount = 0;
 	if(fchan_map){
 		while( fchan_map >> tmp){
@@ -120,7 +119,7 @@ int main(int argc, char *argv[])
 	}
 	// Uncomment if you want to save the chan_map array to a file       //
 	// Remember to specify which name and path you want to save it in   //
-	save_chan_map_array(chmap,"chan_map/array2.h" );
+	// save_chan_map_array(chmap,"chan_map/array1.h" );
 	
 
 	
