@@ -112,28 +112,11 @@ int main(int argc, char *argv[])
 			}
 		}
 	}
-	// save_chan_map_array(chmap,"chan_map/array1.h" );
-	save_chan_map_array(chmap,"chan_map/testFuncCall.h" );
+
 	/*
-	// Uncomment if you want to save the chan_map array to a file
-	// Remember to specify which path you want to save it in
-	std::string array_path = "chan_map/array1.h";
-	std::ofstream fout_array(array_path.c_str());
-	fout_array << "chan_map chmap[N_SLOT][16] = {";
-	for(int i = 0 ; i < N_SLOT; i++){
-		fout_array << "\n{ ";
-		for(int j = 0; j < 16; j++){
-			if(j < 15)
-				fout_array << "{" << chmap[i][j].DET_ID << ", " << chmap[i][j].SEG_NUM << ", " << chmap[i][j].SUB_ELEMENT << "},";
-			else
-				fout_array << "{" << chmap[i][j].DET_ID << ", " << chmap[i][j].SEG_NUM << ", " << chmap[i][j].SUB_ELEMENT << "}";
-		}
-		if(i < N_SLOT-1)
-			fout_array << " },";
-		else
-			fout_array << " }\n";
-	}
-	fout_array << "};";
+	// Uncomment if you want to save the chan_map array to a file //
+	// Remember to specify which path you want to save it in      //
+	save_chan_map_array(chmap,"chan_map/array1.h" );
 	*/
 
 	
