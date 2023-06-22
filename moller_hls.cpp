@@ -1,16 +1,18 @@
 #include "moller_hls.h"
 #include "detector_type.h"
+#include "chan_map.h"
 
 
 void moller_hls
 (
-	ap_uint<3> hit_dt, // coincidence tolerance
-	ap_uint<13> energy_threshold, // minimum energy for us to look at an individual hit
-	ap_uint<16> ring_threshold, // minimum summed energy (over one ring) to count a ring as hit
-	hls::stream<fadc_hits_t> &s_fadc_hits, // raw FADC data input stream
-	hls::stream<trigger_t> &s_trigger, // output stream for for the trigger data
+	ap_uint<3> hit_dt, 							 // coincidence tolerance
+	ap_uint<13> energy_threshold, 				 // minimum energy for us to look at an individual hit
+	ap_uint<16> ring_threshold, 				 // minimum summed energy (over one ring) to count a ring as hit
+	chan_map arr_chan_map[][16], 				 // array that maps the channel to detector
+	hls::stream<fadc_hits_t> &s_fadc_hits, 		 // raw FADC data input stream
+	hls::stream<trigger_t> &s_trigger, 			 // output stream for for the trigger data
 	hls::stream<ring_trigger_t> &s_ring_trigger, // output stream for for the ring trigger data
-	hls::stream<ring_all_t> &s_ring_all_t // output stream for the ring data
+	hls::stream<ring_all_t> &s_ring_all_t 		 // output stream for the ring data
 )
 {
 	fadc_hits_t fadc_hits = s_fadc_hits.read();

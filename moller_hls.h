@@ -28,7 +28,6 @@ typedef struct
 //
 #define N_CHAN_SEC 224 // number of FADC channels per sector (16 FADC ch per segment, 4 segment per sector)
 #define N_SLOT 14 // number of FADC slots in the VXS Crate
-// Be careful, max array n can make is 4096 bits wide (4096/16 = 256 so we are good)
 typedef struct
 {
 	hit_t vxs_chan[N_CHAN_SEC];
@@ -37,10 +36,10 @@ typedef struct
 
 // ring_hit_t:
 // - Hit data for a single ring
-// - e: sum of the energy of all the hits on a ind. ring
-// - t: ring time measured at the central hit time
-// - nhits: number of hits on an ind. ring
-// - segment: bit map for the 28 segments in our detector
+// - e: 		sum of the energy of all the hits on a ind. ring
+// - t: 		ring time measured at the central hit time
+// - nhits:		number of hits on an ind. ring
+// - segment: 	bit map for the 28 segments in our detector
 // - bitbuffer: bit buffer to make the struct multiple of 8
 typedef struct
 {
@@ -57,7 +56,7 @@ typedef struct
 } ring_all_t;
 
 // trigger_t:
-// - trig: bitmap for time - [0]=>0ns, [1]=>4ns, [2]=>8ns, ..., [7]=28ns, when bit=0 no trigger, when bit=1 trigger
+// - trig: 			   bitmap for time - [0]=>0ns, [1]=>4ns, [2]=>8ns, ..., [7]=28ns, when bit=0 no trigger, when bit=1 trigger
 // - 8-element array, one for each ring: [0] = r1, [1] = r2, ..., [7] = r7; when bit=0 no time_trigger, when bit=1 time_trigger
 typedef struct
 {
@@ -74,24 +73,27 @@ typedef struct
 // moller_hls:
 // - main workhorse of the code where most of the logic is performed
 // - Inputs:
-// 		hit_dt - coincidence tolerance
-// 		seed_threshold - min energy for a hit to count
-// 		ring_threshold - min summed energy for a ring to be counted as hit
-// 		s_fadc_hits - input stream buffer for raw FADC data
-// 		rings - output stream of hit rings bitmap | [0]=1 => ring1 hit;[0]=0 => ring1 not hit 
-// 		trigger - output stream of rings timing trigger bitmap
+// 		hit_dt						 - coincidence tolerance
+// 		seed_threshold 				 - min energy for a hit to count
+// 		ring_threshold 				 - min summed energy for a ring to be counted as hit
+//      chan_map arr_chan_map[][16]  - array that maps the channel to detector 
+// 		s_fadc_hits 				 - input stream for raw FADC data
+// 		rings 						 - output stream of hit rings bitmap | [0]=1 => ring1 hit;[0]=0 => ring1 not hit 
+// 		trigger 					 - output stream of rings timing trigger bitmap
 void moller_hls
 (
-	ap_uint<3> hit_dt, // coincidence tolerance
-	ap_uint<13> energy_threshold, // minimum energy for us to look at an individual hit
-	ap_uint<16> ring_threshold, // minimum summed energy (over one ring) to count a ring as hit
-	hls::stream<fadc_hits_t> &s_fadc_hits, // raw FADC data input stream
-	hls::stream<trigger_t> &s_trigger, // output stream for for the trigger data
-	hls::stream<ring_trigger_t> &s_ring_trigger, // output stream for for the ring trigger data
-	hls::stream<ring_all_t> &s_ring_all_t // output strean for the ring data
+	ap_uint<3> hit_dt, 							
+	ap_uint<13> energy_threshold, 			   
+	ap_uint<16> ring_threshold, 				
+	chan_map arr_chan_map[][16], 				
+	hls::stream<fadc_hits_t> &s_fadc_hits, 
+	hls::stream<trigger_t> &s_trigger,
+	hls::stream<ring_trigger_t> &s_ring_trigger,
+	hls::stream<ring_all_t> &s_ring_all_
 );
 
 /* define sub functions here */
+
 // parses FADC channel data and sums it to the appropriate ring
 void add_ring_data(
 	int ringNum,
