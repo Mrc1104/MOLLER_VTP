@@ -88,9 +88,9 @@ int main(int argc, char *argv[])
 
 	// load channel to det mapping
 	std::ifstream fchan_map;
-	fchan_map.open("chan_map/det_map_naive.conf");
+	fchan_map.open("chan_map/det_map_naive2.conf");
 	/* If the chmap[][] is already created and stored in a header file, include it and comment out the I/O section*/
-	// #include "chan_map/array1.h"
+	// #include "chan_map/array#.h"
 	
 	chan_map chmap[N_SLOT][16]; // N_SLOT is defined in moller_hls.h
 								// Each FADC has 16 chans (one FADC per slot)
@@ -120,7 +120,7 @@ int main(int argc, char *argv[])
 	}
 	// Uncomment if you want to save the chan_map array to a file       //
 	// Remember to specify which name and path you want to save it in   //
-	// save_chan_map_array(chmap,"chan_map/array1.h" );
+	save_chan_map_array(chmap,"chan_map/array2.h" );
 	
 
 	
@@ -134,9 +134,9 @@ int main(int argc, char *argv[])
 		fadc_hits.vxs_chan[ch].t = 0;
 	}
 
-	generateRndData(fadc_hits.vxs_chan);
+	// generateRndData(fadc_hits.vxs_chan);
 
-	/*
+	
 	if(testData){
 		std::getline(testData, comment);
 		int index;
@@ -157,7 +157,7 @@ int main(int argc, char *argv[])
 	else{
 		std::cout << "Cannot load test data file" << std::endl;
 	}
-	*/
+	
 
 	s_fadc_hits.write(fadc_hits);
 	while(!s_fadc_hits.empty()){
