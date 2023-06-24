@@ -1,0 +1,66 @@
+0 5 4 
+1 5 5 
+2 5 6 
+3 5 7 
+4 5 0 
+5 5 1 
+6 5 2 
+7 5 3 
+
+Ring Data:__________________
+ringNum: 0
+ring_data.r[0].e: 5
+ring_data.r[0].nhits: 1
+ring_data.r[0].segment: [0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][1]
+ringNum: 1
+ring_data.r[1].e: 5
+ring_data.r[1].nhits: 1
+ring_data.r[1].segment: [0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][1]
+ringNum: 2
+ring_data.r[2].e: 5
+ring_data.r[2].nhits: 1
+ring_data.r[2].segment: [0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][1]
+ringNum: 3
+ring_data.r[3].e: 5
+ring_data.r[3].nhits: 1
+ring_data.r[3].segment: [0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][1]
+ringNum: 4
+ring_data.r[4].e: 5
+ring_data.r[4].nhits: 1
+ring_data.r[4].segment: [0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][1]
+ringNum: 5
+ring_data.r[5].e: 5
+ring_data.r[5].nhits: 1
+ring_data.r[5].segment: [0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][1]
+ringNum: 6
+ring_data.r[6].e: 5
+ring_data.r[6].nhits: 1
+ring_data.r[6].segment: [0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][1]
+ringNum: 7
+ring_data.r[7].e: 5
+ring_data.r[7].nhits: 1
+ring_data.r[7].segment: [0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][1]
+
+Ring Trig Data:__________________
+Format:	 7 ------------------ 0	 ring #
+[1][1][1][1][1][1][1][1]
+
+Time Trig Data:__________________
+Format:	 7 ------------------ 0	 4ns ticks
+Trigger found at T=-16ns
+Ring: 0	[0][0][0][0][0][0][0][1]
+Trigger found at T=-12ns
+Ring: 1	[0][0][0][0][0][0][1][0]
+Trigger found at T=-8ns
+Ring: 2	[0][0][0][0][0][1][0][0]
+Trigger found at T=-4ns
+Ring: 3	[0][0][0][0][1][0][0][0]
+Trigger found at T=0ns
+Ring: 4	[0][0][0][1][0][0][0][0]
+Trigger found at T=4ns
+Ring: 5	[0][0][1][0][0][0][0][0]
+Trigger found at T=8ns
+Ring: 6	[0][1][0][0][0][0][0][0]
+Trigger found at T=12ns
+Ring: 7	[1][0][0][0][0][0][0][0]
+INFO [HLS SIM]: The maximum depth reached by any hls::stream() instance in the design is 1
