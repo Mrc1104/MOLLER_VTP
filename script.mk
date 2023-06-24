@@ -1,9 +1,11 @@
 OPTION:=
-FILE:=
+PFILE:=
+HFILE:=
 configure:
 	echo "Hello from makefile, target: configure"
 	echo $(OPTION)
-	echo $(FILE)
+	echo $(PFILE)
 header:
 	echo "hello from makefile, target: header"
-	echo $(FILE)
+	echo $(PILE)
+	echo $(HILE)

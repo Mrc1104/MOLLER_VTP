@@ -67,7 +67,7 @@ while ( $RUN == 1 )
 		if( -e $paraPath ) then
 			echo "Warning! The file $paraPath alrady exists and will be overwritten"
 		endif
-		make -f script.mk configure OPTION=1 FILE=$paraPath
+		make -f script.mk configure OPTION=1 PFILE=$paraPath
 	endif
 
 	if ( $userInput == 2) then
@@ -81,18 +81,22 @@ while ( $RUN == 1 )
 			echo -n "No valid path given (provided: $paraPath); please do so now: "
 			set paraPath = $<
 		endif
-		make -f script.mk configure OPTION=2 FILE=$paraPath
+		make -f script.mk configure OPTION=2 PFILE=$paraPath
 	endif
 
 	if ( $userInput == 3 ) then
-		if( $headerPath == "") then
+		if( $paraPath == "") then
 			echo -n "No Parameter File given; please do so now: "
 			set paraPath = $<
+		endif
+		if( $headerPath == "") then
+			echo -n "No Parameter File given; please do so now: "
+			set headerPath = $<
 		endif
 		if( -e $headerPath) then
 			echo "Warning! The file $headerPath alrady exists and will be overwritten"
 		else
-		make -f script.mk header FILE=$headerPath
+		make -f script.mk header PFILE=$paraPath HFILE=$headerPath
 	endif
 
 	if ( $userInput == 4 ) then
