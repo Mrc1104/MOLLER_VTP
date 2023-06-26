@@ -26,6 +26,9 @@ void display_channel_choices();
 int get_scint_sub_element(const vector<int> &v);
 
 
+void read_contents(const string& file_name, vector<string> &lines);
+void update_contents(vector<string> &lines);
+void find_avail_slots(const vector<string> &inp, vector<int> &out);
 
 int main(int argc, char* argv[])
 {
@@ -37,7 +40,7 @@ int main(int argc, char* argv[])
 		
 
 
-	return 1;
+	return 0;
 }
 
 
@@ -64,7 +67,9 @@ void create(const string path)
 }
 void modify(const string path)
 {
-
+	vector<string> vbuffer;
+	read_contents(path, vbuffer);
+	update_contents(vbuffer);
 
 }
 
@@ -250,4 +255,32 @@ int get_scint_sub_element(const vector<int> &v)
 	// cout << "index_sub_slot: " << index_sub_slot << endl;
 	// cout << "absolute_channel " << absolute_channel << endl;
 	return absolute_channel;
+}
+
+
+void read_contents(const string& file_name, vector<string> &lines)
+{
+	ifstream inp(file_name);
+	string tmp;
+	while(getline(inp,tmp)){
+		lines.push_back(tmp);
+	}
+}
+
+
+void update_contents(vector<string> &lines)
+{
+	vector<int> avail_slots;
+	find_avail_slots(lines, avail_slots);
+
+}
+
+void find_avail_slots(const vector<string> &inp, vector<int> &out)
+{
+	for(int i = 0; i < inp.size(); i++){
+		if(inp[i][0] == '#' && inp[i].substr(2,4) == "SLOT"){
+			out.push_back(
+		}
+	}
+
 }
