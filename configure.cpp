@@ -168,6 +168,7 @@ vector<sdet> get_channel_info(const vector<int> &slots, const int ii)
 		case 5:
 			v[chan_num].det = "RING_FIVE";
 			v[chan_num].seg = seg_choice;
+			cout << "_________________________________________________________________________________________\n";
 			cout << "1) RING 5A\n";
 			cout << "2) RING 5B\n";
 			cout << "3) RING 5C\n";
@@ -177,6 +178,7 @@ vector<sdet> get_channel_info(const vector<int> &slots, const int ii)
 				cin.ignore();
 				cout << "Invalid Input! Enter 1 - 3: ";
 			}
+			cout << "_________________________________________________________________________________________\n";
 			v[chan_num].sub = sub_choice + 64;
 			break;
 		case 6:
@@ -186,7 +188,9 @@ vector<sdet> get_channel_info(const vector<int> &slots, const int ii)
 		case 7:
 			v[chan_num].det = "TRIG_SCINT";
 			v[chan_num].seg = seg_choice;
+			cout << "_________________________________________________________________________________________\n";
 			v[chan_num].sub = get_scint_sub_element(slots);
+			cout << "_________________________________________________________________________________________\n";
 			break;
 		case 8:
 			v[chan_num].det = "PION_DET";
@@ -234,7 +238,7 @@ int get_scint_sub_element(const vector<int> &v)
 	int sub_chan;
 	cout << "Sub_element:\n";
 	cout << "Enter the SLOT # of the TRIG_SCINT PAIR: ";
-	while( !(cin >> sub_slot)  && ( find(v.begin(),v.end(), sub_slot) != v.end() ) ){ // Check to see if the input is contained in v
+	while( !(cin >> sub_slot)  || ( find(v.begin(),v.end(), sub_slot) == v.end() ) ){ // Check to see if the input is contained in v
 		cin.clear();
 		cin.ignore();
 		cout << "Invalid Input! Possible slot choices: ";
@@ -272,6 +276,20 @@ void update_contents(vector<string> &lines)
 {
 	vector<int> avail_slots;
 	find_avail_slots(lines, avail_slots);
+	cout << "Available Slots:\n";
+	for(int i=0; i < avail_slots.size(); i++){
+		cout << "SLOT #: " << avail_slots[i] << endl;	
+	}
+	cout << "Which one would you like to view?\nEnter SLOT #: ";
+	int choice = 0;
+	while( !(cin >> choice) || find(avail_slots.begin(),avail_slots.end(), choice) == avail_slots.end() ){
+		cout << "Invalid Input. Please re-Enter: "; 	
+	}
+	std::vector<int>::iterator it = lines.begin(lines);
+	while(*it.at[0] !='#' ){
+		it++;
+	}
+	
 
 }
 
@@ -279,7 +297,9 @@ void find_avail_slots(const vector<string> &inp, vector<int> &out)
 {
 	for(int i = 0; i < inp.size(); i++){
 		if(inp[i][0] == '#' && inp[i].substr(2,4) == "SLOT"){
-			out.push_back(
+			string tmp = inp[i].substr(inp[i].size()-2,2);
+			int t = stoi(tmp);
+			out.push_back(t);
 		}
 	}
 
