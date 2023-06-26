@@ -3,6 +3,7 @@
 #include <vector>
 #include <string>
 #include <algorithm>
+#include <iterator>
 
 #include "detector_type.h"
 #include "std_map.h"
@@ -22,7 +23,7 @@ void print_header(ofstream& out);
 vector<int> get_slot_numbers();
 vector<sdet> get_channel_info(const vector<int> &slots, const int ii);
 void display_channel_choices();
-int get_scint_sub_element(const int curr_slot, const int curr_chan, const vector<int> &v);
+int get_scint_sub_element(const vector<int> &v);
 
 
 
@@ -46,15 +47,20 @@ void create(const string path)
 	ofstream out(path);
 	print_header(out);
 	vector<int> slots = get_slot_numbers();
-	if(slots.empty()) {cout << "ERROR: No slots given... exiting"; return ;}
+	if(slots.empty()) {cout << "ERROR: No slots given... exiting\n"; return ;}
+	cout << "HERE!" << endl;
 	for(int i = 0; i < slots.size(); i++){
 		vector<sdet> vdata = get_channel_info(slots, slots[i]);
 		out << "\n# SLOT " << slots[i] << endl;
 		for(int channel = 0; channel < vdata.size(); channel++){ // vdata.size() should == 16
-			cout << "ch: " << vdata.size();	
 			out << channel << "\t" << vdata[channel].det << "\t" << vdata[channel].seg << "\t" << vdata[channel].sub << endl;
 		}
 	}
+	cout << "\n\n#########################################################################################\n";
+	cout << "#########################################################################################\n";
+	cout << "#########################################################################################\n";
+	cout << "#########################################################################################\n";
+	cout << "\nParameter File: (" << path << ") Created!" << endl; 
 }
 void modify(const string path)
 {
@@ -157,10 +163,10 @@ vector<sdet> get_channel_info(const vector<int> &slots, const int ii)
 		case 5:
 			v[chan_num].det = "RING_FIVE";
 			v[chan_num].seg = seg_choice;
-			cout << "Sub_element:\n";
 			cout << "1) RING 5A\n";
 			cout << "2) RING 5B\n";
 			cout << "3) RING 5C\n";
+			cout << "Sub_element: ";
 			while( !(cin >> sub_choice)  && (sub_choice > 0 && sub_choice < 4) ){ // this logic does not work... why?
 				cin.clear();
 				cin.ignore();
@@ -175,7 +181,7 @@ vector<sdet> get_channel_info(const vector<int> &slots, const int ii)
 		case 7:
 			v[chan_num].det = "TRIG_SCINT";
 			v[chan_num].seg = seg_choice;
-			v[chan_num].sub = get_scint_sub_element(ii, chan_num, slots);
+			v[chan_num].sub = get_scint_sub_element(slots);
 			break;
 		case 8:
 			v[chan_num].det = "PION_DET";
@@ -217,13 +223,12 @@ void display_channel_choices()
 	cout << "Enter 0 - 9:\n";
 }
 
-int get_scint_sub_element(const int curr_slot, const int curr_chan, const vector<int> &v)
+int get_scint_sub_element(const vector<int> &v)
 {
-	int sub_choice;
 	int sub_slot;
 	int sub_chan;
 	cout << "Sub_element:\n";
-	cout << "Enter the SLOT # of the TRIG_SCINT PAIR: \nTRIG_SCINT PAIR SLOT#: ";
+	cout << "Enter the SLOT # of the TRIG_SCINT PAIR: ";
 	while( !(cin >> sub_slot)  && ( find(v.begin(),v.end(), sub_slot) != v.end() ) ){ // Check to see if the input is contained in v
 		cin.clear();
 		cin.ignore();
@@ -233,46 +238,16 @@ int get_scint_sub_element(const int curr_slot, const int curr_chan, const vector
 		}
 		cout << endl;
 	}
-	cout << "Enter the Channel # of the TRIG_SCINT PAIR: \nTRIG_SCINT PAIR CHAN #: ";
+	cout << "Enter the Channel # of the TRIG_SCINT PAIR: ";
 	while( !(cin >> sub_chan)  && (sub_chan > -1 && sub_chan < 16 ) ){ // logic does not work, why?
 		cin.clear();
 		cin.ignore();
 		cout << "Invalid Input! Enter a value between 0 - 15: ";
 	}
-	/* time to do math
-	 * 0) Cast all slot #s into vector indices
-	 * 1) Figure out which slot is larger	
-	 * 2) How many channels are left in smaller slot?
-	 * 3) How many empty slots between small and larger slot?
-	 * 4) How many channels in larger slot?
-	 * 5) Calculate absolute channel number of TRIG_SCINT PAIR
-	 * 		5a) we need the absolute index of the smaller index
-	*/
-	int larger_slot = 0;
-	int smaller_slot = 0;
-	int chan_remaining_smaller_slot = 0;
-	int chan_larger_slot = 0;
 
-	int index_curr_slot = find(v.begin(), v.end(), curr_slot) - v.begin();
-	int index_sub_slot = find(v.begin(), v.end(), sub_slot) - v.begin();
-	if( (index_curr_slot - index_sub_slot) > 0) { 
-		larger_slot = index_curr_slot;
-		smaller_slot = index_sub_slot;
-		chan_larger_slot = curr_slot;
-		chan_remaining_smaller_slot = 15 - sub_chan;
-	
-	}
-	else {
-		larger_slot = index_sub_slot;
-		smaller_slot = index_curr_slot;
-		chan_larger_slot = sub_slot;
-		chan_remaining_smaller_slot = 15 - curr_chan;
-	}
-	int slot_between = 0;
-	for(int tmp_index = smaller_slot; tmp_index < larger_slot-1; tmp_index++, slot_between++);
-	int chan_between = slot_between * 16;
-
-	int absolute_channel =  chan_remaining_smaller_slot + (slot_between*16) + chan_larger_slot + (smaller_slot)*16 + (16-chan_remaining_smaller_slot);
-	cout << "absolute_channel " << absolute_channel << endl;
-	return sub_choice;
+	int index_sub_slot = distance(v.begin(), find(v.begin(), v.end(), sub_slot) );
+	int absolute_channel = index_sub_slot * 16 + sub_chan;
+	// cout << "index_sub_slot: " << index_sub_slot << endl;
+	// cout << "absolute_channel " << absolute_channel << endl;
+	return absolute_channel;
 }
