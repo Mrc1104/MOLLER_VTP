@@ -66,10 +66,17 @@ while ( $RUN == 1 )
 		endif
 		if( -e $paraPath ) then
 			echo "Warning! The file $paraPath alrady exists and will be overwritten"
+			echo "Do you wish to continue? (n:0/y:1):"
+			set cont = $<
+			if( $cont == 1 ) then
+				echo "Continuing..."
+			else 
+				echo "Invalid input. Aborting..."
+				exit	
+			endif
 		endif
 		make -f script.mk configure OPTION=1 PFILE=$paraPath
 	endif
-
 	if ( $userInput == 2) then
 		if( $paraPath == "") then
 			echo -n "No Parameter File given; please do so now: "
@@ -83,7 +90,7 @@ while ( $RUN == 1 )
 		endif
 		make -f script.mk configure OPTION=2 PFILE=$paraPath
 	endif
-
+	
 	if ( $userInput == 3 ) then
 		if( $paraPath == "") then
 			echo -n "No Parameter File given; please do so now: "
@@ -95,7 +102,15 @@ while ( $RUN == 1 )
 		endif
 		if( -e $headerPath) then
 			echo "Warning! The file $headerPath alrady exists and will be overwritten"
-		else
+			echo "Do you wish to continue? (n:0/y:1):"
+			set cont = $<
+			if( $cont == 1 ) then
+				echo "Continuing..."
+			else 
+				echo "Invalid input. Aborting..."
+				exit	
+			endif
+		endif
 		make -f script.mk header PFILE=$paraPath HFILE=$headerPath
 	endif
 
