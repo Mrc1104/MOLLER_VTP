@@ -22,6 +22,7 @@ void modify(const string path);
 void print_header(ofstream& out);
 vector<int> get_slot_numbers();
 vector<sdet> get_channel_info(const vector<int> &slots, const int ii);
+void get_channel_data(const vector<int> &slots);
 void display_channel_choices();
 int get_scint_sub_element(const vector<int> &v);
 
@@ -285,11 +286,30 @@ void update_contents(vector<string> &lines)
 	while( !(cin >> choice) || find(avail_slots.begin(),avail_slots.end(), choice) == avail_slots.end() ){
 		cout << "Invalid Input. Please re-Enter: "; 	
 	}
-	std::vector<int>::iterator it = lines.begin(lines);
-	while(*it.at[0] !='#' ){
+
+	string key = "# SLOT " + to_string(choice);
+	vector<string>::iterator it = lines.begin();
+	while( *it != key ){
 		it++;
 	}
-	
+
+	vector<string> vchanges;
+	vchanges.push_back(*it);
+	it++;
+	cout << "#########################################################################################\n";
+	for(int counter = 1; counter < 17; counter++){
+		vchanges.push_back(*it);
+		it++;
+		cout << counter << ") "<< vchanges[counter] << endl;
+	}
+	cout << "-1) Finished" << endl;
+	cout << "_________________________________________________________________________________________\n";
+	int cchannels = 0;
+	vector<int> channels_to_change; 
+	while(cout << "What channel woudl you like to change? " && !(cin>>cchannels) || (cchannels < 16 && cchannels > -2)){
+		if(cchannels == -1) break;
+		channels_to_change.push_back(cchannels);
+	}
 
 }
 
@@ -302,5 +322,23 @@ void find_avail_slots(const vector<string> &inp, vector<int> &out)
 			out.push_back(t);
 		}
 	}
+
+}
+
+
+void get_channel_data()
+{
+
+
+
+
+
+
+
+
+
+
+
+
 
 }
