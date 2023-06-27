@@ -13,10 +13,11 @@ using std::cout; using std::endl;
 #include "detector_type.h"
 #include "chan_map.h"
 #include <map>
+#include "array1.h"
 
 void generateRndData(hit_t* vxs_chan){
 
-	std::srand(std::time(0)); // set random seed
+	std::srand(1); // set specific seed for testing latency
 	ap_uint<13> energy;
 	ap_uint<3> time;
 	for(int ch = 0; ch < N_CHAN_SEC; ch++){
@@ -45,29 +46,6 @@ void generateRndData(hit_t* vxs_chan){
 	}
 }
 
-void save_chan_map_array(chan_map arr[][16], std::string path)
-{
-	std::ofstream fout_array(path.c_str());
-	fout_array << "#pragma once\n";
-	fout_array << "#include \"../moller_hls.h\"\n";
-	fout_array << "#include \"../chan_map.h\"\n\n";
-	fout_array << "chan_map chmap[N_SLOT][16] = {";
-	for(int i = 0 ; i < N_SLOT; i++){
-		fout_array << "\n{ ";
-		for(int j = 0; j < 16; j++){
-			if(j < 15)
-				fout_array << "{" << m2.at(arr[i][j].DET_ID) << ", " << arr[i][j].SEG_NUM << ", " << arr[i][j].SUB_ELEMENT << "},";
-			else
-				fout_array << "{" << m2.at(arr[i][j].DET_ID) << ", " << arr[i][j].SEG_NUM << ", " << arr[i][j].SUB_ELEMENT << "}";
-		}
-		if(i < N_SLOT-1)
-			fout_array << " },";
-		else
-			fout_array << " }\n";
-	}
-	fout_array << "};";
-
-}
 
 int main(int argc, char *argv[])
 {
@@ -100,63 +78,13 @@ int main(int argc, char *argv[])
 	int seg_num;
 	int sub_elem;
 
-	int slot = 0;
-	int channelCount = 0;
-	if(fchan_map){
-		while( fchan_map >> tmp){
-			if(tmp == '#'){ // ignore # lines
-				std::getline(fchan_map, comment);
-			}
-			else{
-				fchan_map.putback(tmp); // char has issues reading multi-digit #s 
-				fchan_map >> ch >> detector_id >> seg_num >> sub_elem;
-				chmap[slot][ch] = {m.at(detector_id), seg_num, sub_elem};
-				// cout << channelCount << " chmap[" << slot <<"]["<<ch<<"] = " << m.at(detector_id) << " " << seg_num << " " << sub_elem << endl;
-				channelCount++;
-				if( channelCount%16 == 0) slot++;
-			}
-		}
-	}
-	// Uncomment if you want to save the chan_map array to a file       //
-	// Remember to specify which name and path you want to save it in   //
-	// save_chan_map_array(chmap,"chan_map/array1.h" );
-	
-
-	
-	// load test data
-	std::ifstream testData;
-	testData.open("test_data/fake_timing_data.txt");
-
 	fadc_hits_t fadc_hits;
 	for(int ch = 0; ch < N_CHAN_SEC; ch++){
 		fadc_hits.vxs_chan[ch].e = 0;
 		fadc_hits.vxs_chan[ch].t = 0;
 	}
 
-	// generateRndData(fadc_hits.vxs_chan);
-
-	
-	if(testData){
-		std::getline(testData, comment);
-		int index;
-		ap_uint<13> en = 0;
-		ap_uint<3> ti = 0;
-		while( testData >> index  ){
-			if(index < 0 || index > 223){
-				cout << "Trying to read into a nonexistant fadc channel" << endl;
-				break; // ran out of fadc channels
-			}
-			testData >> en >> ti;
-			std::cout << index << " " << en << " "
-				 	  << ti << " " << std::endl;
-			fadc_hits.vxs_chan[index].e = en;
-			fadc_hits.vxs_chan[index].t = ti;
-		}
-	}
-	else{
-		std::cout << "Cannot load test data file" << std::endl;
-	}
-	
+	generateRndData(fadc_hits.vxs_chan);
 
 	s_fadc_hits.write(fadc_hits);
 	while(!s_fadc_hits.empty()){
