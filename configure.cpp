@@ -21,8 +21,8 @@ void modify(const string path);
 
 void print_header(ofstream& out);
 vector<int> get_slot_numbers();
-vector<sdet> get_channel_info(const vector<int> &slots, const int ii);
-void get_channel_data(const vector<int> &slots);
+void get_channel_info(const vector<int> &slots, vector<sdet> &v, const int ii);
+void get_channel_data(const vector<int> &slots, vector<sdet> &v, int chan_num);
 void display_channel_choices();
 int get_scint_sub_element(const vector<int> &v);
 
@@ -30,6 +30,7 @@ int get_scint_sub_element(const vector<int> &v);
 void read_contents(const string& file_name, vector<string> &lines);
 void update_contents(vector<string> &lines);
 void find_avail_slots(const vector<string> &inp, vector<int> &out);
+void string_parser(const string &inp, string &det, string &seg, string &sub);
 
 int main(int argc, char* argv[])
 {
@@ -53,8 +54,9 @@ void create(const string path)
 	vector<int> slots = get_slot_numbers();
 	if(slots.empty()) {cout << "ERROR: No slots given... exiting\n"; return ;}
 	cout << "HERE!" << endl;
+	vector<sdet> vdata(16,{"NONE",0,0}); 
 	for(int i = 0; i < slots.size(); i++){
-		vector<sdet> vdata = get_channel_info(slots, slots[i]);
+		get_channel_info(slots, vdata, slots[i]);
 		out << "\n# SLOT " << slots[i] << endl;
 		for(int channel = 0; channel < vdata.size(); channel++){ // vdata.size() should == 16
 			out << channel << "\t" << vdata[channel].det << "\t" << vdata[channel].seg << "\t" << vdata[channel].sub << endl;
@@ -127,88 +129,15 @@ vector<int> get_slot_numbers()
 	return v;
 }
 
-vector<sdet> get_channel_info(const vector<int> &slots, const int ii)
+void get_channel_info(const vector<int> &slots, vector<sdet> &v, const int ii)
 {
-	vector<sdet> v(16,{"NONE",0,0}); 
-	int det_choice = 0;
-	int seg_choice = 0;
-	int sub_choice = 0;
 	display_channel_choices();
 	cout << "\n# SLOT " << ii << endl;
 	for(int chan_num = 0; chan_num < 16; chan_num++){
-	
-		while( ( cout << "CH:" << chan_num << " " && !(cin >> det_choice) ) && (det_choice > -1 && det_choice < 10) ){ // this logic does not work... why?
-			cin.clear();
-			cin.ignore();
-			cout << "Invalid Input! Enter 0 - 9: ";
-		}
-		while( ( cout << "Segment #: " && !(cin >> seg_choice) ) && (seg_choice > -1 && seg_choice < 27) ){ // this logic does not work... why?
-			cin.clear();
-			cin.ignore();
-			cout << "Invalid Input! Enter 0 - 27: ";
-		}
-		
-		switch(det_choice)
-		{
-		case 1:
-			v[chan_num].det = "RING_ONE";
-			v[chan_num].seg = seg_choice;
-			break;
-		case 2:
-			v[chan_num].det = "RING_TWO";
-			v[chan_num].seg = seg_choice;
-			break;
-		case 3:
-			v[chan_num].det = "RING_THREE";
-			v[chan_num].seg = seg_choice;
-			break;
-		case 4:
-			v[chan_num].det = "RING_FOUR";
-			v[chan_num].seg = seg_choice;
-			break;
-		case 5:
-			v[chan_num].det = "RING_FIVE";
-			v[chan_num].seg = seg_choice;
-			cout << "_________________________________________________________________________________________\n";
-			cout << "1) RING 5A\n";
-			cout << "2) RING 5B\n";
-			cout << "3) RING 5C\n";
-			cout << "Sub_element: ";
-			while( !(cin >> sub_choice)  && (sub_choice > 0 && sub_choice < 4) ){ // this logic does not work... why?
-				cin.clear();
-				cin.ignore();
-				cout << "Invalid Input! Enter 1 - 3: ";
-			}
-			cout << "_________________________________________________________________________________________\n";
-			v[chan_num].sub = sub_choice + 64;
-			break;
-		case 6:
-			v[chan_num].det = "RING_SIX";
-			v[chan_num].seg = seg_choice;
-			break;
-		case 7:
-			v[chan_num].det = "TRIG_SCINT";
-			v[chan_num].seg = seg_choice;
-			cout << "_________________________________________________________________________________________\n";
-			v[chan_num].sub = get_scint_sub_element(slots);
-			cout << "_________________________________________________________________________________________\n";
-			break;
-		case 8:
-			v[chan_num].det = "PION_DET";
-			v[chan_num].seg = seg_choice;
-			break;
-		case 9:
-			v[chan_num].det = "SHOWER_MAX";
-			v[chan_num].seg = seg_choice;
-			break;
-		default:
-			v[chan_num].det = "NONE";
-			v[chan_num].seg = seg_choice;
-			break;
-		}
+		get_channel_data(slots, v, chan_num);
 	}
 
-	return v;
+	return;
 }
 
 void display_channel_choices()
@@ -284,6 +213,8 @@ void update_contents(vector<string> &lines)
 	cout << "Which one would you like to view?\nEnter SLOT #: ";
 	int choice = 0;
 	while( !(cin >> choice) || find(avail_slots.begin(),avail_slots.end(), choice) == avail_slots.end() ){
+		cin.clear();
+		cin.ignore();
 		cout << "Invalid Input. Please re-Enter: "; 	
 	}
 
@@ -292,25 +223,42 @@ void update_contents(vector<string> &lines)
 	while( *it != key ){
 		it++;
 	}
-
-	vector<string> vchanges;
-	vchanges.push_back(*it);
 	it++;
+
+	vector<sdet> vchanges;
 	cout << "#########################################################################################\n";
-	for(int counter = 1; counter < 17; counter++){
-		vchanges.push_back(*it);
+	for(int counter = 0; counter < 16; counter++){
+		string tmp = *it;
+		string det_tmp = "";
+		string seg_tmp = "";
+		string sub_tmp = "";
+		if(!tmp.empty()){
+			string_parser(tmp, det_tmp, seg_tmp, sub_tmp);
+		}
+		int seg_int = stoi(seg_tmp);
+		int sub_int = stoi(sub_tmp);
+		sdet store = {det_tmp, seg_int, sub_int};
+		vchanges.push_back(store);
+		cout << counter << ") " << det_tmp << " " << seg_int << " " << sub_int << " " << endl;
 		it++;
-		cout << counter << ") "<< vchanges[counter] << endl;
 	}
 	cout << "-1) Finished" << endl;
 	cout << "_________________________________________________________________________________________\n";
+
 	int cchannels = 0;
 	vector<int> channels_to_change; 
-	while(cout << "What channel woudl you like to change? " && !(cin>>cchannels) || (cchannels < 16 && cchannels > -2)){
-		if(cchannels == -1) break;
-		channels_to_change.push_back(cchannels);
+	while(cchannels != -1){	
+		while(cout << "Which channel would you like to change? " && !(cin>>cchannels) && (cchannels < 16 && cchannels > -2)){
+			cin.clear();
+			cin.ignore();
+			cout << "Invalid Input" << endl;
+		}
+		if(cchannels != -1)
+			channels_to_change.push_back(cchannels);
 	}
-
+	for(auto it : channels_to_change){
+		get_channel_data(avail_slots,vchanges,it);
+	}
 }
 
 void find_avail_slots(const vector<string> &inp, vector<int> &out)
@@ -326,19 +274,108 @@ void find_avail_slots(const vector<string> &inp, vector<int> &out)
 }
 
 
-void get_channel_data()
+void get_channel_data(const vector<int> &slots, vector<sdet> &v, int chan_num)
+{
+	int det_choice = -1;
+	int seg_choice = 0;
+	int sub_choice = 0;
+	while( ( cout << "CH:" << chan_num << " " && !(cin >> det_choice) ) && (det_choice > -1 && det_choice < 10) ){ // this logic does not work... why?
+		cin.clear();
+		cin.ignore();
+		cout << "Invalid Input! Enter 0 - 9: ";
+	}
+	while( ( cout << "Segment #: " && !(cin >> seg_choice) ) && (seg_choice > -1 && seg_choice < 27) ){ // this logic does not work... why?
+		cin.clear();
+		cin.ignore();
+		cout << "Invalid Input! Enter 0 - 27: ";
+	}
+
+	switch(det_choice)
+	{
+		case 1:
+			v[chan_num].det = "RING_ONE";
+			v[chan_num].seg = seg_choice;
+			break;
+		case 2:
+			v[chan_num].det = "RING_TWO";
+			v[chan_num].seg = seg_choice;
+			break;
+		case 3:
+			v[chan_num].det = "RING_THREE";
+			v[chan_num].seg = seg_choice;
+			break;
+		case 4:
+			v[chan_num].det = "RING_FOUR";
+			v[chan_num].seg = seg_choice;
+			break;
+		case 5:
+			v[chan_num].det = "RING_FIVE";
+			v[chan_num].seg = seg_choice;
+			cout << "_________________________________________________________________________________________\n";
+			cout << "1) RING 5A\n";
+			cout << "2) RING 5B\n";
+			cout << "3) RING 5C\n";
+			cout << "Sub_element: ";
+			while( !(cin >> sub_choice)  && (sub_choice > 0 && sub_choice < 4) ){ // this logic does not work... why?
+				cin.clear();
+				cin.ignore();
+				cout << "Invalid Input! Enter 1 - 3: ";
+			}
+			cout << "_________________________________________________________________________________________\n";
+			v[chan_num].sub = sub_choice + 64;
+			break;
+		case 6:
+			v[chan_num].det = "RING_SIX";
+			v[chan_num].seg = seg_choice;
+			break;
+		case 7:
+			v[chan_num].det = "TRIG_SCINT";
+			v[chan_num].seg = seg_choice;
+			cout << "_________________________________________________________________________________________\n";
+			v[chan_num].sub = get_scint_sub_element(slots);
+			cout << "_________________________________________________________________________________________\n";
+			break;
+		case 8:
+			v[chan_num].det = "PION_DET";
+			v[chan_num].seg = seg_choice;
+			break;
+		case 9:
+			v[chan_num].det = "SHOWER_MAX";
+			v[chan_num].seg = seg_choice;
+			break;
+		default:
+			v[chan_num].det = "NONE";
+			v[chan_num].seg = seg_choice;
+			break;
+	}
+
+}
+
+void string_parser(const string &inp, string &det, string &seg, string &sub)
 {
 
-
-
-
-
-
-
-
-
-
-
-
-
+	string tmp = "";
+	bool prevSpace= false;
+	int space_counter = 0;
+	for(int i = 0 ; i < inp.size(); i++){
+		if(inp[i]==' ' || inp[i]== '\t'){
+			prevSpace = true;
+			continue;
+		}	
+		else{
+			if(prevSpace){
+				prevSpace = false;
+				space_counter++;
+			}
+			if(space_counter == 1){
+				det+=inp[i];
+			}
+			if(space_counter == 2){
+				seg+=inp[i];
+			}
+			if(space_counter == 3){
+				sub+=inp[i];
+			}
+		}
+	}
 }
