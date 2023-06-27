@@ -13,7 +13,7 @@ using std::cout; using std::endl;
 #include "detector_type.h"
 #include "chan_map.h"
 #include <map>
-#include "array1.h"
+#include "chan_map/array1.h"
 
 void generateRndData(hit_t* vxs_chan){
 
