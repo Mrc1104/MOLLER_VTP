@@ -29,6 +29,7 @@ int get_scint_sub_element(const vector<int> &v);
 
 void read_contents(const string& file_name, vector<string> &lines);
 void update_contents(vector<string> &lines);
+void save_contents(const string& file_name, vector<string> &lines);
 void find_avail_slots(const vector<string> &inp, vector<int> &out);
 void string_parser(const string &inp, string &det, string &seg, string &sub);
 
@@ -70,10 +71,26 @@ void create(const string path)
 }
 void modify(const string path)
 {
+	bool cont = true;
 	vector<string> vbuffer;
 	read_contents(path, vbuffer);
-	update_contents(vbuffer);
-
+	do{
+		update_contents(vbuffer);
+		cout << "Continue Modifying? (n:0/y:1): ";
+		int intcont = 0;
+		while(cout << "Keep Changes? (n:0/y:1): " && !(cin >> intcont) || (intcont != 0 && intcont != 1)){
+			cin.clear();
+			cin.ignore();
+			cout << "Invalid Input" << endl;
+		}
+		if(intcont == 1){
+			cont = true;
+		}
+		else{
+			cont = false;
+		}
+	}while(cont);
+	save_contents(path,vbuffer);
 }
 
 void print_header(ofstream& out)
@@ -224,6 +241,7 @@ void update_contents(vector<string> &lines)
 		it++;
 	}
 	it++;
+	vector<string>::iterator it_sec = it;
 
 	vector<sdet> vchanges;
 	cout << "#########################################################################################\n";
@@ -256,9 +274,42 @@ void update_contents(vector<string> &lines)
 		if(cchannels != -1)
 			channels_to_change.push_back(cchannels);
 	}
+	display_channel_choices();
 	for(auto it : channels_to_change){
 		get_channel_data(avail_slots,vchanges,it);
 	}
+
+	vector<string> vchanges_but_strings;
+	for(int in = 0; in < vchanges.size(); in++){
+		string st = to_string(in)+"\t"+vchanges[in].det+"\t"+to_string(vchanges[in].seg)+"\t"+to_string(vchanges[in].sub);
+		vchanges_but_strings.push_back(st);
+	}
+	cout << "_________________________________________________________________________________________\n";
+	vector<string>::iterator it_tmp = it_sec;
+	for(int i = 0; i < vchanges_but_strings.size();i++){
+		if(vchanges_but_strings[i] == *it_tmp){
+			cout << *it_tmp << endl;
+		}
+		else{
+			cout << *it_tmp << "\t->\t" << vchanges_but_strings[i] << endl;
+		}
+		it_tmp++;
+	}
+	cout << "_________________________________________________________________________________________\n";
+	int keep_changes= 0;
+	while(cout << "Keep Changes? (n:0/y:1): " && !(cin >> keep_changes) || (keep_changes != 0 && keep_changes != 1)){
+		cin.clear();
+		cin.ignore();
+		cout << "Invalid Input" << endl;
+	}
+	if(keep_changes == 1){
+		for(int i = 0; i < vchanges_but_strings.size(); i++){
+			*it_sec = vchanges_but_strings[i];
+			it_sec++;
+		}
+	}
+	else
+		cout << "Exiting... No Changes Saved" << endl;
 }
 
 void find_avail_slots(const vector<string> &inp, vector<int> &out)
@@ -295,18 +346,22 @@ void get_channel_data(const vector<int> &slots, vector<sdet> &v, int chan_num)
 		case 1:
 			v[chan_num].det = "RING_ONE";
 			v[chan_num].seg = seg_choice;
+			v[chan_num].sub = -1;
 			break;
 		case 2:
 			v[chan_num].det = "RING_TWO";
 			v[chan_num].seg = seg_choice;
+			v[chan_num].sub = -1;
 			break;
 		case 3:
 			v[chan_num].det = "RING_THREE";
 			v[chan_num].seg = seg_choice;
+			v[chan_num].sub = -1;
 			break;
 		case 4:
 			v[chan_num].det = "RING_FOUR";
 			v[chan_num].seg = seg_choice;
+			v[chan_num].sub = -1;
 			break;
 		case 5:
 			v[chan_num].det = "RING_FIVE";
@@ -327,10 +382,12 @@ void get_channel_data(const vector<int> &slots, vector<sdet> &v, int chan_num)
 		case 6:
 			v[chan_num].det = "RING_SIX";
 			v[chan_num].seg = seg_choice;
+			v[chan_num].sub = -1;
 			break;
 		case 7:
 			v[chan_num].det = "TRIG_SCINT";
 			v[chan_num].seg = seg_choice;
+			v[chan_num].sub = -1;
 			cout << "_________________________________________________________________________________________\n";
 			v[chan_num].sub = get_scint_sub_element(slots);
 			cout << "_________________________________________________________________________________________\n";
@@ -338,14 +395,17 @@ void get_channel_data(const vector<int> &slots, vector<sdet> &v, int chan_num)
 		case 8:
 			v[chan_num].det = "PION_DET";
 			v[chan_num].seg = seg_choice;
+			v[chan_num].sub = -1;
 			break;
 		case 9:
 			v[chan_num].det = "SHOWER_MAX";
 			v[chan_num].seg = seg_choice;
+			v[chan_num].sub = -1;
 			break;
 		default:
 			v[chan_num].det = "NONE";
 			v[chan_num].seg = seg_choice;
+			v[chan_num].sub = -1;
 			break;
 	}
 
@@ -378,4 +438,17 @@ void string_parser(const string &inp, string &det, string &seg, string &sub)
 			}
 		}
 	}
+}
+
+
+void save_contents(const string& file_name, vector<string> &lines)
+{
+	ofstream out(file_name);
+	for(auto it : lines){
+		out << it << endl;
+	}
+
+	cout << "_________________________________________________________________________________________\n";
+	cout << "Changes Written to " << file_name << endl;
+
 }
