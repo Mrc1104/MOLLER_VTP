@@ -61,17 +61,6 @@ int main(int argc, char *argv[])
 	hls::stream<ring_trigger_t> s_ring_trigger; // output stream for for the ring trigger data
 	hls::stream<ring_all_t> s_ring_all_t; // output stream for the ring data
 
-	// I/O BLOCk
-	std::string comment;
-
-	// load channel to det mapping
-	std::ifstream fchan_map;
-	fchan_map.open("chan_map/det_map_naive.conf");
-	/* If the chmap[][] is already created and stored in a header file, include it and comment out the I/O section*/
-	// #include "chan_map/array#.h"
-	
-	chan_map chmap[N_SLOT][16]; // N_SLOT is defined in moller_hls.h
-								// Each FADC has 16 chans (one FADC per slot)
 	char tmp;
 	int ch;
 	std::string detector_id;
