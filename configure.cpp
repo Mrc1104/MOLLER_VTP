@@ -76,9 +76,8 @@ void modify(const string path)
 	read_contents(path, vbuffer);
 	do{
 		update_contents(vbuffer);
-		cout << "Continue Modifying? (n:0/y:1): ";
 		int intcont = 0;
-		while(cout << "Keep Changes? (n:0/y:1): " && !(cin >> intcont) || (intcont != 0 && intcont != 1)){
+		while(cout << "Continue Modifying? (n:0/y:1): " && !(cin >> intcont) || (intcont != 0 && intcont != 1)){
 			cin.clear();
 			cin.ignore();
 			cout << "Invalid Input" << endl;

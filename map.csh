@@ -40,6 +40,7 @@ end
 echo "Welcome\n"
 echo "Channel-Detector Map Generator:"
 echo "You can generate map parameter files or construct map arrays to be used in Vitis HLS"
+echo "The Number of Slots (N_SLOT) and Number of Channels (N_CHAN) are defined in variables.h"
 echo "What would you like to do? (run with -h for help)\n"
 
 set RUN = 1
@@ -97,7 +98,7 @@ while ( $RUN == 1 )
 			set paraPath = $<
 		endif
 		if( $headerPath == "") then
-			echo -n "No Parameter File given; please do so now: "
+			echo -n "No Header File given; please do so now: "
 			set headerPath = $<
 		endif
 		if( -e $headerPath) then
