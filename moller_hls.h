@@ -48,9 +48,9 @@ typedef struct
 typedef struct
 {
 	ap_uint<16> e;
-	ap_uint<3> nhits;
+	ap_uint<6> nhits;
 	ap_uint<28> segment;
-	ap_uint<1> bitbuffer;
+	ap_uint<14> bpadding;
 
 } ring_hit_t;
 
@@ -58,6 +58,7 @@ typedef struct
 {
 	ring_hit_t r[8];
 } ring_all_t;
+
 
 // trigger_t:
 // - trig: 			   bitmap for time - [0]=>0ns, [1]=>4ns, [2]=>8ns, ..., [7]=28ns, when bit=0 no trigger, when bit=1 trigger
@@ -89,23 +90,24 @@ void moller_hls
 	ap_uint<3> hit_dt, 							
 	ap_uint<13> energy_threshold, 			   
 	ap_uint<16> ring_threshold, 				
-	chan_map arr_chan_map[][16], 				
+	chan_map_integer arr_chan_map_One[][16],
+	chan_map_integer arr_chan_map_Two[][16],
 	hls::stream<fadc_hits_t> &s_fadc_hits, 
 	hls::stream<trigger_t> &s_trigger,
 	hls::stream<ring_trigger_t> &s_ring_trigger,
-	hls::stream<ring_all_t> &s_ring_all_
+	hls::stream<ring_all_t> &s_ring_all_t
 );
 
 /* define sub functions here */
 
 // parses FADC channel data and sums it to the appropriate ring
+
 void add_ring_data(
 	int ringNum,
 	int hit_segment,
 	hit_t hit_data,
 	ring_hit_t* rings
 );
-
 // takes the summed data from ring_all_t 
 // and compares it to ring_threshold to see 
 // if the ring qualifies as hit
