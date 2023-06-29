@@ -7,7 +7,7 @@
 using namespace std;
 
 
-void read_para_file(string sFile, chan_map chmap[][16])
+void read_para_file(chan_map chmap[][16], std::string sFile)
 {
 	ifstream fchan_map(sFile);	
 	char tmp;
@@ -26,7 +26,6 @@ void read_para_file(string sFile, chan_map chmap[][16])
 			else{
 				fchan_map.putback(tmp); // char has issues reading multi-digit #s 
 				fchan_map >> ch >> detector_id >> seg_num >> sub_elem;
-				cout << ch << detector_id << seg_num << sub_elem;
 				chmap[slot][ch] = {m.at(detector_id), seg_num, sub_elem};
 				// cout << channelCount << " chmap[" << slot <<"]["<<ch<<"] = " << m.at(detector_id) << " " << seg_num << " " << sub_elem << endl;
 				channelCount++;
@@ -44,10 +43,6 @@ void save_chan_map_array(chan_map arr[][16], std::string path)
 	fout_array << "#include \"../moller_hls.h\"\n";
 	fout_array << "#include \"../chan_map.h\"\n\n";
 	fout_array << "const chan_map chmap[N_SLOT][16] = {";
-	cout << "#pragma once\n";
-	cout << "#include \"../moller_hls.h\"\n";
-	cout << "#include \"../chan_map.h\"\n\n";
-	cout << "const chan_map chmap[N_SLOT][16] = {";
 	for(int i = 0 ; i < N_SLOT; i++){
 		fout_array << "\n{ ";
 		for(int j = 0; j < 16; j++){
@@ -73,11 +68,12 @@ int main(int argc, char* argv[])
 	sFile = argv[1];	
 	sHeader = argv[2];	
 
-	std::cout << "sFile: " << sFile << " " << "sHeader :" << sHeader << endl;
 	chan_map chmap[N_SLOT][16]; // N_SLOT is defined in moller_hls.h
-	read_para_file(sFile, chmap);
-	save_chan_map_array(chmap, sFile);
+	read_para_file(chmap,sFile);
+	save_chan_map_array(chmap, sHeader);
 
+	cout << "_________________________________________________________________________________________\n";
+	cout << "Parameter File (" << sFile << ") saved as a header file (" << sHeader << ")" << endl;
 	return 0;
 }
 
