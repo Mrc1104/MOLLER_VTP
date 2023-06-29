@@ -49,15 +49,18 @@ void moller_hls
       		int segment_num;
 			int sub_element;
 			if( (slot % 2) == 0){
-				ring_num = arr_chan_map_One[slot][ich].DET_ID;
-	      		segment_num = arr_chan_map_One[slot][ich].SEG_NUM;
-				sub_element = arr_chan_map_One[slot][ich].SUB_ELEMENT;
+				// we start counting ring_num at 0
+				ring_num = arr_chan_map_One[slot][ich].DET_ID - 1;
+	      		segment_num = arr_chan_map_One[slot][ich].SEG_NUM - 1;
+				sub_element = arr_chan_map_One[slot][ich].SUB_ELEMENT -1 ;
 			}
 			else{
-				ring_num = arr_chan_map_Two[slot][ich].DET_ID;
-	      		segment_num = arr_chan_map_Two[slot][ich].SEG_NUM;
-				sub_element = arr_chan_map_Two[slot][ich].SUB_ELEMENT;
+				// we start counting ring_num at 0
+				ring_num = arr_chan_map_Two[slot][ich].DET_ID - 1;
+	      		segment_num = arr_chan_map_Two[slot][ich].SEG_NUM - 1;
+				sub_element = arr_chan_map_Two[slot][ich].SUB_ELEMENT -1;
 			}
+			if(ring_num == -1) { continue; } // ring_num == -1 => DET_ID == NONE
 			if(ring_num == 4){
 				if(sub_element == 'A') { ring_num = 4; }
 				else if(sub_element == 'B') { ring_num = 5; }

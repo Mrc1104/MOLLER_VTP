@@ -15,6 +15,7 @@ typedef struct
 
 // const std::map<std::string, det_type> m = 
 // {
+//     {"NONE", NONE},
 //     {"RING_ONE", RING_ONE},
 //     {"RING_TWO", RING_TWO},
 //     {"RING_THREE", RING_THREE},
@@ -28,6 +29,7 @@ typedef struct
 // };
 // const std::map<det_type, std::string> m2 = 
 // {
+//     {NONE, "NONE"},
 //     {RING_ONE, "RING_ONE"},
 //     {RING_TWO, "RING_TWO"},
 //     {RING_THREE, "RING_THREE"},
@@ -49,6 +51,7 @@ typedef struct
 
 const std::map<std::string, int> m =
 {
+    {"NONE", 0},
     {"RING_ONE", 1},
     {"RING_TWO", 2},
     {"RING_THREE", 3},
@@ -62,28 +65,30 @@ const std::map<std::string, int> m =
 };
 const std::map<ap_uint<4>, std::string> m2 =
 {
-    {0, "RING_ONE"},
-    {1, "RING_TWO"},
-    {2, "RING_THREE"},
-    {3, "RING_FOUR"},
-    {4, "RING_FIVE"},
-    {5, "RING_SIX"},
-    {6, "RING_SEVEN"},
-    {7, "TRIG_SCINT"},
-    {8, "PION_DET"},
-    {9, "SHOWER_MAX"}
+    {0, "NONE"},
+    {1, "RING_ONE"},
+    {2, "RING_TWO"},
+    {3, "RING_THREE"},
+    {4, "RING_FOUR"},
+    {5, "RING_FIVE"},
+    {6, "RING_SIX"},
+    {7, "RING_SEVEN"},
+    {8, "TRIG_SCINT"},
+    {9, "PION_DET"},
+    {10, "SHOWER_MAX"}
 };
 const std::map<det_type, ap_uint<4>> m3 =
 {
-    {RING_ONE, 0},
-    {RING_TWO, 1},
-    {RING_THREE, 2},
-    {RING_FOUR, 3},
-    {RING_FIVE, 4},
-    {RING_SIX, 5},
-    {RING_SEVEN, 6},
-    {TRIG_SCINT, 7},
-    {PION_DET, 8},
-    {SHOWER_MAX, 9}
+    {NONE, 0},
+    {RING_ONE, 1},
+    {RING_TWO, 3},
+    {RING_THREE, 3},
+    {RING_FOUR, 4},
+    {RING_FIVE, 5},
+    {RING_SIX, 6},
+    {RING_SEVEN, 7},
+    {TRIG_SCINT, 8},
+    {PION_DET, 9},
+    {SHOWER_MAX, 10}
 };
 #endif
