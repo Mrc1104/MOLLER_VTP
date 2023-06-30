@@ -125,6 +125,7 @@ ring_trigger_t make_ring_bitmap(ring_hit_t* rings, ap_uint<16> ring_threshold)
 		}
 		else{
 			tmp.ring[ringNum] = 0; // just being explicit about it
+			// Interesting... if our ring does not meet the threshold to have a "hit", should we set all the other bit maps to 0?
 		}
 	}
 	// TODO: WE COULD ALSO ADD NHIT FILTERING HERE TOO
