@@ -9,8 +9,7 @@ void moller_hls
 	ap_uint<3> hit_dt, 							 // coincidence tolerance
 	ap_uint<13> energy_threshold, 				 // minimum energy for us to look at an individual hit
 	ap_uint<16> ring_threshold, 				 // minimum summed energy (over one ring) to count a ring as hit
-	chan_map_integer arr_chan_map_One[][16], 	 // array that maps the channel to detector
-	chan_map_integer arr_chan_map_Two[][16],
+	chan_map arr_chan_map[][16], 	 		 // array that maps the channel to detector
 	hls::stream<fadc_hits_t> &s_fadc_hits, 		 // raw FADC data input stream
 	hls::stream<trigger_t> &s_trigger, 			 // output stream for for the trigger data
 	hls::stream<ring_trigger_t> &s_ring_trigger, // output stream for for the ring trigger data
@@ -27,10 +26,6 @@ void moller_hls
 		allr.r[i].nhits = 0;
 		allr.r[i].segment = 0;
 		for(int j = 0; j < 8; j++){
-			// trigger_t time_bitmap = {0}; 
-			/* The XILINX documentation says not to initialize ap_uint<N> like above */
-			/* and that if used in an array, they might not initialize to zero       */
-			/* So I am initializing the array if ap_uint<N> explicitly               */
 			time_bitmap.trig[i] = 0;
 		}
 	}
@@ -45,37 +40,21 @@ void moller_hls
 			int slot = (ch-ich)/16; // slot # (starts at 0)
 
 			/* Get Channel to Detector Mappig Information */
-			int ring_num;
-      		int segment_num;
-			int sub_element;
-			if( (slot % 2) == 0){
-				// we start counting ring_num at 0
-				ring_num = arr_chan_map_One[slot][ich].DET_ID - 1;
-	      		segment_num = arr_chan_map_One[slot][ich].SEG_NUM - 1;
-				sub_element = arr_chan_map_One[slot][ich].SUB_ELEMENT -1 ;
-			}
-			else{
-				// we start counting ring_num at 0
-				ring_num = arr_chan_map_Two[slot][ich].DET_ID - 1;
-	      		segment_num = arr_chan_map_Two[slot][ich].SEG_NUM - 1;
-				sub_element = arr_chan_map_Two[slot][ich].SUB_ELEMENT -1;
-			}
-			if(ring_num == -1) { continue; } // ring_num == -1 => DET_ID == NONE
-			if(ring_num == 4){
-				if(sub_element == 'A') { ring_num = 4; }
+			int ring_num = arr_chan_map[slot][ich].DET_ID;
+			int segment_num = arr_chan_map[slot][ich].SEG_NUM;
+			int sub_element = arr_chan_map[slot][ich].SUB_ELEMENT ;
+			if(ring_num == 0) { continue; }
+			if(ring_num == 5){
+				if(sub_element == 'A') 		{ ring_num = 4; }
 				else if(sub_element == 'B') { ring_num = 5; }
 				else if(sub_element == 'C') { ring_num = 6; }
 			}
-//				add_ring_data(segment_num, fadc_hits.vxs_chan[ch], &allr.r[ringNum]);
-//				add_ring_data(fadc_hits.vxs_chan[ch], &allr.r[ringNum]);
 				add_ring_data(ring_num, segment_num, fadc_hits.vxs_chan[ch], allr.r);
 				make_timing_bitmap(ring_num, fadc_hits.vxs_chan[ch], &time_bitmap);
 		}
 	} // end for loop
 
 	ring_trigger_t ring_bitmap = make_ring_bitmap(allr.r,ring_threshold);
-
-
 
 	s_ring_all_t.write(allr);
 	s_ring_trigger.write(ring_bitmap);
@@ -85,16 +64,7 @@ void moller_hls
 	return;
 } // void moller_hls(...)
 
-//void add_ring_data(
-//	int hit_segment,
-//	hit_t hit_data,
-//	ring_hit_t *rings
-//)
-//{
-//	rings->e += hit_data.e;
-//	rings->nhits++;
-//	rings->segment[hit_segment] = 1;
-//}
+
 void add_ring_data(
 	int ringNum,
 	int hit_segment,
@@ -102,15 +72,6 @@ void add_ring_data(
 	ring_hit_t* rings
 )
 {
-#pragma HLS  DEPENDENCE variable=rings[0].segment inter false
-#pragma HLS  DEPENDENCE variable=rings[1].segment inter false
-#pragma HLS  DEPENDENCE variable=rings[2].segment inter false
-#pragma HLS  DEPENDENCE variable=rings[3].segment inter false
-#pragma HLS  DEPENDENCE variable=rings[4].segment inter false
-#pragma HLS  DEPENDENCE variable=rings[5].segment inter false
-#pragma HLS  DEPENDENCE variable=rings[6].segment inter false
-#pragma HLS  DEPENDENCE variable=rings[7].segment inter false
-
 	rings[ringNum].e += hit_data.e;
 	rings[ringNum].nhits += 1;
 	rings[ringNum].segment[hit_segment] = 1;
@@ -125,7 +86,6 @@ ring_trigger_t make_ring_bitmap(ring_hit_t* rings, ap_uint<16> ring_threshold)
 		}
 		else{
 			tmp.ring[ringNum] = 0; // just being explicit about it
-			// Interesting... if our ring does not meet the threshold to have a "hit", should we set all the other bit maps to 0?
 		}
 	}
 	// TODO: WE COULD ALSO ADD NHIT FILTERING HERE TOO
@@ -142,7 +102,6 @@ void make_timing_bitmap(int ring_num, hit_t hit_data, trigger_t *ptrigger)
 	else if(hit_data.t < 4)
 		t_buff = hit_data.t + 8; // map cur time 0 to 3 -> 8 to 11 (move to time after pre hit window)
 	ap_uint<3> t_actual = t_buff - 4;
-#pragma HLS  DEPENDENCE variable=ptrigger pointer inter false
 
 	ptrigger->trig[ring_num][t_actual] = 1;
 }

@@ -56,8 +56,6 @@ int main(int argc, char *argv[])
 	ap_uint<13> energy_threshold = 1;
 	ap_uint<16> ring_threshold = 1;
 	
-	// hls::stream<T> behaves like a fifo array with infinite depth
-	// Once data has been read, it no longer is stored in any buffer
 	hls::stream<fadc_hits_t> s_fadc_hits; // raw data stream from the
 	hls::stream<trigger_t> s_time_trigger; // output stream for for the trigger data
 	hls::stream<ring_trigger_t> s_ring_trigger; // output stream for for the ring trigger data
@@ -80,27 +78,6 @@ int main(int argc, char *argv[])
 	cout << "Energy: " << fadc_hits.vxs_chan[126].e << endl;
 	cout << "Time: " << fadc_hits.vxs_chan[126].t << endl;
 
-
-	// Convert enum to integer
-	chan_map_integer chmap_integer_One[N_SLOT/2][16];
-	chan_map_integer chmap_integer_Two[N_SLOT/2][16];
-	for(int i = 0; i < N_SLOT; i++){
-		for(int j = 0; j < 16; j++){
-			if( (i % 2) == 0){
-				chmap_integer_One[i][j].DET_ID = m3.at(chmap[i][j].DET_ID);
-				chmap_integer_One[i][j].SEG_NUM = chmap[i][j].SEG_NUM;
-				chmap_integer_One[i][j].SUB_ELEMENT = chmap[i][j].SUB_ELEMENT;
-			}
-			else {
-				chmap_integer_Two[i][j].DET_ID = m3.at(chmap[i][j].DET_ID);
-				chmap_integer_Two[i][j].SEG_NUM = chmap[i][j].SEG_NUM;
-				chmap_integer_Two[i][j].SUB_ELEMENT = chmap[i][j].SUB_ELEMENT;
-			}
-		}
-
-	}
-
-
 	s_fadc_hits.write(fadc_hits);
 	while(!s_fadc_hits.empty()){
 
@@ -109,8 +86,7 @@ int main(int argc, char *argv[])
 			hit_dt,
 			energy_threshold,
 			ring_threshold,
-			chmap_integer_One,
-			chmap_integer_Two,
+			chmap,
 			s_fadc_hits,
 			s_time_trigger,
 			s_ring_trigger,
