@@ -38,7 +38,6 @@ void moller_hls
 
 
 	for(int ch = 0; ch < N_CHAN_SEC; ch++){
-#pragma HLS pipeline
 		if(fadc_hits.vxs_chan[ch].e >= energy_threshold ){ // else, no hit
 			/* Need to determine which channel corresponds to which slot / fadc channel */
 			int ich = ch%16; // channel # inside the fadc (starts at 0)
@@ -102,14 +101,7 @@ void add_ring_data(
 	ring_hit_t* rings
 )
 {
-#pragma HLS  DEPENDENCE variable=rings[0].segment inter false
-#pragma HLS  DEPENDENCE variable=rings[1].segment inter false
-#pragma HLS  DEPENDENCE variable=rings[2].segment inter false
-#pragma HLS  DEPENDENCE variable=rings[3].segment inter false
-#pragma HLS  DEPENDENCE variable=rings[4].segment inter false
-#pragma HLS  DEPENDENCE variable=rings[5].segment inter false
-#pragma HLS  DEPENDENCE variable=rings[6].segment inter false
-#pragma HLS  DEPENDENCE variable=rings[7].segment inter false
+
 
 	rings[ringNum].e += hit_data.e;
 	rings[ringNum].nhits += 1;
@@ -142,7 +134,6 @@ void make_timing_bitmap(int ring_num, hit_t hit_data, trigger_t *ptrigger)
 	else if(hit_data.t < 4)
 		t_buff = hit_data.t + 8; // map cur time 0 to 3 -> 8 to 11 (move to time after pre hit window)
 	ap_uint<3> t_actual = t_buff - 4;
-#pragma HLS  DEPENDENCE variable=ptrigger pointer inter false
 
 	ptrigger->trig[ring_num][t_actual] = 1;
 }
