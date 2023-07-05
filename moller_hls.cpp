@@ -9,7 +9,7 @@ void moller_hls
 	ap_uint<3> hit_dt, 							 // coincidence tolerance
 	ap_uint<13> energy_threshold, 				 // minimum energy for us to look at an individual hit
 	ap_uint<16> ring_threshold, 				 // minimum summed energy (over one ring) to count a ring as hit
-	chan_map arr_chan_map[][16], 	 // array that maps the channel to detector
+	chan_map arr_chan_map[][16], 				 // array that maps the channel to detector
 	hls::stream<fadc_hits_t> &s_fadc_hits, 		 // raw FADC data input stream
 	hls::stream<trigger_t> &s_trigger, 			 // output stream for for the trigger data
 	hls::stream<ring_trigger_t> &s_ring_trigger, // output stream for for the ring trigger data
@@ -43,9 +43,9 @@ void moller_hls
 			int slot = (ch-ich)/16; // slot # (starts at 0)
 
 			/* Get Channel to Detector Mappig Information */
-			int ring_num = arr_chan_map_One[slot][ich].DET_ID - 1;
-	      	int segment_num = arr_chan_map_One[slot][ich].SEG_NUM - 1;
-			int sub_element = arr_chan_map_One[slot][ich].SUB_ELEMENT -1 ;
+			int ring_num = arr_chan_map[slot][ich].DET_ID - 1;
+	      	int segment_num = arr_chan_map[slot][ich].SEG_NUM - 1;
+			int sub_element = arr_chan_map[slot][ich].SUB_ELEMENT -1 ;
 
 			if(ring_num == -1) { continue; } // ring_num == -1 => DET_ID == NONE
 			if(ring_num == 4){
