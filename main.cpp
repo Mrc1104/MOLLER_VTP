@@ -16,7 +16,7 @@ using std::cout; using std::endl;
 #include "chan_map.h"
 #include <map>
 #include "chan_map/array1.h"
-//tests
+
 void generateRndData(hit_t* vxs_chan){
 
 	std::srand(1); // set specific seed for testing latency
