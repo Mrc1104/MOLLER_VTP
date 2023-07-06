@@ -48,9 +48,9 @@ void moller_hls
 			int slot = (ch-ich)/16; // slot # (starts at 0)
 
 			/* Get Channel to Detector Mappig Information */
-			int ring_num = arr_chan_map[slot][ich].DET_ID - 1;
-	      	int segment_num = arr_chan_map[slot][ich].SEG_NUM - 1;
-			int sub_element = arr_chan_map[slot][ich].SUB_ELEMENT -1 ;
+			int ring_num = arr_chan_map[slot][ich].DET_ID - 1; // Ring_number is labeled starting at 1 but indexed starting at 0
+	      	int segment_num = arr_chan_map[slot][ich].SEG_NUM;
+			int sub_element = arr_chan_map[slot][ich].SUB_ELEMENT;
 
 			if(ring_num == -1) { continue; } // ring_num == -1 => DET_ID == NONE
 			if(ring_num == 4){ // ring_num == 4 => DET_ID == RING_FIVE
