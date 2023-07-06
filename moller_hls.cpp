@@ -53,13 +53,14 @@ void moller_hls
 			int sub_element = arr_chan_map[slot][ich].SUB_ELEMENT;
 
 			if(ring_num == -1) { continue; } // ring_num == -1 => DET_ID == NONE
+			if(ring_num == 5) { ring_num = 7; } // ring_num == 7 => ring_six
 			if(ring_num == 4){ // ring_num == 4 => DET_ID == RING_FIVE
 				if(sub_element == 'A') { ring_num = 4; }
 				else if(sub_element == 'B') { ring_num = 5; }
 				else if(sub_element == 'C') { ring_num = 6; }
 			}
-				add_ring_data(ring_num, segment_num, arr_event[ch], allr.r);
-				make_timing_bitmap(ring_num, arr_event[ch], &time_bitmap);
+			add_ring_data(ring_num, segment_num, arr_event[ch], allr.r);
+			make_timing_bitmap(ring_num, arr_event[ch], &time_bitmap);
 		}
 	} // end for loop
 
