@@ -128,7 +128,7 @@ void make_timing_bitmap(
  * Comment:		The channel number is 1 to 1 with the input channel data since cur_hit and pre_hit use the 
  * 				same channel-to-detector map
 */
-ring_hit_t make_event(
+hit_t make_event(
 	hit_t pre_hit, 
 	hit_t cur_hit
 );
