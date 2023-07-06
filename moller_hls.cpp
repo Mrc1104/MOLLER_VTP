@@ -53,7 +53,7 @@ void moller_hls
 	      	int segment_num = arr_chan_map[slot][ich].SEG_NUM;
 			int sub_element = arr_chan_map[slot][ich].SUB_ELEMENT;
 			if(arr_event[ch].e == 250){
-				cout << "ch: " << ch << " ring_num: " << ring_num << endl;
+				cout << "ch: " << ch << " ring_num: " << ring_num <<" segment_num: " << segment_num << endl;
 			}
 			if(ring_num == NONE) { continue; } // ring_num == 0 => DET_ID == NONE
 			if(ring_num == RING_FIVE){ 
