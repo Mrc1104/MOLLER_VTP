@@ -40,7 +40,7 @@ void moller_hls
 	}
 	// set curr fadc data to previous fadc data
 	fadc_hits_pre = fadc_hits;
-	
+
 	for(int ch = 0; ch < N_CHAN_SEC; ch++){
 		if(arr_event[ch].e >= energy_threshold ){ // else, no hit
 			/* Need to determine which channel corresponds to which slot / fadc channel */
@@ -95,8 +95,6 @@ void add_ring_data(
 	ring_hit_t* rings
 )
 {
-
-
 	rings[ringNum].e += hit_data.e;
 	rings[ringNum].nhits += 1;
 	rings[ringNum].segment[hit_segment] = 1;
