@@ -10,9 +10,8 @@ enum det_type
     RING_FOUR = 4,
     RING_FIVE = 5,
     RING_SIX = 6,
-    RING_SEVEN = 7,
-    TRIG_SCINT = 8,
-    PION_DET = 9,
-    SHOWER_MAX = 10
+    TRIG_SCINT = 7,
+    PION_DET = 8,
+    SHOWER_MAX = 9
 };
 #endif
