@@ -43,6 +43,7 @@ void moller_hls
 
 	for(int ch = 0; ch < N_CHAN_SEC; ch++){
 		if(arr_event[ch].e >= energy_threshold ){ // else, no hit
+
 			/* Need to determine which channel corresponds to which slot / fadc channel */
 			int ich = ch%16; // channel # inside the fadc (starts at 0)
 			int slot = (ch-ich)/16; // slot # (starts at 0)
@@ -51,7 +52,9 @@ void moller_hls
 			int ring_num = arr_chan_map[slot][ich].DET_ID; // Ring_number is labeled starting at 1 but indexed starting at 0
 	      	int segment_num = arr_chan_map[slot][ich].SEG_NUM;
 			int sub_element = arr_chan_map[slot][ich].SUB_ELEMENT;
-
+			if(arr_event[ch].e == 250){
+				cout << "ch: " << ch << " ring_num: " << ring_num << endl;
+			}
 			if(ring_num == NONE) { continue; } // ring_num == 0 => DET_ID == NONE
 			if(ring_num == RING_FIVE){ 
 				if(sub_element == 'A') { ring_num = 5; }
