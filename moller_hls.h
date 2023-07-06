@@ -117,5 +117,19 @@ void make_timing_bitmap(
 	hit_t hit_data,
 	trigger_t *ptrigger
 );
-
+/*
+ * make_event():
+ * Brief: 		Takes in pre_hit and curr_hit, determines which event falls within the 
+ * 		  		proper window, the returns that event
+ * Description: We are shifting our timing window down to look at 4 time ticks current events
+ * 				and 4 ticks of the previous events (the efficacy of this is debatable). 
+ * 				We check prev_hit and curr_hit time stamps to determine if they fall within the right
+ * 				window then return that event. 
+ * Comment:		The channel number is 1 to 1 with the input channel data since cur_hit and pre_hit use the 
+ * 				same channel-to-detector map
+*/
+ring_hit_t make_event(
+	hit_t pre_hit, 
+	hit_t cur_hit
+);
 #endif

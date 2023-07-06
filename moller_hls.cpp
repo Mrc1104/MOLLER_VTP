@@ -26,6 +26,7 @@ void moller_hls
 
 	trigger_t time_bitmap;
 	ring_all_t allr;
+	ring_hit_t ring_array[N_CHAN_SEC] = {0,0,0,0};
 	for(int i = 0; i < 8; i++){
 		allr.r[i].e = 0;
 		allr.r[i].nhits = 0;
@@ -72,6 +73,14 @@ void moller_hls
 	return;
 } // void moller_hls(...)
 
+ring_hit_t make_event(
+	hit_t pre_hit, 
+	hit_t cur_hit
+)
+{
+
+
+}
 
 void add_ring_data(
 	int ringNum,
