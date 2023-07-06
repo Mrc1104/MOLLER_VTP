@@ -17,10 +17,16 @@ void moller_hls
 )
 {
 	fadc_hits_t fadc_hits = s_fadc_hits.read();
-
+#ifndef __SYNTHESIS__
+  // Initialize for simulation only (creates a problem for synthesis scheduling)
+  static fadc_hits_t fadc_hits_pre = {0,0};
+#else
+  static fadc_hits_t fadc_hits_pre;
+#endif
 
 	trigger_t time_bitmap;
 	ring_all_t allr;
+	hit_t arr_event[N_CHAN_SEC] = {0,0,0,0};
 	for(int i = 0; i < 8; i++){
 		allr.r[i].e = 0;
 		allr.r[i].nhits = 0;
@@ -29,19 +35,22 @@ void moller_hls
 			time_bitmap.trig[i] = 0;
 		}
 	}
-	
-
+	for(int ch = 0; ch < N_CHAN_SEC; ch++){
+		arr_event[ch] = make_event(fadc_hits_pre.vxs_chan[ch], fadc_hits.vxs_chan[ch]);
+	}
+	// set curr fadc data to previous fadc data
+	fadc_hits_pre = fadc_hits;
 
 	for(int ch = 0; ch < N_CHAN_SEC; ch++){
-		if(fadc_hits.vxs_chan[ch].e >= energy_threshold ){ // else, no hit
+		if(arr_event[ch].e >= energy_threshold ){ // else, no hit
 			/* Need to determine which channel corresponds to which slot / fadc channel */
 			int ich = ch%16; // channel # inside the fadc (starts at 0)
 			int slot = (ch-ich)/16; // slot # (starts at 0)
 
 			/* Get Channel to Detector Mappig Information */
-			int ring_num = arr_chan_map[slot][ich].DET_ID - 1;
-	      	int segment_num = arr_chan_map[slot][ich].SEG_NUM - 1;
-			int sub_element = arr_chan_map[slot][ich].SUB_ELEMENT -1 ;
+			int ring_num = arr_chan_map[slot][ich].DET_ID - 1; // Ring_number is labeled starting at 1 but indexed starting at 0
+	      	int segment_num = arr_chan_map[slot][ich].SEG_NUM;
+			int sub_element = arr_chan_map[slot][ich].SUB_ELEMENT;
 
 			if(ring_num == -1) { continue; } // ring_num == -1 => DET_ID == NONE
 			if(ring_num == 4){ // ring_num == 4 => DET_ID == RING_FIVE
@@ -49,8 +58,8 @@ void moller_hls
 				else if(sub_element == 'B') { ring_num = 5; }
 				else if(sub_element == 'C') { ring_num = 6; }
 			}
-				add_ring_data(ring_num, segment_num, fadc_hits.vxs_chan[ch], allr.r);
-				make_timing_bitmap(ring_num, fadc_hits.vxs_chan[ch], &time_bitmap);
+				add_ring_data(ring_num, segment_num, arr_event[ch], allr.r);
+				make_timing_bitmap(ring_num, arr_event[ch], &time_bitmap);
 		}
 	} // end for loop
 
@@ -64,6 +73,18 @@ void moller_hls
 	return;
 } // void moller_hls(...)
 
+hit_t make_event(
+	hit_t pre_hit, 
+	hit_t cur_hit
+)
+{
+	hit_t tmp = {0,0};
+	if(pre_hit.t >=4)
+		tmp = pre_hit;
+	else if(cur_hit.t < 4)
+		tmp = cur_hit;
+	return tmp;
+}
 
 void add_ring_data(
 	int ringNum,
@@ -72,8 +93,6 @@ void add_ring_data(
 	ring_hit_t* rings
 )
 {
-
-
 	rings[ringNum].e += hit_data.e;
 	rings[ringNum].nhits += 1;
 	rings[ringNum].segment[hit_segment] = 1;
