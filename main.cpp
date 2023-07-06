@@ -74,9 +74,8 @@ int main(int argc, char *argv[])
 	}
 
 	generateRndData(fadc_hits.vxs_chan);
-	cout << "Channel: 126" << endl;
-	cout << "Energy: " << fadc_hits.vxs_chan[126].e << endl;
-	cout << "Time: " << fadc_hits.vxs_chan[126].t << endl;
+
+
 
 	s_fadc_hits.write(fadc_hits);
 	while(!s_fadc_hits.empty()){
