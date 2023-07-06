@@ -58,7 +58,7 @@ void moller_hls
 				else if(sub_element == 'B') { ring_num = 6; }
 				else if(sub_element == 'C') { ring_num = 7; }
 			}
-			else if(ring_num == RING_SIX) { ring_num == 8;}
+			else if(ring_num == RING_SIX) { ring_num == 8; cout << "RING SIX (7) was hit!";}
 			add_ring_data(ring_num-1, segment_num, arr_event[ch], allr.r);
 			make_timing_bitmap(ring_num-1, arr_event[ch], &time_bitmap);
 		}
