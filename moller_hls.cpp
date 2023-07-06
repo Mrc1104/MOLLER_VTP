@@ -17,7 +17,12 @@ void moller_hls
 )
 {
 	fadc_hits_t fadc_hits = s_fadc_hits.read();
-
+#ifndef __SYNTHESIS__
+  // Initialize for simulation only (creates a problem for synthesis scheduling)
+  static fadc_hits_t fadc_hits_pre = {0,0};
+#else
+  static fadc_hits_t fadc_hits_pre;
+#endif
 
 	trigger_t time_bitmap;
 	ring_all_t allr;
@@ -62,7 +67,8 @@ void moller_hls
 	s_ring_trigger.write(ring_bitmap);
 	s_trigger.write(time_bitmap);
 
-
+	// set curr fadc data to previous fadc data
+	fadc_hits_pre = fadc_hits;
 	return;
 } // void moller_hls(...)
 
