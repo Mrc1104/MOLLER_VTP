@@ -133,7 +133,7 @@ int main(int argc, char *argv[])
 		int t32ns = 0;
 		trigger_t time_trig = s_time_trigger.read();
 
-		cout << "Format:\t 7 ------------------ 0\t 4ns ticks" << endl;
+		cout << "Format:\t 12ns ------------------ -16ns\t (4ns ticks)" << endl;
 		for(int ring_index = 0; ring_index < 8; ring_index ++){
 			for(int time_tick = 7; time_tick > -1; time_tick--){
 				if(time_trig.trig[ring_index][time_tick]){
