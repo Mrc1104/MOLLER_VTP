@@ -52,16 +52,14 @@ void moller_hls
 			int ring_num = arr_chan_map[slot][ich].DET_ID; // Ring_number is labeled starting at 1 but indexed starting at 0
 	      	int segment_num = arr_chan_map[slot][ich].SEG_NUM;
 			int sub_element = arr_chan_map[slot][ich].SUB_ELEMENT;
-			if(arr_event[ch].e == 250){
-				cout << "ch: " << ch << " ring_num: " << ring_num <<" segment_num: " << segment_num << endl;
-			}
 			if(ring_num == NONE) { continue; } // ring_num == 0 => DET_ID == NONE
-			if(ring_num == RING_FIVE){ 
+			if(ring_num == RING_FIVE){ // careful! ring 5 is actually 3 rings (5a->index 5, 5b->index 6, 5c->7) thus ring 6->index8
 				if(sub_element == 'A') { ring_num = 5; }
 				else if(sub_element == 'B') { ring_num = 6; }
 				else if(sub_element == 'C') { ring_num = 7; }
 			}
-			else if(ring_num == RING_SIX) { ring_num = 8; cout << "RING SIX (7) was hit!";}
+			else if(ring_num == RING_SIX) { ring_num = 8; }
+			// computers start counting at 0 so ring_num - 1 is the appropriate indices
 			add_ring_data(ring_num-1, segment_num, arr_event[ch], allr.r);
 			make_timing_bitmap(ring_num-1, arr_event[ch], &time_bitmap);
 		}
