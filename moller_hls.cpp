@@ -48,19 +48,19 @@ void moller_hls
 			int slot = (ch-ich)/16; // slot # (starts at 0)
 
 			/* Get Channel to Detector Mappig Information */
-			int ring_num = arr_chan_map[slot][ich].DET_ID - 1; // Ring_number is labeled starting at 1 but indexed starting at 0
+			int ring_num = arr_chan_map[slot][ich].DET_ID; // Ring_number is labeled starting at 1 but indexed starting at 0
 	      	int segment_num = arr_chan_map[slot][ich].SEG_NUM;
 			int sub_element = arr_chan_map[slot][ich].SUB_ELEMENT;
 
-			if(ring_num == -1) { continue; } // ring_num == -1 => DET_ID == NONE
-			if(ring_num == 5) { ring_num = 7; } // ring_num == 7 => ring_six
-			if(ring_num == 4){ // ring_num == 4 => DET_ID == RING_FIVE
-				if(sub_element == 'A') { ring_num = 4; }
-				else if(sub_element == 'B') { ring_num = 5; }
-				else if(sub_element == 'C') { ring_num = 6; }
+			if(ring_num == NONE) { continue; } // ring_num == 0 => DET_ID == NONE
+			if(ring_num == RING_FIVE){ 
+				if(sub_element == 'A') { ring_num = 5; }
+				else if(sub_element == 'B') { ring_num = 6; }
+				else if(sub_element == 'C') { ring_num = 7; }
 			}
-			add_ring_data(ring_num, segment_num, arr_event[ch], allr.r);
-			make_timing_bitmap(ring_num, arr_event[ch], &time_bitmap);
+			else if(ring_num == RING_SIX) { ring_num == 8;}
+			add_ring_data(ring_num-1, segment_num, arr_event[ch], allr.r);
+			make_timing_bitmap(ring_num-1, arr_event[ch], &time_bitmap);
 		}
 	} // end for loop
 
