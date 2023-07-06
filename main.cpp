@@ -74,8 +74,9 @@ int main(int argc, char *argv[])
 	}
 
 	generateRndData(fadc_hits.vxs_chan);
-
-
+	fadc_hits.vxs_chan[7].e = 250;
+	fadc_hits.vxs_chan[7].t = 4;
+	
 
 	s_fadc_hits.write(fadc_hits);
 	while(!s_fadc_hits.empty()){
