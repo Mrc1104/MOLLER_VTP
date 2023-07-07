@@ -45,9 +45,11 @@ void generateRndData(hit_t* vxs_chan){
         }
 		vxs_chan[ch].e = energy;
 		vxs_chan[ch].t = time;
+		if(vxs_chan[ch].e > 0){
 		cout << "__________________\nch: " << ch << endl;
 		cout << "vxs_chan[ch].e = energy: " << vxs_chan[ch].e << endl;
 		cout << "vxs_chan[ch].t = time: " << vxs_chan[ch].t << endl;
+		}
 	}
 }
 
