@@ -46,7 +46,14 @@ void generateRndData(hit_t* vxs_chan){
 		vxs_chan[ch].e = energy;
 		vxs_chan[ch].t = time;
 		if(vxs_chan[ch].e > 0){
+		int ich = ch%16; // channel # inside the fadc (starts at 0)
+		int slot = (ch-ich)/16; // slot # (starts at 0)
+			int ring_num = chmap[slot][ich].DET_ID; // Ring_number is labeled starting at 1 but indexed starting at 0
+	      	int segment_num = chmap[slot][ich].SEG_NUM;
+			int sub_element = chmap[slot][ich].SUB_ELEMENT;
 		cout << "__________________\nch: " << ch << endl;
+		cout << "Ring: " << ring_num << endl;
+		cout << "SEG: " << segment_num << endl;
 		cout << "vxs_chan[ch].e = energy: " << vxs_chan[ch].e << endl;
 		cout << "vxs_chan[ch].t = time: " << vxs_chan[ch].t << endl;
 		}
