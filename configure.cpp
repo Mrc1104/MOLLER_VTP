@@ -137,7 +137,9 @@ vector<int> get_slot_numbers()
 		cout << "###\tWarning: Variables.h has N_SLOT defined as " << N_SLOT << "\t###\n";
 		cout << "Array Header Files depend on having the correct N_SLOT defined to work properly...\n";
 		cout << "However, N_SLOT is not a hard dependency to create Array Header Files...\n";
-		cout << "Make sure the N_SLOT variable is defined correctly before you include a generated Array Header File...";
+		cout << "Make sure the N_SLOT variable is defined correctly before you include a generated Array Header File...\n";
+		cout << "###\tWarning: Variables.h has N_SLOT defined as " << N_SLOT << "\t###\n";
+		cout << "_________________________________________________________________________________________\n";
 	}
 
 	vector<int> v(size,-1);
