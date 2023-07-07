@@ -109,7 +109,7 @@ void print_header(ofstream& out)
 		"#              DETECTOR_TYPE - enum (see detector_type.h for scheme)                    #\n",
 		"#              SEGMENT_NUMBER - integer [0-27]                                          #\n",
 		"#              SUB_ELEMENT - no sub-element => -1                                       #\n",
-		"#                            for TRIG_SCINT, => chan # if TRIG_SCINT pair               #\n",
+		"#                            for TRIG_SCINT, => chan # of TRIG_SCINT pair               #\n",
 		"#                            for RING_5, => 65 (5a), 66 (5b), 67 (5c)                   #\n",
 		"#                                                                                       #\n",
 		"# FADC_CHAN_NUMBER,    DETECTOR_TYPE,  SEGMENT_NUMBER, SUB_ELEMENT                      #\n"
