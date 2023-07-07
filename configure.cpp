@@ -6,6 +6,7 @@
 #include <iterator>
 
 #include "detector_type.h"
+#include "variables.h"
 #include "std_map.h"
 
 using namespace std;
@@ -131,6 +132,14 @@ vector<int> get_slot_numbers()
 		cin.ignore();
 		cout << "Invalid Input" << endl;
 	}
+	if(size != N_SLOT){
+		cout << "_________________________________________________________________________________________\n";
+		cout << "###\tWarning: Variables.h has N_SLOT defined as " << N_SLOT << "\t###\n";
+		cout << "Array Header Files depend on having the correct N_SLOT defined to work properly...\n";
+		cout << "However, N_SLOT is not a hard dependency to create Array Header Files...\n";
+		cout << "Make sure the N_SLOT variable is defined correctly before you include a generated Array Header File...";
+	}
+
 	vector<int> v(size,-1);
 	for(int i = 0; i < size; i++){
 		int slot_num; 
