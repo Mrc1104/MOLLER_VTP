@@ -1,6 +1,0 @@
-TODO:
-1) Create configure cpp files that parse parameter file
-	a) be able to create one
-	b) be able to modify an existing one
-2) Create the array header file cpp file (see to main.cpp for how to do that)
-	a) should take a given parameter file and create the header file from it
