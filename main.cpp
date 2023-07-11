@@ -14,9 +14,8 @@ using namespace std;
 #include "detector_type.h"
 
 
-void generateRndData(hit_t* vxs_chan, int seed){
+void generateRndData(hit_t* vxs_chan){
 
-	std::srand(seed); // set specific seed for testing latency
 	ap_uint<13> energy;
 	ap_uint<3> time;
 	for(int ch = 0; ch < N_CHAN; ch++){
@@ -56,6 +55,7 @@ int main()
 {
 	
 	
+	std::srand(2); // set specific seed for testing latency
 	fadc_hits_t data;
 	std::ofstream fout("data_stream.txt");
 	std::ofstream f1("ring_one.txt");
@@ -76,7 +76,7 @@ int main()
 		vector<vstruct> ring_six;	
 		vector<vstruct> ring_seven;	
 		vector<vstruct> ring_eight;	
-		generateRndData(data.vxs_chan, i);
+		generateRndData(data.vxs_chan);
 		for(int ch = 0; ch < N_CHAN; ch++){
 			fout << ch << '\t' << data.vxs_chan[ch].e << '\t' << data.vxs_chan[ch].t << endl;
 
