@@ -22,7 +22,7 @@ void generateRndData(hit_t* vxs_chan){
 	std::srand(1); // set specific seed for testing latency
 	ap_uint<13> energy;
 	ap_uint<3> time;
-	for(int ch = 0; ch < N_CHAN_SEC; ch++){
+	for(int ch = 0; ch < N_CHAN; ch++){
 		energy = 0;
 		time = 0;
 		if(ch%8 < 4){ // rings 1 - 4
@@ -68,7 +68,7 @@ int main(int argc, char *argv[])
 	int sub_elem;
 
 	fadc_hits_t fadc_hits;
-	for(int ch = 0; ch < N_CHAN_SEC; ch++){
+	for(int ch = 0; ch < N_CHAN; ch++){
 		fadc_hits.vxs_chan[ch].e = 0;
 		fadc_hits.vxs_chan[ch].t = 0;
 	}

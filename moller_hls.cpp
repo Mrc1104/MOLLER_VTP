@@ -1,5 +1,5 @@
 #include "moller_hls.h"
-#include <hls_vector.h>
+#include "variables.h"
 
 #include <iostream>
 using std::endl; using std::cout;
@@ -26,7 +26,7 @@ void moller_hls
 
 	trigger_t time_bitmap;
 	ring_all_t allr;
-	hit_t arr_event[N_CHAN_SEC] = {0,0,0,0};
+	hit_t arr_event[N_CHAN] = {0,0,0,0};
 	for(int i = 0; i < 8; i++){
 		allr.r[i].e = 0;
 		allr.r[i].nhits = 0;
@@ -35,13 +35,13 @@ void moller_hls
 			time_bitmap.trig[i] = 0;
 		}
 	}
-	for(int ch = 0; ch < N_CHAN_SEC; ch++){
+	for(int ch = 0; ch < N_CHAN; ch++){
 		arr_event[ch] = make_event(fadc_hits_pre.vxs_chan[ch], fadc_hits.vxs_chan[ch]);
 	}
 	// set curr fadc data to previous fadc data
 	fadc_hits_pre = fadc_hits;
 
-	for(int ch = 0; ch < N_CHAN_SEC; ch++){
+	for(int ch = 0; ch < N_CHAN; ch++){
 		if(arr_event[ch].e >= energy_threshold ){ // else, no hit
 
 			/* Need to determine which channel corresponds to which slot / fadc channel */

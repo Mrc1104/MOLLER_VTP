@@ -6,6 +6,7 @@
 
 #include "chan_map.h"
 #include "detector_type.h"
+#include "variables.h"
 
 
 
@@ -30,11 +31,9 @@ typedef struct
 // ...
 // - vxs_ch[ 208 ] to vxs_ch[ 223 ]: VME slot 19, ch 0 to 15 FADC channels
 //
-#define N_CHAN_SEC 224 // number of FADC channels per sector (16 FADC ch per segment, 4 segment per sector)
-#define N_SLOT 14 // number of FADC slots in the VXS Crate
 typedef struct
 {
-	hit_t vxs_chan[N_CHAN_SEC];
+	hit_t vxs_chan[N_CHAN];
 } fadc_hits_t;
 
 
