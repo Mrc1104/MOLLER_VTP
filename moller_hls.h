@@ -4,8 +4,6 @@
 #include <ap_int.h>
 #include <hls_stream.h>
 
-#include "chan_map.h"
-#include "detector_type.h"
 #include "variables.h"
 
 
@@ -74,61 +72,4 @@ typedef struct
 	ap_uint<8> ring;
 } ring_trigger_t;
 
-// moller_hls:
-// - main workhorse of the code where most of the logic is performed
-// - Inputs:
-// 		hit_dt						 - coincidence tolerance
-// 		seed_threshold 				 - min energy for a hit to count
-// 		ring_threshold 				 - min summed energy for a ring to be counted as hit
-//      chan_map arr_chan_map[][16]  - array that maps the channel to detector 
-// 		s_fadc_hits 				 - input stream for raw FADC data
-// 		rings 						 - output stream of hit rings bitmap | [0]=1 => ring1 hit;[0]=0 => ring1 not hit 
-// 		trigger 					 - output stream of rings timing trigger bitmap
-void moller_hls
-(
-	ap_uint<3> hit_dt, 							
-	ap_uint<13> energy_threshold, 			   
-	ap_uint<16> ring_threshold, 				
-	chan_map arr_chan_map[][16],
-	hls::stream<fadc_hits_t> &s_fadc_hits, 
-	hls::stream<trigger_t> &s_trigger,
-	hls::stream<ring_trigger_t> &s_ring_trigger,
-	hls::stream<ring_all_t> &s_ring_all_t
-);
-
-/* define sub functions here */
-
-// parses FADC channel data and sums it to the appropriate ring
-
-void add_ring_data(
-	int ringNum,
-	int hit_segment,
-	hit_t hit_data,
-	ring_hit_t* rings
-);
-// takes the summed data from ring_all_t 
-// and compares it to ring_threshold to see 
-// if the ring qualifies as hit
-ring_trigger_t make_ring_bitmap(ring_hit_t* rings, ap_uint<16> ring_threshold);
-
-void make_timing_bitmap(
-	int ringNum,
-	hit_t hit_data,
-	trigger_t *ptrigger
-);
-/*
- * make_event():
- * Brief: 		Takes in pre_hit and curr_hit, determines which event falls within the 
- * 		  		proper window, the returns that event
- * Description: We are shifting our timing window down to look at 4 time ticks current events
- * 				and 4 ticks of the previous events (the efficacy of this is debatable). 
- * 				We check prev_hit and curr_hit time stamps to determine if they fall within the right
- * 				window then return that event. 
- * Comment:		The channel number is 1 to 1 with the input channel data since cur_hit and pre_hit use the 
- * 				same channel-to-detector map
-*/
-hit_t make_event(
-	hit_t pre_hit, 
-	hit_t cur_hit
-);
 #endif

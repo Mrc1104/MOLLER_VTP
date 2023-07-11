@@ -1,6 +1,7 @@
 #pragma once
 #include "../moller_hls.h"
 #include "../chan_map.h"
+#include "../detector_type.h"
 
 chan_map chmap[N_SLOT][16] = {
 { {RING_ONE, 0, -1},{RING_TWO, 0, -1},{RING_THREE, 0, -1},{RING_FOUR, 0, -1},{RING_FIVE, 0, 65},{RING_FIVE, 0, 66},{RING_FIVE, 0, 67},{RING_SIX, 0, -1},{RING_ONE, 1, -1},{RING_TWO, 1, -1},{RING_THREE, 1, -1},{RING_FOUR, 1, -1},{RING_FIVE, 1, 65},{RING_FIVE, 1, 66},{RING_FIVE, 1, 67},{RING_SIX, 1, -1} },
