@@ -116,6 +116,17 @@ int main()
 			}
 		}
 		fout << endl;
+
+
+
+		f1 << "RUN: " << i << endl;
+		f2 << "RUN: " << i << endl;
+		f3 << "RUN: " << i << endl;
+		f4 << "RUN: " << i << endl;
+		f5 << "RUN: " << i << endl;
+		f6 << "RUN: " << i << endl;
+		f7 << "RUN: " << i << endl;
+		f8 << "RUN: " << i << endl;
 		for(auto it : ring_one){
 			f1 << "Segment: " << it.seg_number << "\tEnergy: " << it.energy << "\tTime: " << it.time << endl;
 		}

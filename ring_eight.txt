@@ -1,3 +1,4 @@
+RUN: 0
 Segment: 0	Energy: 0	Time: 0
 Segment: 1	Energy: 0	Time: 0
 Segment: 2	Energy: 0	Time: 0
@@ -26,6 +27,7 @@ Segment: 24	Energy: 0	Time: 0
 Segment: 25	Energy: 2568	Time: 0
 Segment: 26	Energy: 0	Time: 0
 Segment: 27	Energy: 0	Time: 0
+RUN: 1
 Segment: 0	Energy: 0	Time: 0
 Segment: 1	Energy: 0	Time: 0
 Segment: 2	Energy: 0	Time: 0
@@ -54,6 +56,7 @@ Segment: 24	Energy: 0	Time: 0
 Segment: 25	Energy: 2568	Time: 0
 Segment: 26	Energy: 0	Time: 0
 Segment: 27	Energy: 0	Time: 0
+RUN: 2
 Segment: 0	Energy: 0	Time: 0
 Segment: 1	Energy: 0	Time: 0
 Segment: 2	Energy: 0	Time: 0
