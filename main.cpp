@@ -101,9 +101,9 @@ int main()
 					ring_four.push_back({seg_num, data.vxs_chan[ch].e , data.vxs_chan[ch].t});
 					break;
 				case RING_FIVE:
-					if(sub_elem = 65) { ring_five.push_back({seg_num, data.vxs_chan[ch].e , data.vxs_chan[ch].t}); }
-					if(sub_elem = 66) { ring_six.push_back({seg_num, data.vxs_chan[ch].e , data.vxs_chan[ch].t}); }
-					if(sub_elem = 67) { ring_seven.push_back({seg_num, data.vxs_chan[ch].e , data.vxs_chan[ch].t}); }
+					if(sub_elem == 65) { ring_five.push_back({seg_num, data.vxs_chan[ch].e , data.vxs_chan[ch].t});  }
+					if(sub_elem == 66) { ring_six.push_back({seg_num, data.vxs_chan[ch].e , data.vxs_chan[ch].t});   }
+					if(sub_elem == 67) { ring_seven.push_back({seg_num, data.vxs_chan[ch].e , data.vxs_chan[ch].t}); }
 					break;
 				case RING_SIX:
 					ring_eight.push_back({seg_num, data.vxs_chan[ch].e , data.vxs_chan[ch].t});
