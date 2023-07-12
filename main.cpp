@@ -138,6 +138,7 @@ int main(int argc, char *argv[])
 		for(int ring_index = 7; ring_index > -1; ring_index--){
 			cout << "[" << ring_trig.ring[ring_index] << "]";
 		}
+		cout << endl;
 	}
 	
 	printf("\n\nTime Trig Data:__________________\n");
