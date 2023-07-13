@@ -1,0 +1,83 @@
+109d108
+< Trigger found at T=8ns
+112,113d110
+< Trigger found at T=8ns
+< Trigger found at T=4ns
+115d111
+< Trigger found at T=0ns
+117,118d112
+< Trigger found at T=8ns
+< Trigger found at T=4ns
+120,123d113
+< Trigger found at T=12ns
+< Trigger found at T=8ns
+< Trigger found at T=4ns
+< Trigger found at T=0ns
+125d114
+< Trigger found at T=0ns
+127d115
+< Trigger found at T=0ns
+130,135d117
+< Trigger found at T=12ns
+< Trigger found at T=4ns
+< Trigger found at T=0ns
+< Trigger found at T=-4ns
+< Trigger found at T=-8ns
+< Trigger found at T=-16ns
+137,138d118
+< Trigger found at T=8ns
+< Trigger found at T=-16ns
+140,142d119
+< Trigger found at T=4ns
+< Trigger found at T=-12ns
+< Trigger found at T=-16ns
+144,148d120
+< Trigger found at T=8ns
+< Trigger found at T=0ns
+< Trigger found at T=-8ns
+< Trigger found at T=-12ns
+< Trigger found at T=-16ns
+150,154d121
+< Trigger found at T=4ns
+< Trigger found at T=0ns
+< Trigger found at T=-8ns
+< Trigger found at T=-12ns
+< Trigger found at T=-16ns
+156,159d122
+< Trigger found at T=12ns
+< Trigger found at T=8ns
+< Trigger found at T=0ns
+< Trigger found at T=-4ns
+161,163d123
+< Trigger found at T=12ns
+< Trigger found at T=8ns
+< Trigger found at T=-8ns
+167,170d126
+< Trigger found at T=12ns
+< Trigger found at T=0ns
+< Trigger found at T=-4ns
+< Trigger found at T=-8ns
+172,173d127
+< Trigger found at T=-8ns
+< Trigger found at T=-16ns
+175d128
+< Trigger found at T=-16ns
+177d129
+< Trigger found at T=0ns
+179,181d130
+< Trigger found at T=8ns
+< Trigger found at T=-8ns
+< Trigger found at T=-12ns
+183,186d131
+< Trigger found at T=12ns
+< Trigger found at T=4ns
+< Trigger found at T=-8ns
+< Trigger found at T=-12ns
+188,190d132
+< Trigger found at T=8ns
+< Trigger found at T=0ns
+< Trigger found at T=-8ns
+192d133
+< Trigger found at T=-4ns
+194d134
+< INFO [HLS SIM]: The maximum depth reached by any hls::stream() instance in the design is 3
