@@ -17,8 +17,6 @@ using std::cout; using std::endl;
 #include <map>
 #include "chan_map/array1.h"
 
-// Fake data arrays
-#include "data_stream.h"
 
 void generateRndData(hit_t* vxs_chan){
 
@@ -75,23 +73,10 @@ int main(int argc, char *argv[])
 		fadc_hits.vxs_chan[ch].e = 0;
 		fadc_hits.vxs_chan[ch].t = 0;
 	}
-
-	// generateRndData(fadc_hits.vxs_chan);
-	for(int i = 0 ; i <N_CHAN; i++){
-		fadc_hits.vxs_chan[i].e = fake_data_0[i].e;
-		fadc_hits.vxs_chan[i].t = fake_data_0[i].t;
-	}	
-	s_fadc_hits.write(fadc_hits);
-	for(int i = 0 ; i <N_CHAN; i++){
-		fadc_hits.vxs_chan[i].e = fake_data_1[i].e;
-		fadc_hits.vxs_chan[i].t = fake_data_1[i].t;
-	}	
-	s_fadc_hits.write(fadc_hits);
-	for(int i = 0 ; i <N_CHAN; i++){
-		fadc_hits.vxs_chan[i].e = fake_data_2[i].e;
-		fadc_hits.vxs_chan[i].t = fake_data_2[i].t;
-	}	
-	s_fadc_hits.write(fadc_hits);
+	for(int i = 0; i < 8; i++){
+		generateRndData(fadc_hits.vxs_chan);
+		s_fadc_hits.write(fadc_hits);
+	}
 
 	while(!s_fadc_hits.empty()){
 

@@ -1,9 +1,0 @@
-1d0
-< 
-106d104
-< 
-194c192
-< INFO [HLS SIM]: The maximum depth reached by any hls::stream() instance in the design is 3
----
-> INFO [HLS SIM]: The maximum depth reached by any hls::stream() instance in the design is 3
-\ No newline at end of file
