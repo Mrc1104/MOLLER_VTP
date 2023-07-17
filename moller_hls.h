@@ -83,8 +83,7 @@ typedef struct
 // 		rings 						 - output stream of hit rings bitmap | [0]=1 => ring1 hit;[0]=0 => ring1 not hit 
 // 		trigger 					 - output stream of rings timing trigger bitmap
 void moller_hls
-(
-	ap_uint<3> hit_dt, 							
+(							
 	ap_uint<13> energy_threshold, 			   
 	ap_uint<16> ring_threshold, 				
 	hls::stream<fadc_hits_t> &s_fadc_hits, 

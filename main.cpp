@@ -50,7 +50,6 @@ void generateRndData(hit_t* vxs_chan){
 
 int main(int argc, char *argv[])
 {
-	ap_uint<3> hit_dt = 2; // time tolerance for coincidence (in 4ns ticks)
 	// ap_uint<13> energy_threshold = 5e3;
 	ap_uint<13> energy_threshold = 1;
 	ap_uint<16> ring_threshold = 1;
@@ -80,7 +79,6 @@ int main(int argc, char *argv[])
 
 		moller_hls
 		(
-			hit_dt,
 			energy_threshold,
 			ring_threshold,
 			s_fadc_hits,
