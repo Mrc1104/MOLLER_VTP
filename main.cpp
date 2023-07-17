@@ -15,7 +15,6 @@ using std::cout; using std::endl;
 #include "detector_type.h"
 #include "chan_map.h"
 #include <map>
-#include "chan_map/array1.h"
 
 void generateRndData(hit_t* vxs_chan){
 
@@ -84,7 +83,6 @@ int main(int argc, char *argv[])
 			hit_dt,
 			energy_threshold,
 			ring_threshold,
-			chmap,
 			s_fadc_hits,
 			s_time_trigger,
 			s_ring_trigger,

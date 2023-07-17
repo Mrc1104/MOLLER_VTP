@@ -8,8 +8,6 @@
 #include "detector_type.h"
 #include "variables.h"
 
-
-
 // hit_t:
 // - every 32ns each fadc reports 13 bit energy, and 3 bit hit time (time offset in current 32ns clock: 0=0ns, 1=4ns, 2=8ns, ..., 7=28ns)
 // - if the channel has no hit, then the energy, e, will be reported as 0
@@ -89,7 +87,6 @@ void moller_hls
 	ap_uint<3> hit_dt, 							
 	ap_uint<13> energy_threshold, 			   
 	ap_uint<16> ring_threshold, 				
-	chan_map arr_chan_map[][16],
 	hls::stream<fadc_hits_t> &s_fadc_hits, 
 	hls::stream<trigger_t> &s_trigger,
 	hls::stream<ring_trigger_t> &s_ring_trigger,
