@@ -101,9 +101,9 @@ void print_header(ofstream& out)
 	{
 		"# Description: Channel to detector mapping. Subdivided by the slot number of the        #\n",
 		"#              VXS crate, each slot holds 16 (0 - 15) FADC channels that corresponds    #\n",
-		"#              to a particular detector. Main.cpp will parse the information inserted   #\n",
-		"#              below and create an array that will be used in the FPGA for arbritrary   #\n",
-		"#              detector to channel mapping.                                             #\n",
+		"#              to a particular detector. Parser.cpp will parse the information          #\n",
+		"#              inserted below and create an array that will be used in the FPGA for     #\n",
+		"#              arbritrary detector to channel mapping.                                  #\n",
 		"#                                                                                       #\n",
 		"# Note:        Any lines starting with '#' will be ignored. Delineate by spaces.        #\n",
 		"#              FADC_CHAN_NUMBER - integer [0-15]                                        #\n",
