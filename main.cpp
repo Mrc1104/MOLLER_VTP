@@ -99,7 +99,6 @@ int main(int argc, char *argv[])
 			cout << "ringNum: " << ring_index << endl;
 			cout << "ring_data.r[" << ring_index << "].e: " << ring_data.r[ring_index].e << endl;
 			cout << "ring_data.r[" << ring_index << "].nhits: " << ring_data.r[ring_index].nhits << endl;
-			// cout << "ring_data.r[" << i << "].segment: " << ring_data.r[i].segment << endl;
 			cout << "ring_data.r[" << ring_index <<"].segment: ";
 			for(int seg_index = 27; seg_index > -1; seg_index--){
 				cout << "[" << ring_data.r[ring_index].segment[seg_index] << "]";
@@ -110,7 +109,7 @@ int main(int argc, char *argv[])
 
 
 
-	printf("\nRing Trig Data:__________________\n");
+	cout << "\nRing Trig Data:__________________\n";
 	cout << "Format:\t 7 ------------------ 0\t ring #" << endl;
 	while(!s_ring_trigger.empty())
 	{
@@ -120,7 +119,7 @@ int main(int argc, char *argv[])
 		}
 	}
 	
-	printf("\n\nTime Trig Data:__________________\n");
+	cout << "n\nTime Trig Data:__________________\n";
 	while(!s_time_trigger.empty())
 	{
 		int t32ns = 0;
@@ -130,7 +129,7 @@ int main(int argc, char *argv[])
 		for(int ring_index = 0; ring_index < 8; ring_index ++){
 			for(int time_tick = 7; time_tick > -1; time_tick--){
 				if(time_trig.trig[ring_index][time_tick]){
-					printf("Trigger found at T=%dns\n", t32ns*32+time_tick*4-16);
+					cout << "Trigger found at T=" << t32ns*32+time_tick*4-16 << "ns" << endl;
 				}
 			}
 			cout << "Ring: " << ring_index << "\t";
