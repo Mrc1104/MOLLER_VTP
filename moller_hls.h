@@ -72,16 +72,30 @@ typedef struct
 	ap_uint<8> ring;
 } ring_trigger_t;
 
+// raw_counter_t
+// - counter: a raw counter that increases whenever a ring is hit (ignores any scalars and configurations)
+typedef struct
+{
+	ap_uint<16> counter;
+} raw_counter_t;
+
+// ring_all_counter_t 
+// - ring_counter[8]: an arr for all 8 rings that stores the raw counter information
+typedef struct
+{
+	raw_counter_t ring_counter[8];
+} ring_all_counter_t;
 // moller_hls:
 // - main workhorse of the code where most of the logic is performed
 // - Inputs:
 // 		hit_dt						 - coincidence tolerance
 // 		seed_threshold 				 - min energy for a hit to count
 // 		ring_threshold 				 - min summed energy for a ring to be counted as hit
-//      chan_map arr_chan_map[][16]  - array that maps the channel to detector 
 // 		s_fadc_hits 				 - input stream for raw FADC data
 // 		rings 						 - output stream of hit rings bitmap | [0]=1 => ring1 hit;[0]=0 => ring1 not hit 
 // 		trigger 					 - output stream of rings timing trigger bitmap
+// 		s_ring_all   				 - output stream for the bitmap of ring hits
+// 		s_ring_all_counter 		     - output of a raw ring counter for all rings
 void moller_hls
 (							
 	ap_uint<13> energy_threshold, 			   
@@ -89,7 +103,8 @@ void moller_hls
 	hls::stream<fadc_hits_t> &s_fadc_hits, 
 	hls::stream<trigger_t> &s_trigger,
 	hls::stream<ring_trigger_t> &s_ring_trigger,
-	hls::stream<ring_all_t> &s_ring_all_t
+	hls::stream<ring_all_t> &s_ring_all,
+	hls::stream<ring_all_counter_t> &s_ring_all_counter
 );
 
 /* define sub functions here */

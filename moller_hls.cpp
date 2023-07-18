@@ -14,7 +14,8 @@ void moller_hls
 	hls::stream<fadc_hits_t> &s_fadc_hits, 		 // raw FADC data input stream
 	hls::stream<trigger_t> &s_trigger, 			 // output stream for for the trigger data
 	hls::stream<ring_trigger_t> &s_ring_trigger, // output stream for for the ring trigger data
-	hls::stream<ring_all_t> &s_ring_all_t 		 // output stream for the ring data
+	hls::stream<ring_all_t> &s_ring_all_t, 		 // output stream for the ring data
+	hls::stream<ring_all_counter_t> &s_ring_all_counter
 )
 {
 	fadc_hits_t fadc_hits = s_fadc_hits.read();
@@ -24,7 +25,8 @@ void moller_hls
 #else
   static fadc_hits_t fadc_hits_pre;
 #endif
-
+	
+	ring_all_counter_t raw_counter;
 	trigger_t time_bitmap;
 	ring_all_t allr;
 	hit_t arr_event[N_CHAN] = {0,0,0,0};
@@ -32,9 +34,8 @@ void moller_hls
 		allr.r[i].e = 0;
 		allr.r[i].nhits = 0;
 		allr.r[i].segment = 0;
-		for(int j = 0; j < 8; j++){
-			time_bitmap.trig[i] = 0;
-		}
+		time_bitmap.trig[i] = 0;
+		raw_counter.ring_counter[i].counter = 0;
 	}
 	for(int ch = 0; ch < N_CHAN; ch++){
 		arr_event[ch] = make_event(fadc_hits_pre.vxs_chan[ch], fadc_hits.vxs_chan[ch]);
@@ -61,13 +62,15 @@ void moller_hls
 			}
 			else if(ring_num == RING_SIX) { ring_num = 8; }
 			// computers start counting at 0 so ring_num - 1 is the appropriate indices
+			raw_counter.ring_counter[ring_num-1].counter++;
 			add_ring_data(ring_num-1, segment_num, arr_event[ch], allr.r);
 			make_timing_bitmap(ring_num-1, arr_event[ch], &time_bitmap);
 		}
 	} // end for loop
 
 	ring_trigger_t ring_bitmap = make_ring_bitmap(allr.r,ring_threshold);
-
+	
+	s_ring_all_counter.write(raw_counter);
 	s_ring_all_t.write(allr);
 	s_ring_trigger.write(ring_bitmap);
 	s_trigger.write(time_bitmap);

@@ -18,7 +18,6 @@ using std::cout; using std::endl;
 
 void generateRndData(hit_t* vxs_chan){
 
-	std::srand(1); // set specific seed for testing latency
 	ap_uint<13> energy;
 	ap_uint<3> time;
 	for(int ch = 0; ch < N_CHAN; ch++){
@@ -57,7 +56,8 @@ int main(int argc, char *argv[])
 	hls::stream<fadc_hits_t> s_fadc_hits; // raw data stream from the
 	hls::stream<trigger_t> s_time_trigger; // output stream for for the trigger data
 	hls::stream<ring_trigger_t> s_ring_trigger; // output stream for for the ring trigger data
-	hls::stream<ring_all_t> s_ring_all_t; // output stream for the ring data
+	hls::stream<ring_all_t> s_ring_all; // output stream for the ring data
+	hls::stream<ring_all_counter_t> s_ring_all_counter;
 
 	char tmp;
 	int ch;
@@ -71,6 +71,7 @@ int main(int argc, char *argv[])
 		fadc_hits.vxs_chan[ch].t = 0;
 	}
 
+	std::srand(1); // set specific seed for testing latency
 	generateRndData(fadc_hits.vxs_chan);
 	
 
@@ -84,7 +85,8 @@ int main(int argc, char *argv[])
 			s_fadc_hits,
 			s_time_trigger,
 			s_ring_trigger,
-	 		s_ring_all_t
+	 		s_ring_all,
+			s_ring_all_counter
 		);
 
 	}
@@ -92,9 +94,9 @@ int main(int argc, char *argv[])
 	
 	// TRIGGER INFO BLOCK
 	printf("\nRing Data:__________________\n");
-	while(!s_ring_all_t.empty())
+	while(!s_ring_all.empty())
 	{
-		ring_all_t ring_data = s_ring_all_t.read();
+		ring_all_t ring_data = s_ring_all.read();
 		for(int ring_index = 0; ring_index < 8; ring_index++){
 			cout << "ringNum: " << ring_index << endl;
 			cout << "ring_data.r[" << ring_index << "].e: " << ring_data.r[ring_index].e << endl;
@@ -140,7 +142,14 @@ int main(int argc, char *argv[])
 		}
 		t32ns++;
 	}
-
+	while(!s_ring_all_counter.empty())
+	{
+		ring_all_counter_t raw_counter = s_ring_all_counter.read();
+		cout << "Raw Counter:" << endl;
+		for(int i = 0; i < 8; i++){
+			cout << "Ring " << i << ": " << raw_counter.ring_counter[i].counter << endl;
+		}
+	}
 	
 	return 0;
 }
