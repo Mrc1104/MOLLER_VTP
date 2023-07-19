@@ -8,6 +8,7 @@ using std::cout; using std::endl;
 // for testing
 #include <fstream>
 #include <string>
+#include "data_stream.h"
 
 #include "moller_hls.h"
 
@@ -72,10 +73,24 @@ int main(int argc, char *argv[])
 	}
 
 	std::srand(1); // set specific seed for testing latency
-	generateRndData(fadc_hits.vxs_chan);
+// 	generateRndData(fadc_hits.vxs_chan);
 	
-
+	for(int i = 0 ; i <N_CHAN; i++){
+		fadc_hits.vxs_chan[i].e = fake_data_0[i].e;
+		fadc_hits.vxs_chan[i].t = fake_data_0[i].t;
+	}	
 	s_fadc_hits.write(fadc_hits);
+	for(int i = 0 ; i <N_CHAN; i++){
+		fadc_hits.vxs_chan[i].e = fake_data_1[i].e;
+		fadc_hits.vxs_chan[i].t = fake_data_1[i].t;
+	}	
+	s_fadc_hits.write(fadc_hits);
+	for(int i = 0 ; i <N_CHAN; i++){
+		fadc_hits.vxs_chan[i].e = fake_data_2[i].e;
+		fadc_hits.vxs_chan[i].t = fake_data_2[i].t;
+	}	
+	s_fadc_hits.write(fadc_hits);
+
 	while(!s_fadc_hits.empty()){
 
 		moller_hls
@@ -119,9 +134,10 @@ int main(int argc, char *argv[])
 		for(int ring_index = 7; ring_index > -1; ring_index--){
 			cout << "[" << ring_trig.ring[ring_index] << "]";
 		}
+		cout << endl;
 	}
 	
-	cout << "n\nTime Trig Data:__________________\n";
+	cout << "\n\nTime Trig Data:__________________\n";
 	while(!s_time_trigger.empty())
 	{
 		int t32ns = 0;
