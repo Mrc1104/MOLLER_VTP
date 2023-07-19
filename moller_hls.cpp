@@ -31,12 +31,14 @@ void moller_hls
 	trigger_t time_bitmap;
 	ring_all_t allr;
 	hit_t arr_event[N_CHAN] = {0,0,0,0};
+	ap_uint<8> ring_trigger_counter[8] = {0,0,0,0,0,0,0,0};
 	for(int i = 0; i < 8; i++){
 		allr.r[i].e = 0;
 		allr.r[i].nhits = 0;
 		allr.r[i].segment = 0;
 		time_bitmap.trig[i] = 0;
 		raw_counter.ring_counter[i].counter = 0;
+		ring_trigger_counter[i] = ring_trigger_scalars[i]; 
 	}
 	for(int ch = 0; ch < N_CHAN; ch++){
 		arr_event[ch] = make_event(fadc_hits_pre.vxs_chan[ch], fadc_hits.vxs_chan[ch]);
@@ -55,6 +57,10 @@ void moller_hls
 			int ring_num = chmap[slot][ich].DET_ID; // Ring_number is labeled starting at 1 but indexed starting at 0
 	      	int segment_num = chmap[slot][ich].SEG_NUM;
 			int sub_element = chmap[slot][ich].SUB_ELEMENT;
+
+			if( (ring_trigger_config_bitmap[ring_num] == 0) || (segment_trigger_config_bitmap[ring_num][segment_num] == 0) ){
+				ring_num = NONE;
+			}
 			if(ring_num == NONE) { continue; } // ring_num == 0 => DET_ID == NONE
 			if(ring_num == RING_FIVE){ // careful! ring 5 is actually 3 rings (5a->index 5, 5b->index 6, 5c->7) thus ring 6->index8
 				if(sub_element == 'A') { ring_num = 5; }
@@ -64,13 +70,18 @@ void moller_hls
 			else if(ring_num == RING_SIX) { ring_num = 8; }
 			// computers start counting at 0 so ring_num - 1 is the appropriate indices
 			raw_counter.ring_counter[ring_num-1].counter++;
-			add_ring_data(ring_num-1, segment_num, arr_event[ch], allr.r);
-			make_timing_bitmap(ring_num-1, arr_event[ch], &time_bitmap);
+			if(ring_trigger_counter == 0){
+				add_ring_data(ring_num-1, segment_num, arr_event[ch], allr.r);
+				make_timing_bitmap(ring_num-1, arr_event[ch], &time_bitmap);
+				ring_trigger_counter[ring_num-1] = ring_trigger_scalars[ring_num-1];
+			}
+			else{
+				ring_trigger_counter[ring_num-1]--;
+			}
 		}
 	} // end for loop
 
 	ring_trigger_t ring_bitmap = make_ring_bitmap(allr.r,ring_threshold);
-	
 	s_ring_all_counter.write(raw_counter);
 	s_ring_all_t.write(allr);
 	s_ring_trigger.write(ring_bitmap);
