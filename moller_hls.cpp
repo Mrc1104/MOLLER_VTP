@@ -1,7 +1,7 @@
 #include "moller_hls.h"
 #include "variables.h"
 #include "chan_map/array1.h"
-#include "trigger_config/save3.h"
+#include "trigger_config/save4.h"
 
 #include <iostream>
 using std::endl; using std::cout;
