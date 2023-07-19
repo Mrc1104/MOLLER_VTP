@@ -3,6 +3,8 @@
 #include <vector>
 #include <string>
 #include <algorithm>
+
+#include <ap_int.h>
 using namespace std;
 
 bool save_file_already_exists(const string path)
@@ -77,7 +79,7 @@ void parser(ifstream &inp, vector<int> &r, vector<vector<int>> &seg, vector<int>
 					sdummy = "";
 				}
 			}
-			r.push_back(ring_counter);
+			r.push_back(ring_counter-1);
 			scal.push_back(stoi(scalar));
 			seg.push_back(vdummy);
 		}
@@ -87,20 +89,73 @@ void parser(ifstream &inp, vector<int> &r, vector<vector<int>> &seg, vector<int>
 ap_uint<8> make_ring_bitmap(const vector<int> r)
 {
 	ap_uint<8> ring_bitmap = 0;
-
-
+	for(auto it : r)
+	{
+		ring_bitmap[it] = 1;
+	}	
 	return ring_bitmap;
 }
 
 ap_uint<28> make_segment_bitmap(const vector<int> s)
 {
 	ap_uint<28> seg_bitmap = 0;
-
+	if( find(s.begin(),s.end(), 0) == s.end() && s.size() != 0 ){
+		if(find(s.begin(), s.end(), 29) == s.end()){
+			for(auto it : s){
+				seg_bitmap[it-1] = 1;
+			}			
+		}
+		else
+		{
+			for(int i = 0 ; i < 28; i++)
+			{
+				seg_bitmap[i] = 1;
+			}
+		}
+	}
 	return seg_bitmap;
 }
 
-void create_header(ofstream &out)
+void create_header(ofstream &out , const ap_uint<8> r, const ap_uint<28> *s, const ap_uint<8> *scal)
 {
+	out << "#pragma once\n";
+	out << "#include <ap_int.h>\n";
+	out << endl;
+	out << "const ap_uint<8> ring_trigger_config_bitmap = " << r << ";\n// ";
+	for(int i = 7; i>-1; i--){
+		out << "[" << r[i] << "]";
+	}
+	out << "\n// MSB ----------------- LSB" << endl;
+	out << endl;
+	out << "const ap_uint<28> segment_trigger_config_bitmap[8] = \n{\n";
+	for(int i = 0; i < 8; i++){
+		out << "// ";
+		for(int j = 27; j > -1; j--){
+			out << "[" << s[i][j] << "]";
+		}
+		out << endl;
+		if(i < 7){
+			out << s[i] << ",";
+			if(i == 0) out << " // Ring 1";
+			out << "\n";
+		}
+		else
+			out << s[i] << " // Ring 8\n};";
+	}
+	out << endl;
+	out << "const ap_uint<8> ring_trigger_scalars[8] =\n{\n";
+	for(int i = 0 ; i < 8; i++){
+		if(i < 7){
+			out << " " << scal[i] << ",";
+			if(i == 0){
+				out << " // Ring 1";
+			}
+			out << endl; 
+		}	
+		else{
+			out << " " << scal[i] << "  // Ring 8\n};";
+		}
+	}
 
 }
 
@@ -150,9 +205,28 @@ int main(int argc, char **argv)
 	parser(config_file, rings, segments, scalars);
 
 	
-	// ap_uint<8> make_ring_bitmap(const vector<int> r)
-	// ap_uint<28> make_segment_bitmap(const vector<int> s)
+	ap_uint<8> ring_bitmap = make_ring_bitmap(rings);
 
 
+
+	ap_uint<28> segment_bitmap;
+	ap_uint<28> arr_segment_bitmap[8];
+	for(int i = 0 ; i < 8; i++){
+		arr_segment_bitmap[i] = 0;
+	}
+	for(int i = 0 ; i < segments.size(); i++){
+		segment_bitmap = make_segment_bitmap(segments[i]);
+		arr_segment_bitmap[rings[i]] = segment_bitmap;	
+	}
+	
+	
+	ap_uint<8> scalar_array[8]; 
+	for(int index = 0; index < 8; index++){
+		scalar_array[index] = 0 ;		
+	}
+	for(int r_index = 0; r_index<rings.size(); r_index++){
+		scalar_array[rings[r_index]] = scalars[r_index];	
+	}
+	create_header(save_file, ring_bitmap, arr_segment_bitmap, scalar_array);
 	return 0;
 }
