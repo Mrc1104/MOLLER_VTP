@@ -1,7 +1,7 @@
 #include "moller_hls.h"
 #include "variables.h"
 #include "chan_map/array1.h"
-#include "trigger_config/save5.h"
+#include "trigger_config/config_header/all_rings_all_segs_no_scalars.h"
 
 #include <iostream>
 using std::endl; using std::cout;
@@ -63,11 +63,12 @@ void moller_hls
 				else if(sub_element == 'C') { ring_num = 7; }
 			}
 			else if(ring_num == RING_SIX) { ring_num = 8; }
+
+			// computers start counting at 0 so ring_num - 1 is the appropriate index
 			if( (ring_trigger_config_bitmap[ring_num-1] == 0) || (segment_trigger_config_bitmap[ring_num-1][segment_num] == 0) ){
 				ring_num = NONE;
 			}
 			if(ring_num == NONE) { continue; } // ring_num == 0 => DET_ID == NONE
-			// computers start counting at 0 so ring_num - 1 is the appropriate indices
 			raw_counter.ring_counter[ring_num-1].counter++;
 			if(ring_trigger_counter[ring_num-1] == 0){
 				add_ring_data(ring_num-1, segment_num, arr_event[ch], allr.r);

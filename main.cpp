@@ -73,8 +73,10 @@ int main(int argc, char *argv[])
 	}
 
 	std::srand(1); // set specific seed for testing latency
-// 	generateRndData(fadc_hits.vxs_chan);
-	
+	generateRndData(fadc_hits.vxs_chan);
+	s_fadc_hits.write(fadc_hits);
+
+	/* Uncomment for predetermined data that spans 3 runs
 	for(int i = 0 ; i <N_CHAN; i++){
 		fadc_hits.vxs_chan[i].e = fake_data_0[i].e;
 		fadc_hits.vxs_chan[i].t = fake_data_0[i].t;
@@ -90,7 +92,7 @@ int main(int argc, char *argv[])
 		fadc_hits.vxs_chan[i].t = fake_data_2[i].t;
 	}	
 	s_fadc_hits.write(fadc_hits);
-
+	*/
 	while(!s_fadc_hits.empty()){
 
 		moller_hls
