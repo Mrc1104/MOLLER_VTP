@@ -1,0 +1,189 @@
+ringNum: 0
+ring_data.r[0].e: 2984
+ring_data.r[0].nhits: 1
+ring_data.r[0].segment: [0][0][0][0][0][0][0][0][0][0][0][0][0][1][0][0][0][0][0][0][0][0][0][0][0][0][0][0]
+ringNum: 1
+ring_data.r[1].e: 0
+ring_data.r[1].nhits: 0
+ring_data.r[1].segment: [0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0]
+ringNum: 2
+ring_data.r[2].e: 5999
+ring_data.r[2].nhits: 1
+ring_data.r[2].segment: [0][0][0][0][0][0][0][1][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0]
+ringNum: 3
+ring_data.r[3].e: 0
+ring_data.r[3].nhits: 0
+ring_data.r[3].segment: [0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0]
+ringNum: 4
+ring_data.r[4].e: 3211
+ring_data.r[4].nhits: 2
+ring_data.r[4].segment: [0][0][0][0][0][1][0][0][0][0][0][0][0][0][0][0][1][0][0][0][0][0][0][0][0][0][0][0]
+ringNum: 5
+ring_data.r[5].e: 17218
+ring_data.r[5].nhits: 3
+ring_data.r[5].segment: [0][0][0][0][0][0][0][1][0][0][0][0][0][0][0][0][0][0][1][0][0][0][1][0][0][0][0][0]
+ringNum: 6
+ring_data.r[6].e: 0
+ring_data.r[6].nhits: 0
+ring_data.r[6].segment: [0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0]
+ringNum: 7
+ring_data.r[7].e: 0
+ring_data.r[7].nhits: 0
+ring_data.r[7].segment: [0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0]
+ringNum: 0
+ring_data.r[0].e: 14163
+ring_data.r[0].nhits: 3
+ring_data.r[0].segment: [0][0][0][1][0][0][0][1][0][0][0][0][0][0][1][0][0][0][0][0][0][0][0][0][0][0][0][0]
+ringNum: 1
+ring_data.r[1].e: 7854
+ring_data.r[1].nhits: 1
+ring_data.r[1].segment: [0][0][0][0][1][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0]
+ringNum: 2
+ring_data.r[2].e: 8579
+ring_data.r[2].nhits: 3
+ring_data.r[2].segment: [0][0][0][0][1][0][0][0][0][0][1][0][0][0][0][0][0][0][1][0][0][0][0][0][0][0][0][0]
+ringNum: 3
+ring_data.r[3].e: 13698
+ring_data.r[3].nhits: 3
+ring_data.r[3].segment: [0][0][0][0][0][0][1][0][0][0][1][0][0][0][0][0][0][0][0][0][0][0][0][0][1][0][0][0]
+ringNum: 4
+ring_data.r[4].e: 12688
+ring_data.r[4].nhits: 2
+ring_data.r[4].segment: [0][0][0][0][1][0][0][0][0][0][0][0][0][0][0][0][0][0][0][1][0][0][0][0][0][0][0][0]
+ringNum: 5
+ring_data.r[5].e: 13485
+ring_data.r[5].nhits: 2
+ring_data.r[5].segment: [0][0][0][0][1][0][0][0][0][0][0][0][1][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0]
+ringNum: 6
+ring_data.r[6].e: 13926
+ring_data.r[6].nhits: 2
+ring_data.r[6].segment: [0][0][1][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][1][0][0][0][0][0][0]
+ringNum: 7
+ring_data.r[7].e: 0
+ring_data.r[7].nhits: 0
+ring_data.r[7].segment: [0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0]
+ringNum: 0
+ring_data.r[0].e: 9932
+ring_data.r[0].nhits: 2
+ring_data.r[0].segment: [0][0][0][0][0][1][0][0][0][0][0][0][0][0][0][0][1][0][0][0][0][0][0][0][0][0][0][0]
+ringNum: 1
+ring_data.r[1].e: 5583
+ring_data.r[1].nhits: 1
+ring_data.r[1].segment: [0][0][0][0][0][0][0][0][1][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0]
+ringNum: 2
+ring_data.r[2].e: 0
+ring_data.r[2].nhits: 0
+ring_data.r[2].segment: [0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0]
+ringNum: 3
+ring_data.r[3].e: 0
+ring_data.r[3].nhits: 0
+ring_data.r[3].segment: [0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0]
+ringNum: 4
+ring_data.r[4].e: 1467
+ring_data.r[4].nhits: 1
+ring_data.r[4].segment: [0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][1][0][0][0][0][0]
+ringNum: 5
+ring_data.r[5].e: 12506
+ring_data.r[5].nhits: 3
+ring_data.r[5].segment: [0][0][0][0][0][0][0][0][0][0][0][0][1][0][0][0][0][0][0][0][0][1][0][1][0][0][0][0]
+ringNum: 6
+ring_data.r[6].e: 231
+ring_data.r[6].nhits: 1
+ring_data.r[6].segment: [0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][1][0][0][0][0]
+ringNum: 7
+ring_data.r[7].e: 0
+ring_data.r[7].nhits: 0
+ring_data.r[7].segment: [0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0]
+
+Ring Trig Data:__________________
+Format:	 7 ------------------ 0	 ring #
+[0][0][1][1][0][1][0][1]
+[0][1][1][1][1][1][1][1]
+[0][1][1][1][0][0][1][1]
+
+
+Time Trig Data:__________________
+Format:	 12ns ------------------ -16ns	 (4ns ticks)
+Trigger found at T=8ns
+Ring: 0	[0][1][0][0][0][0][0][0]
+Ring: 1	[0][0][0][0][0][0][0][0]
+Trigger found at T=8ns
+Ring: 2	[0][1][0][0][0][0][0][0]
+Ring: 3	[0][0][0][0][0][0][0][0]
+Trigger found at T=4ns
+Ring: 4	[0][0][1][0][0][0][0][0]
+Trigger found at T=12ns
+Trigger found at T=8ns
+Trigger found at T=0ns
+Ring: 5	[1][1][0][1][0][0][0][0]
+Ring: 6	[0][0][0][0][0][0][0][0]
+Ring: 7	[0][0][0][0][0][0][0][0]
+Format:	 12ns ------------------ -16ns	 (4ns ticks)
+Trigger found at T=4ns
+Trigger found at T=-8ns
+Trigger found at T=-16ns
+Ring: 0	[0][0][1][0][0][1][0][1]
+Trigger found at T=-16ns
+Ring: 1	[0][0][0][0][0][0][0][1]
+Trigger found at T=4ns
+Trigger found at T=-12ns
+Trigger found at T=-16ns
+Ring: 2	[0][0][1][0][0][0][1][1]
+Trigger found at T=8ns
+Trigger found at T=0ns
+Trigger found at T=-16ns
+Ring: 3	[0][1][0][1][0][0][0][1]
+Trigger found at T=-8ns
+Trigger found at T=-12ns
+Ring: 4	[0][0][0][0][0][1][1][0]
+Trigger found at T=12ns
+Trigger found at T=8ns
+Ring: 5	[1][1][0][0][0][0][0][0]
+Trigger found at T=12ns
+Trigger found at T=-8ns
+Ring: 6	[1][0][0][0][0][1][0][0]
+Ring: 7	[0][0][0][0][0][0][0][0]
+Format:	 12ns ------------------ -16ns	 (4ns ticks)
+Trigger found at T=12ns
+Trigger found at T=-8ns
+Ring: 0	[1][0][0][0][0][1][0][0]
+Trigger found at T=-16ns
+Ring: 1	[0][0][0][0][0][0][0][1]
+Ring: 2	[0][0][0][0][0][0][0][0]
+Ring: 3	[0][0][0][0][0][0][0][0]
+Trigger found at T=-12ns
+Ring: 4	[0][0][0][0][0][0][1][0]
+Trigger found at T=12ns
+Trigger found at T=4ns
+Trigger found at T=-12ns
+Ring: 5	[1][0][1][0][0][0][1][0]
+Trigger found at T=-8ns
+Ring: 6	[0][0][0][0][0][1][0][0]
+Ring: 7	[0][0][0][0][0][0][0][0]
+Raw Counter:
+Ring 0: 2
+Ring 1: 0
+Ring 2: 2
+Ring 3: 1
+Ring 4: 5
+Ring 5: 6
+Ring 6: 1
+Ring 7: 1
+Raw Counter:
+Ring 0: 6
+Ring 1: 2
+Ring 2: 6
+Ring 3: 6
+Ring 4: 5
+Ring 5: 5
+Ring 6: 5
+Ring 7: 0
+Raw Counter:
+Ring 0: 4
+Ring 1: 2
+Ring 2: 1
+Ring 3: 1
+Ring 4: 3
+Ring 5: 7
+Ring 6: 3
+Ring 7: 1
