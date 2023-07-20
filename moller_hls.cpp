@@ -1,7 +1,7 @@
 #include "moller_hls.h"
 #include "variables.h"
 #include "chan_map/array1.h"
-#include "trigger_config/config_headers/all_rings_all_segs_no_scalars.h"
+#include "trigger_config/config_headers/only_rings_5abc_all_segs_no_scalars.h"
 
 #include <iostream>
 using std::endl; using std::cout;

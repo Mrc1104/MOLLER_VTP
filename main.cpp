@@ -106,7 +106,7 @@ int main(int argc, char *argv[])
 
 	}
 
-	ofstream fout("C:/Users/mrcco/Documents/GitHub/MOLLER_VTP/vitis_w_all_rings_all_segs_no_scalars.txt");
+	ofstream fout("C:/Users/mrcco/Documents/GitHub/MOLLER_VTP/vitis_only_rings_5abc_all_segs_no_scalars.txt");
 	// TRIGGER INFO BLOCK
 	printf("\nRing Data:__________________\n");
 	while(!s_ring_all.empty())
