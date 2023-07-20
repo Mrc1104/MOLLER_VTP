@@ -106,64 +106,64 @@ int main(int argc, char *argv[])
 
 	}
 
-	
+	ofstream fout("C:/Users/mrcco/Documents/GitHub/MOLLER_VTP/vitis_w_all_rings_all_segs_no_scalars.txt");
 	// TRIGGER INFO BLOCK
 	printf("\nRing Data:__________________\n");
 	while(!s_ring_all.empty())
 	{
 		ring_all_t ring_data = s_ring_all.read();
 		for(int ring_index = 0; ring_index < 8; ring_index++){
-			cout << "ringNum: " << ring_index << endl;
-			cout << "ring_data.r[" << ring_index << "].e: " << ring_data.r[ring_index].e << endl;
-			cout << "ring_data.r[" << ring_index << "].nhits: " << ring_data.r[ring_index].nhits << endl;
-			cout << "ring_data.r[" << ring_index <<"].segment: ";
+			fout << "ringNum: " << ring_index << endl;
+			fout << "ring_data.r[" << ring_index << "].e: " << ring_data.r[ring_index].e << endl;
+			fout << "ring_data.r[" << ring_index << "].nhits: " << ring_data.r[ring_index].nhits << endl;
+			fout << "ring_data.r[" << ring_index <<"].segment: ";
 			for(int seg_index = 27; seg_index > -1; seg_index--){
-				cout << "[" << ring_data.r[ring_index].segment[seg_index] << "]";
+				fout << "[" << ring_data.r[ring_index].segment[seg_index] << "]";
 			}
-			cout << endl;
+			fout << endl;
 		}
 	}
 
 
 
-	cout << "\nRing Trig Data:__________________\n";
-	cout << "Format:\t 7 ------------------ 0\t ring #" << endl;
+	fout << "\nRing Trig Data:__________________\n";
+	fout << "Format:\t 7 ------------------ 0\t ring #" << endl;
 	while(!s_ring_trigger.empty())
 	{
 		ring_trigger_t ring_trig = s_ring_trigger.read();
 		for(int ring_index = 7; ring_index > -1; ring_index--){
-			cout << "[" << ring_trig.ring[ring_index] << "]";
+			fout << "[" << ring_trig.ring[ring_index] << "]";
 		}
-		cout << endl;
+		fout << endl;
 	}
 	
-	cout << "\n\nTime Trig Data:__________________\n";
+	fout << "\n\nTime Trig Data:__________________\n";
 	while(!s_time_trigger.empty())
 	{
 		int t32ns = 0;
 		trigger_t time_trig = s_time_trigger.read();
 
-		cout << "Format:\t 12ns ------------------ -16ns\t (4ns ticks)" << endl;
+		fout << "Format:\t 12ns ------------------ -16ns\t (4ns ticks)" << endl;
 		for(int ring_index = 0; ring_index < 8; ring_index ++){
 			for(int time_tick = 7; time_tick > -1; time_tick--){
 				if(time_trig.trig[ring_index][time_tick]){
-					cout << "Trigger found at T=" << t32ns*32+time_tick*4-16 << "ns" << endl;
+					fout << "Trigger found at T=" << t32ns*32+time_tick*4-16 << "ns" << endl;
 				}
 			}
-			cout << "Ring: " << ring_index << "\t";
+			fout << "Ring: " << ring_index << "\t";
 			for(int time_tick = 7; time_tick > -1; time_tick--){
-				cout << "[" << time_trig.trig[ring_index][time_tick] << "]";
+				fout << "[" << time_trig.trig[ring_index][time_tick] << "]";
 			}
-			cout << endl;
+			fout << endl;
 		}
 		t32ns++;
 	}
 	while(!s_ring_all_counter.empty())
 	{
 		ring_all_counter_t raw_counter = s_ring_all_counter.read();
-		cout << "Raw Counter:" << endl;
+		fout << "Raw Counter:" << endl;
 		for(int i = 0; i < 8; i++){
-			cout << "Ring " << i << ": " << raw_counter.ring_counter[i].counter << endl;
+			fout << "Ring " << i << ": " << raw_counter.ring_counter[i].counter << endl;
 		}
 	}
 	
