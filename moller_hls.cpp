@@ -1,7 +1,7 @@
 #include "moller_hls.h"
 #include "variables.h"
 #include "chan_map/array1.h"
-#include "trigger_config/config_headers/all_rings_all_segs_no_scalars.h"
+#include "trigger_config/config_headers/all_rings_all_segs_1_scalars.h"
 
 #include <iostream>
 using std::endl; using std::cout;
@@ -28,11 +28,21 @@ void moller_hls
 #endif
 	
 	ring_all_counter_t raw_counter;
+#pragma HLS ARRAY_PARTITION dim=1 factor=2 type=block variable=raw_counter.ring_counter
+
 	trigger_t time_bitmap;
+#pragma HLS ARRAY_PARTITION dim=1 type=complete variable=time_bitmap.trig
+
 	ring_all_t allr;
+#pragma HLS ARRAY_PARTITION dim=1 type=complete variable=allr.r
+
 	hit_t arr_event[N_CHAN] = {0,0,0,0};
 	ap_uint<8> ring_trigger_counter[8] = {0,0,0,0,0,0,0,0};
+#pragma HLS ARRAY_PARTITION dim=1 type=complete variable=ring_trigger_counter
+
 	for(int i = 0; i < 8; i++){
+#pragma HLS UNROLL
+
 		allr.r[i].e = 0;
 		allr.r[i].nhits = 0;
 		allr.r[i].segment = 0;
@@ -41,6 +51,8 @@ void moller_hls
 		ring_trigger_counter[i] = ring_trigger_scalars[i]; 
 	}
 	for(int ch = 0; ch < N_CHAN; ch++){
+#pragma HLS UNROLL
+
 		arr_event[ch] = make_event(fadc_hits_pre.vxs_chan[ch], fadc_hits.vxs_chan[ch]);
 	}
 	// set curr fadc data to previous fadc data
@@ -63,12 +75,11 @@ void moller_hls
 				else if(sub_element == 'C') { ring_num = 7; }
 			}
 			else if(ring_num == RING_SIX) { ring_num = 8; }
-
-			// computers start counting at 0 so ring_num - 1 is the appropriate index
 			if( (ring_trigger_config_bitmap[ring_num-1] == 0) || (segment_trigger_config_bitmap[ring_num-1][segment_num] == 0) ){
 				ring_num = NONE;
 			}
 			if(ring_num == NONE) { continue; } // ring_num == 0 => DET_ID == NONE
+			// computers start counting at 0 so ring_num - 1 is the appropriate indices
 			raw_counter.ring_counter[ring_num-1].counter++;
 			if(ring_trigger_counter[ring_num-1] == 0){
 				add_ring_data(ring_num-1, segment_num, arr_event[ch], allr.r);
