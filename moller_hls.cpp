@@ -113,7 +113,8 @@ void add_ring_data(
 {
 	rings[ringNum].e += hit_data.e;
 	rings[ringNum].nhits += 1;
-	rings[ringNum].segment[hit_segment] = 1;
+	// rings[ringNum].segment[hit_segment] = 1;
+	rings[ringNum].segment = (1<<hit_segment) | rings[ringNum].segment;
 }
 
 ring_trigger_t make_ring_bitmap(ring_hit_t* rings, ap_uint<16> ring_threshold)
