@@ -1,0 +1,65 @@
+
+Ring Data:__________________
+ringNum: 0
+ring_data.r[0].e: 0
+ring_data.r[0].nhits: 0
+ring_data.r[0].segment: [0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0]
+ringNum: 1
+ring_data.r[1].e: 0
+ring_data.r[1].nhits: 0
+ring_data.r[1].segment: [0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0]
+ringNum: 2
+ring_data.r[2].e: 0
+ring_data.r[2].nhits: 0
+ring_data.r[2].segment: [0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0]
+ringNum: 3
+ring_data.r[3].e: 6519
+ring_data.r[3].nhits: 2
+ring_data.r[3].segment: [1][0][0][0][1][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0]
+ringNum: 4
+ring_data.r[4].e: 1787
+ring_data.r[4].nhits: 1
+ring_data.r[4].segment: [0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][1][0][0][0][0][0][0][0][0][0][0]
+ringNum: 5
+ring_data.r[5].e: 1058
+ring_data.r[5].nhits: 1
+ring_data.r[5].segment: [0][0][0][0][0][0][1][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0]
+ringNum: 6
+ring_data.r[6].e: 5096
+ring_data.r[6].nhits: 1
+ring_data.r[6].segment: [0][0][0][0][1][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0]
+ringNum: 7
+ring_data.r[7].e: 7014
+ring_data.r[7].nhits: 1
+ring_data.r[7].segment: [0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][1][0][0][0]
+
+Ring Trig Data:__________________
+Format:	 7 ------------------ 0	 ring #
+[1][1][1][1][1][0][0][0]
+
+
+Time Trig Data:__________________
+Format:	 12ns ------------------ -16ns	 (4ns ticks)
+Ring: 0	[0][0][0][0][0][0][0][0]
+Ring: 1	[0][0][0][0][0][0][0][0]
+Ring: 2	[0][0][0][0][0][0][0][0]
+Trigger found at T=12ns
+Ring: 3	[1][0][0][0][0][0][0][0]
+Trigger found at T=8ns
+Ring: 4	[0][1][0][0][0][0][0][0]
+Trigger found at T=4ns
+Ring: 5	[0][0][1][0][0][0][0][0]
+Trigger found at T=0ns
+Ring: 6	[0][0][0][1][0][0][0][0]
+Trigger found at T=8ns
+Ring: 7	[0][1][0][0][0][0][0][0]
+Raw Counter:
+Ring 0: 0
+Ring 1: 0
+Ring 2: 0
+Ring 3: 2
+Ring 4: 1
+Ring 5: 1
+Ring 6: 1
+Ring 7: 1
+INFO [HLS SIM]: The maximum depth reached by any hls::stream() instance in the design is 1

@@ -122,7 +122,8 @@ ring_trigger_t make_ring_bitmap(ring_hit_t* rings, ap_uint<16> ring_threshold)
 	ring_trigger_t tmp;
 	for(int ringNum = 0; ringNum < 8; ringNum++){
 		if(rings[ringNum].e >= ring_threshold){
-			tmp.ring[ringNum] = 1;
+			// tmp.ring[ringNum] = 1;
+			tmp.ring = (1<<ringNum) | tmp.ring;
 		}
 		else{
 			tmp.ring[ringNum] = 0; // just being explicit about it
