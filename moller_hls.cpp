@@ -113,7 +113,6 @@ void add_ring_data(
 {
 	rings[ringNum].e += hit_data.e;
 	rings[ringNum].nhits += 1;
-	// rings[ringNum].segment[hit_segment] = 1;
 	rings[ringNum].segment = (1<<hit_segment) | rings[ringNum].segment;
 }
 
@@ -122,7 +121,6 @@ ring_trigger_t make_ring_bitmap(ring_hit_t* rings, ap_uint<16> ring_threshold)
 	ring_trigger_t tmp;
 	for(int ringNum = 0; ringNum < 8; ringNum++){
 		if(rings[ringNum].e >= ring_threshold){
-			// tmp.ring[ringNum] = 1;
 			tmp.ring = (1<<ringNum) | tmp.ring;
 		}
 		else{
@@ -144,7 +142,6 @@ void make_timing_bitmap(int ring_num, hit_t hit_data, trigger_t *ptrigger)
 		t_buff = hit_data.t + 8; // map cur time 0 to 3 -> 8 to 11 (move to time after pre hit window)
 	ap_uint<3> t_actual = t_buff - 4;
 
-	// ptrigger->trig[ring_num][t_actual] = 1;
 	ptrigger->trig[ring_num] = (1<<t_actual) | ptrigger->trig[ring_num];
 	
 }
