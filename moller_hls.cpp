@@ -65,7 +65,8 @@ void moller_hls
 			}
 			else if(ring_num == RING_SIX) { ring_num = 8; }
 
-			// computers start counting at 0 so ring_num - 1 is the appropriate index
+			// TODO: computers start counting at 0 so ring_num - 1 is the appropriate index
+			// make this a bit manip check with a bit map (see stack exhange)
 			if( (ring_trigger_config_bitmap[ring_num-1] == 0) || (segment_trigger_config_bitmap[ring_num-1][segment_num] == 0) ){
 				continue;
 			}
