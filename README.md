@@ -6,6 +6,7 @@ There are two git repos,
 1. MOLLER_VTP (this one)
 
 and 
+
 2. VXS-Crate-2 (https://github.com/Mrc1104/VXS-Crate-2)
 
 The two are very similar projects but with different scopes. MOLLER_VTP is for only the thin quartz detectors wheras the VXS-Crate-2 is for the shower max, pion detectors, and trigger scintillator pairs. Both repos, however, were trying to set up basic trigger functionality: can we see what detector was hit, which segment it occured in, and the timing of the hit. 
@@ -46,7 +47,7 @@ Three arrays that store permenant fake data. Used for multi-run testing where we
 ## Supplements
 Currently only holds additional information regarding the splitting of events into current_hit and pre_hit bins. Essentially, we shift the time window we are interested so that half the data we fanout comes from the previous 32ns fadc clock cycle and half comes from the current 32ns fadc clock cycle. 
 
-# Configuration and Configuraiton Scripts
+# Configuration and Configuration Scripts
 One thing MOLLER_VTP and VXS-Crate-2 sought to do was have the ability to choose what fadc channels correspond to what detector and detector segments. Additionally, we also wanted the ability to set scalars and to select which detectors or segments we would listed to. This culminates into having configuration files. Eventually, we would get to loading these configuration files dynamically into the FPGA, but we are not there yet. So, for now, we are simply "loading configuration files" statically via header files. There are two types of configuration files:
 1. Trigger Configuration
 Which detector and segments do we care about and with what scalars.
@@ -62,3 +63,13 @@ A 8-bit bitmask that indicates which rings we are listening to.
 
 An array of 8, 28bit bitmasks that indicate which segments we care about for each ring
 * ap_uint<8> ring_trigger_scalars[8]
+
+An array of 8, 8bit ring countdown scalars. The ring will not detect a hit until the scalar reaches zero.  
+
+There exists a helper file called trigger_conf.cpp. The C++ file will take a trigger configuration file and parse it into a useable header file that can be included in moller_hls.[h,cpp], 
+(See trigger_config/ for examples and more information)
+
+## Detector to Channel Configuration
+The det_chan is an array of chan_map structs. This array is used in moller_hls.cpp to parse which channel corresponds to which detector and segment. It additionally stores secondary detector information like which sub-ring Ring5 is (5a,5b,5c) or which channel the partner scintillator in the scintillator pair resides in (to check for coincidences)
+There exists three helper functions to help generate these det-chan-mapping arrays. A shell script that takes in information and passes it to a makefile. The makefile then compiles and calls either configure.cpp to create a detector to channel configuration file or the parser.cpp which takes the configuration file and creates an array. 
+(See Det_Chan_Config_Script/ for more information and examples) 
