@@ -73,3 +73,18 @@ There exists a helper file called trigger_conf.cpp. The C++ file will take a tri
 The det_chan is an array of chan_map structs. This array is used in moller_hls.cpp to parse which channel corresponds to which detector and segment. It additionally stores secondary detector information like which sub-ring Ring5 is (5a,5b,5c) or which channel the partner scintillator in the scintillator pair resides in (to check for coincidences)
 There exists three helper functions to help generate these det-chan-mapping arrays. A shell script that takes in information and passes it to a makefile. The makefile then compiles and calls either configure.cpp to create a detector to channel configuration file or the parser.cpp which takes the configuration file and creates an array. 
 (See Det_Chan_Config_Script/ for more information and examples) 
+
+# Misc. Files
+There exists several output files that were used to verify the output of the moller_hls logic. I primarily worked through a preset of fake data and used that to compare (via the output) if the logic was working properly or not. They are, for the most part, inconsequential. 
+
+# Summary
+That covers the main grouped files. To recap, the primary files are `main.cpp`, `moller_hls.cpp`, and `moller_hls.h`. Important header files that are used by a variety of files are located in the Supporting_Headers. Basic configuration abilties exist but are done in a very obtuse and static way via arrays stored in header files. To keep the structure consistent, helper files exist to create these arrays. Each main subdir has a README.md with more information if interested.
+
+# Contact
+If you have any questions, please feel free to contact me either via my OU email or jeffersonlab email.
+
+Ryan Conaway
+
+mc321015@ohio.edu
+
+mrc@jlab.org
