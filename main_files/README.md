@@ -3,6 +3,7 @@ The three files
 * main.cpp
 * moller_hls.h
 * moller_hls.cpp
+
 are the main files of the repo. They meant to be used with the AMD Vitis software to program a FPGA. 
 
 ## main.cpp

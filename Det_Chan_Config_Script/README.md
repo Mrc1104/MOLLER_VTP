@@ -4,6 +4,7 @@ Four files
 * configuration.cpp
 * parser.cpp
 * script.mk
+
 are helper files to generate channel-to-detector maps. This basically was a way for me to practice shell-scripting and C++ while providing a systematic way to make different channel to detector maps needed for moller_hls testing (see main_files/). 
 
 I do not expect this to be of any use so I'll be brief with my description.

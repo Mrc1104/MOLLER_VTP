@@ -4,6 +4,7 @@ I went ahead an grouped like files in named directories to help with navigation 
 # Layout
 There are two git repos,
 1. MOLLER_VTP (this one)
+
 and 
 2. VXS-Crate-2 (https://github.com/Mrc1104/VXS-Crate-2)
 
@@ -15,23 +16,31 @@ Since I grouped files in common directories, I reccomend checking out the other 
 ## Main Files
 These are the primary files of the repository. They include 
 * main.cpp
+
 The testbench file needed to generate fake fadc data, intilize variables to be passed to the top function, and output the bitmasks the top function returns. Fanins and Fanouts occur using the hls::stream<> data type as input parameters into the top function. 
 * moller_hls.cpp
+
 The top function where the fake fadc data is parsed and distributed to the appropriate detectors. This is where the total # of hits per ring is calculated and the bitmasks for each detector and segment is created.
 * moller_hls.h
+
 The header file that holds the function and struct declarations for moller_hls.cpp. 
 
 ## Supporting_Headers
 These are header files that define global variables, std::maps, struct, and etc. that are used by several different files.
 * variables.h
+
 Defines N_SLOT (# of fadc slots) and N_CHAN (# of fadc channels, each fadc has 16 channels). These are the two most important global variables. Needed for helper files as well as the main moller_hls files. 
 * detector_type.h
+
 This declares the detector enum that is used to map channel to detector in a more legible manner. Used in serveral helper files and the main moller_hls files. 
 * chan_map.h
+
 Holds a detector to channel map struct that is required for the det_chan maps that are stored as arrays.  
 * std_map.h 
+
 A std::map that converts strings to the detector enum or vice versa. Used in the det-chan configuation scripts (see Det_Chan_Config_script/)
 * data_stream.h
+
 Three arrays that store permenant fake data. Used for multi-run testing where we know the desired output.
 
 ## Supplements
@@ -47,7 +56,9 @@ Which fadc channel corresponds to which detector and segment.
 ## Trigger Configuration
 Trigger Configuration header file holds three pieces of information:
 * ap_uint<8> ring_trigger_config_bitmap
+
 A 8-bit bitmask that indicates which rings we are listening to.
 * ap_uint<28> segment_trigger_config_bitmap[8]
+
 An array of 8, 28bit bitmasks that indicate which segments we care about for each ring
 * ap_uint<8> ring_trigger_scalars[8]
