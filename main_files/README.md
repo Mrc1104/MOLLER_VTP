@@ -19,3 +19,8 @@ The goal was to create simple ring trigger logic where we can generate fake data
 
 ### General Comments
 The basis for the code came from Hanjie Liu's code for an E-calorimator cluster. I am not the most experienced programmer, especially when it comes writing firmware-type things. A lot of the code written is experimental (for me) and a lot of it was written to try different things and different approaches. I have gone through and tried to comment through the logic to help clarify things. Through trial and error with Vitis, I have found that the #pragma directives make the most difference in efficiency (especially when it comes to arrays and the "ARRAY_PARTITION" directives). 
+
+### Configration Files
+The idea was to eventually be able to load configuration file to the FPGA dynamically. As if now, all configuration files are included in moller_hls.[h,cpp] as header files. There are trigger configuration files (what rings/segments are enabled and with what prescalars) and detector-to-channel-map configuration files (what fadc channel corresponds to which detector and segment). See trigger_config/ and Det_Chan_Config_Script/ for more information and examples. 
+
+Both folders also contain helper scripts that will generate these configuration headers.

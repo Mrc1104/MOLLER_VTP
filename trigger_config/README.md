@@ -5,7 +5,7 @@ This directory contains a simple script that takes in a configuration file of th
 ON/OFF		SCALAR		[SEGMENTS]
 
 and generates an output header file. The idea is that you will use this in the FPGA design.
-NOTE: Being able to load configuration files dynamically is still a WiP so this only results in 
+NOTE: Being able to load configuration files dynamically is still a WIP so this only results in 
 	  a static configuration.
 Ex: 
 
