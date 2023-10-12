@@ -1,6 +1,18 @@
 # MOLLER_VTP
 Fork of hanjie1/solid_ecal. Trigger design in vivado_hls 
 
+# Layout
+There are two git repos,
+1. MOLLER_VTP (this one)
+
+and 
+
+2. VXS-Crate-2 (https://github.com/Mrc1104/VXS-Crate-2)
+
+The two are very similar projects but with different scopes. MOLLER_VTP is for only the thin quartz detectors wheras the VXS-Crate-2 is for the shower max, pion detectors, and trigger scintillator pairs. Both repos, however, were trying to set up basic trigger functionality: can we see what detector was hit, which segment it occured in, and the timing of the hit. 
+
+Moller_VTP was written first and served as the primary testing ground for ideas and changes that were ported over to VXS-Crate-2. Therefore, MOLLER_VTP has a higher likelihood of being disoriented so I spent most of the time explaining this repository. 
+
 # Main Files
 The three files
 * main.cpp          -- testbench file
