@@ -1,5 +1,3 @@
-// Branch Vitis
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <iostream>
@@ -17,6 +15,15 @@ using std::cout; using std::endl;
 #include "chan_map.h"
 #include <map>
 
+/*
+* generateRndData():
+* Brief:		generates random time and energy data wih different 
+*				probabilities per ring.
+* Description:  
+*			 	Rings < 5      | 5% chance 
+*			 	Rings 5a,5b,5c | 10% chance 
+*			 	Rings > 7      | 5% chance 
+*/
 void generateRndData(hit_t* vxs_chan){
 
 	ap_uint<13> energy;
@@ -67,6 +74,8 @@ int main(int argc, char *argv[])
 	int sub_elem;
 
 	fadc_hits_t fadc_hits;
+	// The VITIS manual reccomends explicitly initilizing arrays of ap_uint<>
+	// as intilizing to 0 is not guaranteed
 	for(int ch = 0; ch < N_CHAN; ch++){
 		fadc_hits.vxs_chan[ch].e = 0;
 		fadc_hits.vxs_chan[ch].t = 0;
@@ -75,8 +84,8 @@ int main(int argc, char *argv[])
 	std::srand(1); // set specific seed for testing latency
 	generateRndData(fadc_hits.vxs_chan);
 	s_fadc_hits.write(fadc_hits);
-
-	/* Uncomment for predetermined data that spans 3 runs
+	/* 
+	// Uncomment for predetermined data that spans 3 runs
 	for(int i = 0 ; i <N_CHAN; i++){
 		fadc_hits.vxs_chan[i].e = fake_data_0[i].e;
 		fadc_hits.vxs_chan[i].t = fake_data_0[i].t;
@@ -94,7 +103,7 @@ int main(int argc, char *argv[])
 	s_fadc_hits.write(fadc_hits);
 	*/
 	while(!s_fadc_hits.empty()){
-
+		// primary function
 		moller_hls
 		(
 			energy_threshold,
@@ -127,7 +136,7 @@ int main(int argc, char *argv[])
 	}
 
 
-
+	// Printing to screen (or file if need be)
 	cout << "\nRing Trig Data:__________________\n";
 	cout << "Format:\t 7 ------------------ 0\t ring #" << endl;
 	while(!s_ring_trigger.empty())
