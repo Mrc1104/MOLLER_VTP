@@ -4,9 +4,9 @@
 #include <ap_int.h>
 #include <hls_stream.h>
 
-#include "chan_map.h"
-#include "detector_type.h"
-#include "variables.h"
+#include "chan_map.h" // channel to detector mapping 
+#include "detector_type.h" // detector enum
+#include "variables.h" // N_CHAN and N_SLOT definitions
 
 // hit_t:
 // - every 32ns each fadc reports 13 bit energy, and 3 bit hit time (time offset in current 32ns clock: 0=0ns, 1=4ns, 2=8ns, ..., 7=28ns)
@@ -28,6 +28,8 @@ typedef struct
 // - vxs_ch[ 144 ] to vxs_ch[ 159 ]: VME slot 5, ch 0 to 15 FADC channels
 // ...
 // - vxs_ch[ 208 ] to vxs_ch[ 223 ]: VME slot 19, ch 0 to 15 FADC channels
+// Comment:
+// - N_CHAN is defined in variables.h
 //
 typedef struct
 {
@@ -85,7 +87,10 @@ typedef struct
 {
 	raw_counter_t ring_counter[8];
 } ring_all_counter_t;
-// moller_hls:
+
+/* Functin declarations */
+
+// moller_hl:
 // - main workhorse of the code where most of the logic is performed
 // - Inputs:
 // 		hit_dt						 - coincidence tolerance
@@ -96,6 +101,28 @@ typedef struct
 // 		trigger 					 - output stream of rings timing trigger bitmap
 // 		s_ring_all   				 - output stream for the bitmap of ring hits
 // 		s_ring_all_counter 		     - output of a raw ring counter for all rings
+/*
+ * moller_hls():
+ * Brief: 		
+ * 				Main workhorse where most of the logic occurs. Takes in data streams,
+ * 				parses the data, generates ring masks, segment masks, and timing masks. 
+ * 				Returns via data streams
+ * Description: Takes in information from the fadc, parses that data, and generates required
+ * 				bitmasks by calling subfunctions (see sub function definitions below)
+ * 				The data, when parsed, gets allocated to the appropriate ring buffer 
+ * 				and ring masks, timing masks, and segment masks for each ring are created
+ * 				and returned via the output streams 
+ * 				
+ * Para:
+ * 		        hit_dt						 - coincidence tolerance
+ * 				seed_threshold 				 - min energy for a hit to count
+ * 				ring_threshold 				 - min summed energy for a ring to be counted as hit
+ * 				s_fadc_hits 				 - input stream for raw FADC data
+ * 				rings 						 - output stream of hit rings bitmap | [0]=1 => ring1 hit;[0]=0 => ring1 not hit 
+ * 				trigger 					 - output stream of rings timing trigger bitmap
+ * 				s_ring_all   				 - output stream for the bitmap of ring hits
+ * 				s_ring_all_counter 		     - output of a raw ring counter for all rings
+*/
 void moller_hls
 (							
 	ap_uint<13> energy_threshold, 			   
@@ -109,19 +136,54 @@ void moller_hls
 
 /* define sub functions here */
 
-// parses FADC channel data and sums it to the appropriate ring
 
+/*
+ * add_ring_data():
+ * Brief: 		
+ * 				Parses FADC channel data and sums it to the appropriate ring. Creates the rings
+ * 				segment bitmask. Each fadc channel corresponds to a different ring and segment
+ * Para:
+ * 				int ringNum       - ring number to add hit_data to 
+ * 				int hit_segment   - segment number that was hit
+ *				hit_t hit_data    - event data from the fadc
+ *				ring_hit_t* rings - struct that stores the ring data and segment bitmask
+*/
 void add_ring_data(
 	int ringNum,
 	int hit_segment,
 	hit_t hit_data,
 	ring_hit_t* rings
 );
-// takes the summed data from ring_all_t 
-// and compares it to ring_threshold to see 
-// if the ring qualifies as hit
+
+/*
+ * make_ring_bitmap():
+ * Brief: 		Creates the ring bitmask if a pre-set ring-energy threshold has been set. 
+ * 				Stored in *rings 
+ * Description: Creates a 8 bit bitmask that corresponds to which rings were hit
+ * 				Bitmask for ring hit - [0]=r0, [1]=r1, [2]=r2, ..., [7]=r6; 
+ * 				when bit=0 no ring_trigger, when bit=1 ring_trigger
+ * Para:
+ * 				ring_hit_t *rings   	   - ring hit bitmask to be updated
+ * 				ap_uint<16> ring_threshold - global ring threshold that needs to be satisfied
+ * 											  before a hit is considered to be true
+ * Comment:
+ * 				A global ring_threshold might be unnecessary. A per ring threshold would make
+ * 				more sense. Possible refactoring required.
+*/
 ring_trigger_t make_ring_bitmap(ring_hit_t* rings, ap_uint<16> ring_threshold);
 
+/*
+ * make_timing_bitmap():
+ * Brief: 		Creates timing bit mask that is stored in *ptrigger
+ * Description: We are shifting our timing window down to look at 4 time ticks current events
+ * 				and 4 ticks of the previous events. Take in the current time trigger data and creates
+ * 				the appropriate time trigger mask.
+ * Para:
+ * 				int ringNum    		- ring number that the data corresponds to
+ * 				hit_t hit_data 		- event information
+ * 				tirgger_t *ptrigger - The trigger bit mask for the current ring that is 
+ * 									  to be updated and returned  
+*/
 void make_timing_bitmap(
 	int ringNum,
 	hit_t hit_data,
@@ -129,13 +191,22 @@ void make_timing_bitmap(
 );
 /*
  * make_event():
- * Brief: 		Takes in pre_hit and curr_hit, determines which event falls within the 
+ * Brief: 		
+ * 				Takes in pre_hit and curr_hit, determines which one falls within the 
  * 		  		proper window, the returns that event
- * Description: We are shifting our timing window down to look at 4 time ticks current events
+ * Description: 
+ * 				We are shifting our timing window down to look at 4 time ticks current events
  * 				and 4 ticks of the previous events (the efficacy of this is debatable). 
  * 				We check prev_hit and curr_hit time stamps to determine if they fall within the right
  * 				window then return that event. 
- * Comment:		The channel number is 1 to 1 with the input channel data since cur_hit and pre_hit use the 
+ * Para:
+ * 				hit_t pre_hit - previous event data that had the appropriate timining data
+ * 				hit_t cur_hit - current event data that had the appropriate timining data
+ * Returns:
+ * 				the event that falls within the desired timing window
+ * 				
+ * Comment:		
+ * 				The channel number is 1 to 1 with the input channel data since cur_hit and pre_hit use the 
  * 				same channel-to-detector map
 */
 hit_t make_event(

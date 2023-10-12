@@ -10,13 +10,13 @@ using std::endl; using std::cout;
 
 void moller_hls
 (
-	ap_uint<13> energy_threshold, 				 // minimum energy for us to look at an individual hit
-	ap_uint<16> ring_threshold, 				 // minimum summed energy (over one ring) to count a ring as hit
-	hls::stream<fadc_hits_t> &s_fadc_hits, 		 // raw FADC data input stream
-	hls::stream<trigger_t> &s_trigger, 			 // output stream for for the trigger data
-	hls::stream<ring_trigger_t> &s_ring_trigger, // output stream for for the ring trigger data
-	hls::stream<ring_all_t> &s_ring_all_t, 		 // output stream for the ring data
-	hls::stream<ring_all_counter_t> &s_ring_all_counter
+	ap_uint<13> energy_threshold, 				 		// minimum energy for us to look at an individual hit
+	ap_uint<16> ring_threshold, 				 		// minimum summed energy (over one ring) to count a ring as hit
+	hls::stream<fadc_hits_t> &s_fadc_hits, 		 		// raw FADC data input stream
+	hls::stream<trigger_t> &s_trigger, 			 		// output stream for for the trigger data
+	hls::stream<ring_trigger_t> &s_ring_trigger, 		// output stream for for the ring trigger data
+	hls::stream<ring_all_t> &s_ring_all_t, 		 		// output stream for the ring data
+	hls::stream<ring_all_counter_t> &s_ring_all_counter // counter that sums over all the rings
 )
 {
 	fadc_hits_t fadc_hits = s_fadc_hits.read();
@@ -32,6 +32,7 @@ void moller_hls
 	ring_all_t allr;
 	hit_t arr_event[N_CHAN] = {0,0,0,0};
 	ap_uint<8> ring_trigger_counter[8] = {0,0,0,0,0,0,0,0};
+	// explicit intilization
 	for(int i = 0; i < 8; i++){
 		allr.r[i].e = 0;
 		allr.r[i].nhits = 0;
@@ -40,6 +41,11 @@ void moller_hls
 		raw_counter.ring_counter[i].counter = 0;
 		ring_trigger_counter[i] = ring_trigger_scalars[i]; 
 	}
+	/* We are shifting the time window in which we are looking at per event "I/O"
+	   That means that current events that have a timestamp >= 4 (*4ns ticks) are relegated
+	   to the next event I/O and are put in a pre-hit array.
+	   See documentation/timing_logic_suplementary for a (hopefully) better explanation
+	*/
 	for(int ch = 0; ch < N_CHAN; ch++){
 		arr_event[ch] = make_event(fadc_hits_pre.vxs_chan[ch], fadc_hits.vxs_chan[ch]);
 	}
@@ -66,11 +72,12 @@ void moller_hls
 			else if(ring_num == RING_SIX) { ring_num = 8; }
 
 			// TODO: computers start counting at 0 so ring_num - 1 is the appropriate index
-			// make this a bit manip check with a bit map (see stack exhange)
+			// make this a bit manip check with a bit mask 
 			if( (ring_trigger_config_bitmap[ring_num-1] == 0) || (segment_trigger_config_bitmap[ring_num-1][segment_num] == 0) ){
 				continue;
 			}
 			raw_counter.ring_counter[ring_num-1].counter++;
+			// Scalar countdown till we consider a "hit"
 			if(ring_trigger_counter[ring_num-1] == 0){
 				add_ring_data(ring_num-1, segment_num, arr_event[ch], allr.r);
 				make_timing_bitmap(ring_num-1, arr_event[ch], &time_bitmap);
@@ -82,6 +89,7 @@ void moller_hls
 		}
 	} // end for loop
 
+	// Store data for fanout
 	ring_trigger_t ring_bitmap = make_ring_bitmap(allr.r,ring_threshold);
 	s_ring_all_counter.write(raw_counter);
 	s_ring_all_t.write(allr);
@@ -128,14 +136,11 @@ ring_trigger_t make_ring_bitmap(ring_hit_t* rings, ap_uint<16> ring_threshold)
 			tmp.ring[ringNum] = 0; // just being explicit about it
 		}
 	}
-	// TODO: WE COULD ALSO ADD NHIT FILTERING HERE TOO
-
 	return tmp;
 }
 
 void make_timing_bitmap(int ring_num, hit_t hit_data, trigger_t *ptrigger)
 {
-
 	ap_uint<4> t_buff=0;
 	if(hit_data.t >=4)
 		t_buff = hit_data.t; // map pre time 4 to 7 -> 4 to 7 (unchanged)
